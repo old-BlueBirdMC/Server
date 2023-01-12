@@ -130,7 +130,7 @@ class Server {
 								return;
 							}
 							mainClass.description = {
-								name: pluginName,
+								pluginName: pluginName,
 								author: author,
 								description: description,
 								version: version
