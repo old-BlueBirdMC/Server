@@ -44,7 +44,7 @@ class GamePacket extends PacketsBase {
 		try {
 			data = new BinaryStream(await this.decompress(remaining));
 		} catch (e) {
-			if (this.compression) { // since there is no first packet check we do it like this
+			if (this.compression) {
 				this.compression = false;
 
 				data = new BinaryStream(remaining);
