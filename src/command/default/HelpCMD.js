@@ -1,0 +1,31 @@
+/******************************************\
+ *  ____  _            ____  _         _  *
+ * | __ )| |_   _  ___| __ )(_)_ __ __| | *
+ * |  _ \| | | | |/ _ \  _ \| | '__/ _` | *
+ * | |_) | | |_| |  __/ |_) | | | | (_| | *
+ * |____/|_|\__,_|\___|____/|_|_|  \__,_| *
+ *                                        *
+ * This file is licensed under the GNU    *
+ * General Public License 3. To use or    *
+ * modify it you must accept the terms    *
+ * of the license.                        *
+ * ___________________________            *
+ * \ @author BlueBirdMC Team /            *
+\******************************************/
+
+const Command = require("../Command");
+
+class HelpCMD extends Command {
+	constructor(cmd) {
+		super(cmd, "help command");
+	}
+
+	async run(sender, writtenCommand, args) {
+		sender.message("Help command");
+		for (const [,command] of Object.entries(sender.server.commandsList.getAllCommands())) {
+			sender.message(`${command.name} - ${command.description}`);
+		}
+	}
+}
+
+module.exports = HelpCMD;
