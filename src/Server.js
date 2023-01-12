@@ -16,7 +16,6 @@
 const { InternetAddress } = require("bbmc-raknet");
 const ServerInfo = require("./ServerInfo");
 const Logger = require("./console/Logger");
-const RakNetMessage = require("./misc/RakNetMessage");
 const ResourceManager = require("./managers/ResourceManager");
 const GeneratorManager = require("./managers/GeneratorManager");
 const fs = require("fs");
@@ -37,7 +36,7 @@ class Server {
 	log;
 	#workingEvents = [];
 	#workingPlugins = {};
-	eventsHandler;
+	#eventsHandler;
 	commandsList;
 	resourceManager;
 	generatorManager;
@@ -49,18 +48,10 @@ class Server {
 		this.generatorManager = new GeneratorManager(this.resourceManager.blockStatesMap);
 		this.registerDefaultGenerators();
 		this.testWorld = new World(this.generatorManager);
-		this.eventsHandler = new EventEmitter();
-		this.rakNetMessage = new RakNetMessage(
-			"Dedicated Server",
-			ServerInfo.minecraftProtocolVersion,
-			ServerInfo.minecraftVersion,
-			0,
-			10,
-			0,
-			"BlueBird Server",
-			"Survival"
-		); 
-		this.rakNetInterface = new RakNetInterface(this, new InternetAddress("0.0.0.0", 19132, 4), this.rakNetMessage);
+		this.#eventsHandler = new EventEmitter();
+		let rakNetMsgFH = {motd: "Dedicated Server", protocolVersion: ServerInfo.minecraftProtocolVersion,
+		minecraftVersion: ServerInfo.minecraftVersion, maxPlayerCount: 10, subMotd: "BlueBird Server", gameMode: "Survival"};
+		this.rakNetInterface = new RakNetInterface(this, new InternetAddress("0.0.0.0", 19132, 4), rakNetMsgFH);
 		this.log = new Logger({Name: "Server", AllowDebugging: false, WithColors: true});
 		this.log.info("Loading Server");
 		this.commandsList = new CommandsList();
@@ -114,7 +105,7 @@ class Server {
 	addEvent(event, eventName) {
 		if (this.#workingEvents.indexOf(eventName) === -1) {
 			this.#workingEvents.push(eventName);
-			this.eventsHandler.emit(eventName, event);
+			this.#eventsHandler.emit(eventName, event);
 		}
 	}
 
