@@ -23,6 +23,7 @@ const GamePacket = require("./packets/GamePacket");
 const Player = require("../player/Player");
 const PacketsBase = require("./packets/PacketsBase");
 const MinecraftTextColors = require("../color/MinecraftTextColors");
+const RakNetMessage = require("../misc/RakNetMessage");
 
 class RakNetInterface {
 	server;
@@ -31,14 +32,21 @@ class RakNetInterface {
 	rakNetMessage;
 	players = {};
 
-	constructor(server, address, rakNetMessage) {
+	constructor(server, address, rakNetMsgFH) {
 		this.server = server;
 		this.address = address;
 		this.rakNetServer = new RakNetServer(address, ServerInfo.rakNetProtocolVersion);
-		rakNetMessage.playerCount = Object.entries(this.players).length;
-		rakNetMessage.serverGUID = this.rakNetServer.serverGUID.toString();
-		this.rakNetMessage = rakNetMessage;
-		this.rakNetServer.message = rakNetMessage;
+		this.rakNetMessage = new RakNetMessage(
+			rakNetMsgFH.motd,
+			rakNetMsgFH.protocolVersion,
+			rakNetMsgFH.minecraftVersion,
+			Object.entries(this.players).length,
+			rakNetMsgFH.maxPlayerCount,
+			this.rakNetServer.serverGUID.toString(),
+			rakNetMsgFH.subMotd,
+			rakNetMsgFH.gameMode
+		);
+		this.rakNetServer.message = this.rakNetMessage;
 		this.log = new Logger({Name: "RakNet", AllowDebugging: false, WithColors: true});
 	}
 
@@ -48,7 +56,12 @@ class RakNetInterface {
 				if (this.rakNetServer.isRunning === false) {
 					clearInterval(pinger);
 				}
+				if (this.rakNetMessage.playerCount !== Object.entries(this.players).length) {
+					this.rakNetMessage.playerCount = Object.entries(this.players).length;
+					console.log(Object.entries(this.players).length);
+				}
 				this.rakNetServer.message = this.rakNetMessage.toString();
+				this.log.info(this.rakNetServer.message);
 			});
 		}, 50);
 	}
