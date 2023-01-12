@@ -58,7 +58,6 @@ class RakNetInterface {
 				}
 				if (this.rakNetMessage.playerCount !== Object.entries(this.players).length) {
 					this.rakNetMessage.playerCount = Object.entries(this.players).length;
-					console.log(Object.entries(this.players).length);
 				}
 				this.rakNetServer.message = this.rakNetMessage.toString();
 				this.log.info(this.rakNetServer.message);
