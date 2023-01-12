@@ -60,7 +60,6 @@ class RakNetInterface {
 					this.rakNetMessage.playerCount = Object.entries(this.players).length;
 				}
 				this.rakNetServer.message = this.rakNetMessage.toString();
-				this.log.info(this.rakNetServer.message);
 			});
 		}, 50);
 	}
