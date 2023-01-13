@@ -13,5 +13,3 @@
 - [Discord](https://discord.gg/rZ6DBFzDYe)
 - [Plugin Example](https://github.com/BlueBirdMC/BBMC-TestPlugin)
 
-## Pictures
-![BBMC](https://i.ibb.co/L092zSF/image-2.png)
