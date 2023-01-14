@@ -28,9 +28,6 @@ const DisconnectPacket = require("../network/packets/DisconnectPacket");
 const ServerInfo = require("../ServerInfo");
 const PlayStatus = require("../network/constants/PlayStatus");
 const CommandData = require("../network/types/CommandData");
-const CommandParam = require("../network/types/CommandParam");
-const CommandArgumentFlags = require("../network/constants/CommandArgumentFlags");
-const CommandArgumentTypes = require("../network/constants/CommandArgumentTypes");
 const AvailableCommandsPacket = require("../network/packets/AvailableCommandsPacket");
 
 class Player extends Human {

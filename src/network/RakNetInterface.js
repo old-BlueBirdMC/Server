@@ -80,7 +80,7 @@ class RakNetInterface {
 		this.rakNetServer.on("packet", async (stream, connection) => {
 			if (stream.buffer[0] == Identifiers.game) {
 				const player = this.players[connection.address.toString()];
-				HandlersList.refresh(player, this.server);
+				HandlersList.refresh(player, this.server, connection.address.toString());
 				const game = new GamePacket(stream.buffer);
 				await game.deserializeA();
 				const gamePacketHandler = new GamePacketHandler(player);

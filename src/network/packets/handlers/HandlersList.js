@@ -19,7 +19,7 @@ const fs = require("fs");
 class HandlersList {
 	static #handlers = {};
 
-	static refresh(player, server) {
+	static refresh(player, server, playerAddress) {
 		fs.readdirSync(__dirname).forEach(async (handlersName) => { 
 			let blackList = ["GamePacketHandler.js", "HandlersBase.js", "HandlersList.js"];
 			if (!(blackList.includes(handlersName))) {
@@ -27,22 +27,23 @@ class HandlersList {
 				let IdentifierName = handlersName;
 				IdentifierName += "";
 				let toIdentifiersWork = Identifiers[(IdentifierName.charAt(0).toLocaleLowerCase() + IdentifierName.substring(1)).replace("PacketHandler.js", "")];
-				this.add(staticPacket, toIdentifiersWork, player, server);
+				this.add(staticPacket, toIdentifiersWork, player, playerAddress, server);
 			}
 		});
 	}
 
-	static add(handler, packetID, player, server) {
-		if (!(packetID in this.#handlers)) {
-			this.#handlers[packetID] = new handler(player, server);
+	static add(handler, packetID, player, playerAddress, server) {
+		if (typeof this.#handlers[packetID] === "undefined" || typeof this.#handlers[packetID][playerAddress] === "undefined") {
+			this.#handlers[packetID] = {};
+			this.#handlers[packetID][playerAddress] = new handler(player, server);
 		}
 	}
 
-	static get(packetID) {
-		if (!(packetID in this.#handlers)) {
+	static get(packetID, playerAddress) {
+		if (typeof this.#handlers[packetID] === "undefined" && typeof this.#handlers[packetID][playerAddress] === "undefined") {
 			return;
 		}
-		return this.#handlers[packetID];
+		return this.#handlers[packetID][playerAddress];
 	}
 
 	static getAll() {
