@@ -111,12 +111,16 @@ class RakNetInterface {
 		}
 	}
 
-	async close(exitProcess = false) {
+	async close(closeMessage = undefined, exitProcess = false) {
 		if (this.rakNetServer.isRunning === true) {
 			if (exitProcess === true) {
 				exitProcess = false;
 				for (const [,player] of Object.entries(this.players)) {
-					player.disconnect(`${MinecraftTextColors.red}Server killed`);
+					if (closeMessage === undefined) {
+						player.disconnect(`${MinecraftTextColors.red}Server killed`);
+					} else if (typeof closeMessage === "string") {
+						player.disconnect(`${MinecraftTextColors.red}Server killed, reason: ${closeMessage}`);
+					}
 				}
 				setInterval(async () => {
 					this.rakNetServer.isRunning = false;

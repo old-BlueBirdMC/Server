@@ -27,6 +27,11 @@ const TextTypes = require("../network/constants/TextTypes");
 const DisconnectPacket = require("../network/packets/DisconnectPacket");
 const ServerInfo = require("../ServerInfo");
 const PlayStatus = require("../network/constants/PlayStatus");
+const CommandData = require("../network/types/CommandData");
+const CommandParam = require("../network/types/CommandParam");
+const CommandArgumentFlags = require("../network/constants/CommandArgumentFlags");
+const CommandArgumentTypes = require("../network/constants/CommandArgumentTypes");
+const AvailableCommandsPacket = require("../network/packets/AvailableCommandsPacket");
 
 class Player extends Human {
 	connection;
@@ -94,6 +99,37 @@ class Player extends Human {
 		stream.writeChunk(chunk, levelChunk.subChunkCount);
 		levelChunk.payload = stream.buffer;
 		levelChunk.sendTo(this);
+	}
+
+	sendCommands() {
+		let data = [];
+		Object.values(this.server.commandsList.getAllCommands()).forEach((value) => {
+			if (typeof data[value.name] !== "undefined") {
+				return;
+			}
+			let cmdData = new CommandData();
+			cmdData.name = value.name.toLowerCase();
+			cmdData.description = value.description;
+			cmdData.flags = 0;
+			cmdData.permissionLevel = 0;
+			cmdData.aliases = []; // soon
+			let cmdOverloads = value.overloads;
+			if (Array.isArray(cmdOverloads)) {
+				if (cmdOverloads.length !== 0) {
+					cmdData.overloads = [
+						[
+							cmdOverloads
+						]
+					];
+				} else {
+					cmdData.overloads = [];
+				}
+			}
+			data.push(cmdData);
+		});
+		let pk = new AvailableCommandsPacket();
+		pk.commandData = data;
+		pk.sendTo(this);
 	}
 
 	sendPlayStatus(status) {

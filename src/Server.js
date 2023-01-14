@@ -90,8 +90,8 @@ class Server {
 		});
 	}
 
-	async shutdown(exitProcess = true) {
-		await this.rakNetInterface.close(exitProcess);
+	async shutdown(closeMessage = undefined, exitProcess = true) {
+		await this.rakNetInterface.close(closeMessage, exitProcess);
 	}
 
 	async sendUnserializedMinecraftPacket(packet, player) {

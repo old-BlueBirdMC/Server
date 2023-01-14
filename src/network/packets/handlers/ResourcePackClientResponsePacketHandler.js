@@ -37,7 +37,7 @@ class ResourcePackClientResponsePacketHandler extends HandlersBase {
 		await super.startHandling(packet);
 		switch(packet.responseStatus) {
 			case ResourcePackClientResponseStatus.refused:
-				this.player.disconnect("You must accept the resource pack");
+				this.player.disconnect("You need to accept the resource pack");
 				break;
 			case ResourcePackClientResponseStatus.sendPacks:
 				break;
@@ -153,13 +153,11 @@ class ResourcePackClientResponsePacketHandler extends HandlersBase {
 					this.server.addEvent(ev, "join");
 					if (ev.canceller.isCancelled()) {
 						delete this.server.players[this.player.connection.address.toString()];
-						this.player.disconnect("", false);
+						this.player.disconnect("Join cancelled", false);
 						return;
-					} else {
-						if (this.player.spawned) {
-							this.server.log.info(ev.message ? ev.message : "Player joined the game");
-						}
 					}
+					this.server.log.info(ev.message ? ev.message : `Player ${this.server.getPlayerName(this.player)} joined the game`);
+					this.player.sendCommands();
 					this.player.resourcePackClientResponseSent = true;
 				}
 				this.player.sendPlayStatus(PlayStatus.playerSpawn);

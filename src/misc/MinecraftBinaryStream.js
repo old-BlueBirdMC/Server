@@ -39,6 +39,13 @@ const Chunk = require("../world/chunk/Chunk");
 const MetadataTypes = require("../network/constants/MetadataTypes");
 const Metadata = require("../network/types/Metadata");
 const EntityLink = require("../network/types/EntityLink");
+const CommandOriginData = require("../network/types/CommandOriginData");
+const CommandOriginDataTypes = require("../network/constants/CommandOriginDataTypes");
+const CommandEnum = require("../network/types/CommandEnum");
+const CommandArgumentFlags = require("../network/constants/CommandArgumentFlags");
+const CommandParam = require("../network/types/CommandParam");
+const CommandData = require("../network/types/CommandData");
+const CommandEnumConstraint = require("../network/types/CommandEnumConstraint");
 
 class MinecraftBinaryStream extends BinaryStream {
 	readStringVarInt() {
@@ -788,6 +795,160 @@ class MinecraftBinaryStream extends BinaryStream {
 		this.writeVarInt(value.length);
 		for (let i = 0; i < value.length; ++i) {
 			this.writeEntityLink(value[i]);
+		}
+	}
+
+	readCommandOrigin() {
+		let value = new CommandOriginData();
+		value.typeID = this.readVarInt();
+		value.uuid = this.readUUID();
+		value.requestID = this.readStringVarInt();
+		if (value.typeID === CommandOriginDataTypes.devConsole || value.typeID === CommandOriginDataTypes.test) {
+			value.entityID = this.readEntityID();
+		}
+		return value;
+	}
+
+	writeCommandOrigin(value) {
+		this.writeVarInt(value.typeID);
+		this.writeUUID(value.uuid);
+		this.writeStringVarInt(value.requestID);
+		if (value.typeID === CommandOriginDataTypes.devConsole || value.typeID === CommandOriginDataTypes.test) {
+			this.writeEntityID(value.entityID);
+		}
+	}
+
+	readCommandEnum(enumValues) {
+		let value = new CommandEnum();
+		value.name = this.readVarInt();
+		value.values = [];
+		for (let i = 0; i < this.readVarInt(); ++i) {
+			if (enumValues.length < 255) {
+				value.values.push(this.readUnsignedByte());
+			} else if (enumValues.length < 65536) {
+				value.values.push(this.readUnsignedShortLE());
+			} else {
+				value.values.push(this.readUnsignedIntLE());
+			}
+		}
+		value.isDynamic = false;
+		return value;
+	}
+
+	writeCommandEnum(value, enumValues) {
+		this.writeStringVarInt(value.name);
+		this.writeVarInt(value.values.length);
+		for (const [val] of value.values) {
+			if (enumValues.length < 255) {
+				this.writeUnsignedByte(val);
+			} else if (enumValues.length < 65536) {
+				this.writeUnsigendShortLE(val);
+			} else {
+				this.writeUnsignedIntLE(val);
+			}
+		}
+	}
+
+	readCommandData(enums, suffixes) {
+		let value = new CommandData();
+		value.name = this.readStringVarInt();
+		value.description = this.readStringVarInt();
+		value.flags = this.readUnsignedShortLE();
+		value.permissionLevel = this.readUnsignedByte();
+		value.aliases = [];
+		value.overloads = [];
+
+		for (let i = 0; i < this.readVarInt(); ++i) {
+			let overload = [];
+			overload[i] = [];
+			for (let i2 = 0; i2 < this.readVarInt(); ++i2) {
+				let cmdParam = new CommandParam();
+				cmdParam.name = this.readStringVarInt();
+				cmdParam.typeID = this.readIntLE();
+				if (cmdParam.typeID & CommandArgumentFlags.enum !== 0) {
+					let len = cmdParam.typeID & 65535;
+					if (len > (enums.length - 1)) {
+						throw new Error("Enum limition reached max. (MCBS)");
+					}
+					cmdParam.typeID = enums[len];
+				} else if (cmdParam.typeID & CommandArgumentFlags.suffix !== 0) {
+					let len = cmdParam.typeID & 65535;
+					if (len > (suffixes.length - 1)) {
+						throw new Error("Suffix limition reached max. (MCBS)");
+					}
+					cmdParam.suffixes = suffixes[len];
+				}
+				cmdParam.optional = this.readBool();
+				cmdParam.options = this.readUnsignedByte();
+				overload[i].push([[cmdParam]]); // if this is wrong fix it
+			}
+			value.overloads.push(overload);
+		}
+	}
+
+	writeCommandData(value, enums, dynamicEnums, suffixes) {
+		this.writeStringVarInt(value.name);
+		this.writeStringVarInt(value.description);
+		this.writeUnsignedShortLE(value.flags);
+		this.writeUnsignedByte(value.permissionLevel);
+		this.writeIntBE(-1); // aliases
+		this.writeVarInt(value.overloads.length);
+
+		for (const [overload] of value.overloads) {
+			this.writeVarInt(overload.length);
+			overload.forEach(overloadVal => {
+				this.writeStringVarInt(overloadVal.name);
+				let typeID = overloadVal.typeID;
+				enums.forEach((val) => {
+					if (val.isDynamic) {
+						typeID = CommandArgumentFlags.softEnum | CommandArgumentFlags.valid | dynamicEnums[overloadVal.typeID];
+					} else if (val.options.length != 0) {
+						typeID = CommandArgumentFlags.enum | CommandArgumentFlags.valid | suffixes[overloadVal.typeID];
+					}
+				});
+				this.writeIntLE(typeID);
+				this.writeBool(overloadVal.optional);
+				this.writeUnsignedByte(overloadVal.options);
+			});
+		}
+	}
+
+	readDynamicCommandEnum() {
+		let value = new CommandEnum();
+		value.name = this.readStringVarInt();
+		value.values = [];
+		for (let i = 0; i < this.readVarInt(); ++i) {
+			value.values.push(this.readStringVarInt());	
+		}
+		value.isDynamic = true;
+		return value;
+	}
+
+	writeDynamicCommandEnum(value) {
+		this.writeStringVarInt(value.name);
+		this.writeVarInt(value.values.length);
+		for (const [value] of value.values) {
+			this.writeStringVarInt(value);
+		}
+	}
+
+	readCommandEnumConstraint() {
+		let value = new CommandEnumConstraint();
+		value.value = this.readIntLE();
+		value.enumIndex = this.readIntLE();
+		value.constraints = [];
+		for (let i = 0; i < this.readVarInt(); ++i) {
+			value.constraints.push(this.readUnsignedByte());
+		}
+		return value;
+	}
+
+	writeCommandEnumConstraint(value) {
+		this.writeIntLE(value.value);
+		this.writeIntLE(value.enumIndex);
+		this.writeVarInt(value.constraints.length);
+		for (const [value] of value.constraints) {
+			this.writeUnsignedByte(value);
 		}
 	}
 }

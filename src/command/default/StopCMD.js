@@ -13,16 +13,30 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
+const CommandArgumentFlags = require("../../network/constants/CommandArgumentFlags");
+const CommandArgumentTypes = require("../../network/constants/CommandArgumentTypes");
+const CommandParam = require("../../network/types/CommandParam");
 const Command = require("../Command");
 
 class StopCMD extends Command {
 	constructor() {
-		super("stop", "stop command");
+		let cmdParam = new CommandParam();
+		cmdParam.name = "stopMessage";
+		cmdParam.optional = true;
+		cmdParam.enumData = [];
+		cmdParam.typeID = CommandArgumentFlags.valid | CommandArgumentTypes.rawText;
+		cmdParam.options = 0;
+		cmdParam.suffixes = [];
+		super("stop", "stop command", [cmdParam]);
 	}
 
 	async run(sender, writtenCommand, args) {
 		sender.message("Stopping server...");
-		sender.server.shutdown();
+		if (typeof args[0] !== "undefined") {
+			sender.server.shutdown(args[0]);
+		} else {
+			sender.server.shutdown();
+		}
 	}
 }
 
