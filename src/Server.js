@@ -29,6 +29,7 @@ const CommandsList = require("./command/CommandsList");
 const CommandReader = require("./console/CommandReader");
 const RakNetInterface = require("./network/RakNetInterface");
 const PacketsList = require("./network/packets/PacketsList");
+const ConfigIniManager = require("./managers/ConfgIniManager");
 
 class Server {
 	rakNetServer;
@@ -39,19 +40,22 @@ class Server {
 	#eventsHandler;
 	commandsList;
 	resourceManager;
+	configManager;
 	generatorManager;
 	testWorld;
 
 	constructor() {
 		let startTime = Date.now();
 		this.resourceManager = new ResourceManager();
+		this.configManager = new ConfigIniManager();
 		this.generatorManager = new GeneratorManager(this.resourceManager.blockStatesMap);
 		this.registerDefaultGenerators();
 		this.testWorld = new World(this.generatorManager);
 		this.#eventsHandler = new EventEmitter();
-		let rakNetMsgFH = {motd: "Dedicated Server", protocolVersion: ServerInfo.minecraftProtocolVersion,
-		minecraftVersion: ServerInfo.minecraftVersion, maxPlayerCount: 10, subMotd: "BlueBird Server", gameMode: "Survival"};
-		this.rakNetInterface = new RakNetInterface(this, new InternetAddress("0.0.0.0", 19132, 4), rakNetMsgFH);
+		let rakNetMsgFH = {motd: this.configManager.getMotd(), protocolVersion: ServerInfo.minecraftProtocolVersion,
+		minecraftVersion: ServerInfo.minecraftVersion, maxPlayerCount: this.configManager.getMaxPlayerCount(),
+		subMotd: this.configManager.getSubMotd(), gameMode: this.configManager.getGamemode()};
+		this.rakNetInterface = new RakNetInterface(this, new InternetAddress("0.0.0.0", this.configManager.getServerPort(), this.configManager.getAddressVersion()), rakNetMsgFH);
 		this.log = new Logger({Name: "Server", AllowDebugging: false, WithColors: true});
 		this.log.info("Loading Server");
 		this.commandsList = new CommandsList();

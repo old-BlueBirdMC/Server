@@ -21,7 +21,7 @@ const Command = require("../Command");
 class StopCMD extends Command {
 	constructor() {
 		let cmdParam = new CommandParam();
-		cmdParam.name = "stopMessage";
+		cmdParam.name = "reason";
 		cmdParam.optional = true;
 		cmdParam.enumData = [];
 		cmdParam.typeID = CommandArgumentFlags.valid | CommandArgumentTypes.rawText;
