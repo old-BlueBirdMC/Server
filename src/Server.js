@@ -107,7 +107,7 @@ class Server {
 	}
 
 	addEvent(event, eventName) {
-		if (this.#workingEvents.indexOf(eventName) === -1) {
+		if (!this.#workingEvents.includes(eventName)) {
 			this.#workingEvents.push(eventName);
 			this.#eventsHandler.emit(eventName, event);
 		}

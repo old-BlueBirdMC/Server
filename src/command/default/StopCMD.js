@@ -23,7 +23,6 @@ class StopCMD extends Command {
 		let cmdParam = new CommandParam();
 		cmdParam.name = "reason";
 		cmdParam.optional = true;
-		cmdParam.enumData = [];
 		cmdParam.typeID = CommandArgumentFlags.valid | CommandArgumentTypes.rawText;
 		cmdParam.options = 0;
 		cmdParam.suffixes = [];

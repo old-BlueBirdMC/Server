@@ -16,7 +16,6 @@
 class CommandParam {
 	name;
 	optional;
-	enumData;
 	typeID;
 	options;
 	suffixes;

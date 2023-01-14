@@ -859,7 +859,7 @@ class MinecraftBinaryStream extends BinaryStream {
 		value.overloads = [];
 
 		for (let i = 0; i < this.readVarInt(); ++i) {
-			let overload = [];
+			let overload = {};
 			overload[i] = [];
 			for (let i2 = 0; i2 < this.readVarInt(); ++i2) {
 				let cmdParam = new CommandParam();
@@ -880,9 +880,9 @@ class MinecraftBinaryStream extends BinaryStream {
 				}
 				cmdParam.optional = this.readBool();
 				cmdParam.options = this.readUnsignedByte();
-				overload[i].push([[cmdParam]]); // if this is wrong fix it
+				overload[i] = [[cmdParam]]; // if this is wrong fix it
 			}
-			value.overloads.push(overload);
+			value.overloads.push([overload]);
 		}
 	}
 
@@ -902,8 +902,10 @@ class MinecraftBinaryStream extends BinaryStream {
 				enums.forEach((val) => {
 					if (val.isDynamic) {
 						typeID = CommandArgumentFlags.softEnum | CommandArgumentFlags.valid | dynamicEnums[overloadVal.typeID];
-					} else if (val.options.length != 0) {
-						typeID = CommandArgumentFlags.enum | CommandArgumentFlags.valid | suffixes[overloadVal.typeID];
+					} else if (enums.length != 0 && !val.isDynamic) {
+						typeID = CommandArgumentFlags.enum | CommandArgumentFlags.valid | enums[overloadVal.typeID];
+					} else if (overloadVal.suffixes.length != 0) {
+						typeID = CommandArgumentFlags.suffix | CommandArgumentFlags.valid | suffixes[overloadVal.suffix];
 					}
 				});
 				this.writeIntLE(typeID);
