@@ -25,7 +25,6 @@ const MinecraftTextColors = require("../color/MinecraftTextColors");
 const RakNetMessage = require("../misc/RakNetMessage");
 const RakNetPlayerManager = require("../managers/RakNetPlayerManager");
 const GamePacketHandler = require("./packets/handlers/GamePacketHandler");
-const { default: TPromise } = require("thread-promises");
 
 class RakNetInterface {
 	server;
@@ -53,15 +52,15 @@ class RakNetInterface {
 
 	async handlePong() {
 		const pinger = setInterval(async () => {
-			return await new TPromise(resolve => {
+			return await new Promise(() => {
 				if (this.rakNetServer.isRunning === false) {
 					clearInterval(pinger);
 				}
 
 				if (this.rakNetMessage.playerCount !== RakNetPlayerManager.getLength()) {
-					resolve(this.rakNetMessage.playerCount = RakNetPlayerManager.getLength());
+					this.rakNetMessage.playerCount = RakNetPlayerManager.getLength();
 				}
-				resolve(this.rakNetServer.message = this.rakNetMessage.toString());
+				this.rakNetServer.message = this.rakNetMessage.toString()
 			});
 		}, 50);
 	}
