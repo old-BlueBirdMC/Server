@@ -14,7 +14,6 @@
 \******************************************/
 
 const { RakNetServer, Frame, ReliabilityTool } = require("bbmc-raknet");
-const GamePacketHandler = require("./packets/handlers/GamePacketHandler");
 const HandlersList = require("./packets/handlers/HandlersList");
 const ServerInfo = require("../ServerInfo");
 const Identifiers = require("./packets/Identifiers");
@@ -24,13 +23,15 @@ const Player = require("../player/Player");
 const PacketsBase = require("./packets/PacketsBase");
 const MinecraftTextColors = require("../color/MinecraftTextColors");
 const RakNetMessage = require("../misc/RakNetMessage");
+const RakNetPlayerManager = require("../managers/RakNetPlayerManager");
+const GamePacketHandler = require("./packets/handlers/GamePacketHandler");
+const { default: TPromise } = require("thread-promises");
 
 class RakNetInterface {
 	server;
 	address;
 	rakNetServer;
 	rakNetMessage;
-	players = {};
 
 	constructor(server, address, rakNetMsgFH) {
 		this.server = server;
@@ -40,57 +41,58 @@ class RakNetInterface {
 			rakNetMsgFH.motd,
 			rakNetMsgFH.protocolVersion,
 			rakNetMsgFH.minecraftVersion,
-			Object.entries(this.players).length,
+			RakNetPlayerManager.getLength(),
 			rakNetMsgFH.maxPlayerCount,
 			this.rakNetServer.serverGUID.toString(),
 			rakNetMsgFH.subMotd,
 			rakNetMsgFH.gameMode
 		);
-		this.rakNetServer.message = this.rakNetMessage;
-		this.log = new Logger({Name: "RakNet", AllowDebugging: false, WithColors: true});
+		this.rakNetServer.message = this.rakNetMessage.toString();
+		this.log = new Logger({Name: "RakNet", AllowDebugging: true, WithColors: true});
 	}
 
 	async handlePong() {
 		const pinger = setInterval(async () => {
-			return await new Promise(() => {
+			return await new TPromise(resolve => {
 				if (this.rakNetServer.isRunning === false) {
 					clearInterval(pinger);
 				}
-				if (this.rakNetMessage.playerCount !== Object.entries(this.players).length) {
-					this.rakNetMessage.playerCount = Object.entries(this.players).length;
+
+				if (this.rakNetMessage.playerCount !== RakNetPlayerManager.getLength()) {
+					resolve(this.rakNetMessage.playerCount = RakNetPlayerManager.getLength());
 				}
-				this.rakNetServer.message = this.rakNetMessage.toString();
+				resolve(this.rakNetServer.message = this.rakNetMessage.toString());
 			});
 		}, 50);
 	}
 
 	async handle() {
 		this.rakNetServer.on("connect", (connection) => {
-			this.log.info("New Connection, Address:", connection.address.toString());
-			if (!(connection.address.toString() in this.players)) {
-				this.players[connection.address.toString()] = new Player(connection, this.server);
+			let reg = RakNetPlayerManager.registerPlayer(connection.address.toString(), new Player(connection, this.server));
+			if (reg !== null) {
+				this.log.debug("New Connection, Address:", connection.address.toString());
 			}
 		});
 		this.rakNetServer.on("disconnect", (address) => {
-			this.log.info("Disconnected, Address:", address.toString());
-			if (address.toString() in this.players) {
-				delete this.players[address.toString()];
-			}
+			this.log.debug("Disconnected, Address:", address.toString());
+			RakNetPlayerManager.unregisterPlayer(address.toString());
 		});
 		this.rakNetServer.on("packet", async (stream, connection) => {
 			if (stream.buffer[0] == Identifiers.game) {
-				const player = this.players[connection.address.toString()];
-				HandlersList.refresh(player, this.server, connection.address.toString());
-				const game = new GamePacket(stream.buffer);
-				await game.deserializeA();
-				const gamePacketHandler = new GamePacketHandler(player);
-				await gamePacketHandler.startHandling(game);
+				const player = RakNetPlayerManager.getPlayer(connection.address.toString());
+				if (player !== null) {
+					HandlersList.refresh(player, this.server, connection.address.toString());
+					const game = new GamePacket(stream.buffer);
+					await game.deserializeA();
+					const gameHandler = new GamePacketHandler(player, this.server);
+					await gameHandler.startHandling(game);
+				}
 			}
 		});
 	}
 
 	async queuePacket(packet, player) {
-		if (player.connection.address.toString() in this.players) {
+		if (player.connection.address.toString() in RakNetPlayerManager.getAllWithoutEditing()) {
 			if (!(packet.serialized)) {
 				packet.serializeA();
 			}
@@ -106,7 +108,7 @@ class RakNetInterface {
 				frame.stream = game;
 				player.connection.addToQueue(frame);
 			} else {
-				this.log.debug("failed to send an unknown packet, className: " + packet.constructor.name);
+				this.log.debug(`Failed to send an unknown packet, className: ${packet.constructor.name}`);
 			}
 		}
 	}
@@ -115,7 +117,7 @@ class RakNetInterface {
 		if (this.rakNetServer.isRunning === true) {
 			if (exitProcess === true) {
 				exitProcess = false;
-				for (const [,player] of Object.entries(this.players)) {
+				for (const [,player] of RakNetPlayerManager.getAllObjectEntries()) {
 					if (closeMessage === undefined) {
 						player.disconnect(`${MinecraftTextColors.red}Server killed`);
 					} else if (typeof closeMessage === "string") {

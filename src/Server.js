@@ -30,6 +30,7 @@ const CommandReader = require("./console/CommandReader");
 const RakNetInterface = require("./network/RakNetInterface");
 const PacketsList = require("./network/packets/PacketsList");
 const ConfigIniManager = require("./managers/ConfgIniManager");
+const PluginDescription = require("./plugin/PluginDescription");
 
 class Server {
 	rakNetServer;
@@ -76,7 +77,7 @@ class Server {
 			fs.mkdirSync("plugins");
 		}
 		this.log.info("Loading Plugins");
-		this.loadPlugins();
+		this.enablePlugins();
 		this.log.info("Plugins Loaded");
 		this.log.info("Server Loaded");
 		let doneTime = Date.now();
@@ -113,7 +114,7 @@ class Server {
 		}
 	}
 
-	loadPlugins() {
+	enablePlugins() {
 		fs.readdirSync("plugins").forEach(async (pluginsDir) => {
 			if (fs.lstatSync("plugins/" + pluginsDir).isDirectory()) {
 				fs.readdirSync(`plugins/${pluginsDir}`).forEach(async () => {
@@ -133,12 +134,11 @@ class Server {
 								this.log.error("Cant load plugin " + pluginName + ", cause: The plugin is not instance of PluginStructure");
 								return;
 							}
-							mainClass.description = {
-								pluginName: pluginName,
-								author: author,
-								description: description,
-								version: version
-							};
+							mainClass.description = new PluginDescription();
+							mainClass.description.pluginName = pluginName;
+							mainClass.description.verison = version;
+							mainClass.description.description = description;
+							mainClass.description.author = author;
 							this.#workingPlugins[pluginName] = mainClass;
 							if (!(fs.existsSync(dataPath))) {
 								fs.mkdirSync(dataPath);
