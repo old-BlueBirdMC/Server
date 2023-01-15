@@ -78,7 +78,7 @@ class RakNetInterface {
 			RakNetPlayerManager.unregisterPlayer(address.toString());
 		});
 		this.rakNetServer.on("packet", async (stream, connection) => {
-			if (stream.buffer[0] == Identifiers.game) {
+			if (stream.readUnsignedByte() === Identifiers.game) {
 				const player = RakNetPlayerManager.getPlayer(connection.address.toString());
 				if (player !== null) {
 					HandlersList.refresh(player, this.server, connection.address.toString());

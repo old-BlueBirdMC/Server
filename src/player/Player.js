@@ -29,6 +29,7 @@ const ServerInfo = require("../ServerInfo");
 const PlayStatus = require("../network/constants/PlayStatus");
 const CommandData = require("../network/types/CommandData");
 const AvailableCommandsPacket = require("../network/packets/AvailableCommandsPacket");
+const RakNetPlayerManager = require("../managers/RakNetPlayerManager");
 
 class Player extends Human {
 	connection;
@@ -139,7 +140,7 @@ class Player extends Human {
 		if (typeof value !== "string") return;
 		if (value.length >= 256) return;
 		if (value.trim() === "") return;
- 		for (const [,player] of Object.entries(this.server.rakNetInterface.players)) {
+ 		for (const [,player] of RakNetPlayerManager.getAllObjectEntries()) {
 			player.message(`<${this.server.getPlayerName(this)}> ${value}`);
 		}
 	}
