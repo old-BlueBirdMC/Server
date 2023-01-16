@@ -80,9 +80,9 @@ class RakNetInterface {
 			if (stream.readUnsignedByte() === Identifiers.game) {
 				const player = RakNetPlayerManager.getPlayer(connection.address.toString());
 				if (player !== null) {
-					HandlersList.refresh(player, this.server, connection.address.toString());
 					const game = new GamePacket(stream.buffer);
 					await game.deserializeA();
+					HandlersList.refresh(player, this.server, connection.address.toString());
 					const gameHandler = new GamePacketHandler(player, this.server);
 					await gameHandler.startHandling(game);
 				}
