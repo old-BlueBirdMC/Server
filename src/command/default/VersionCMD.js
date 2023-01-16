@@ -13,30 +13,21 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const CommandArgumentFlags = require("../../network/constants/CommandArgumentFlags");
-const CommandArgumentTypes = require("../../network/constants/CommandArgumentTypes");
-const CommandParam = require("../../network/types/CommandParam");
 const Command = require("../Command");
+const ServerInfo = require("../../ServerInfo");
 
-class StopCMD extends Command {
+class VersionCMD extends Command {
 	constructor() {
-		let cmdParam = new CommandParam();
-		cmdParam.name = "reason";
-		cmdParam.optional = true;
-		cmdParam.typeID = CommandArgumentFlags.valid | CommandArgumentTypes.rawText;
-		cmdParam.options = 0;
-		cmdParam.suffixes = [];
-		super("stop", "stop command", [], [cmdParam]);
+		super("version", "Shows the version of BBMC is running or plugin version.", ["about", "ver", "versions"]);
 	}
 
 	async run(sender, writtenCommand, args) {
-		sender.message("Stopping server...");
 		if (typeof args[0] !== "undefined") {
-			sender.server.shutdown(args[0]);
+			sender.message('Plugins Versions not supported yet!');
 		} else {
-			sender.server.shutdown();
+			sender.message(`This server is running: ${ServerInfo.engine} and Minecraft version: ${ServerInfo.minecraftVersion}, ProtocolVersion: (${ServerInfo.minecraftProtocolVersion})`);
 		}
 	}
 }
 
-module.exports = StopCMD;
+module.exports = VersionCMD;

@@ -13,37 +13,51 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
+const fs = require("fs");
 const ConsoleColors = require("../color/ConsoleColors");
 const MinecraftTextColors = require("../color/MinecraftTextColors");
 const ConsoleCommandSender = require("../console/ConsoleCommandSender");
 const Player = require("../player/Player");
+const Command = require("./Command");
 const HelpCMD = require("./default/HelpCMD");
 const StopCMD = require("./default/StopCMD");
 const CommandSender = require("./sender/CommandSender");
 
 class CommandsList {
 	#commands = {};
+	#alias = {};
 
 	refresh() {
-		this.add(new HelpCMD("?"));
-		this.add(new HelpCMD("help"));
-		this.add(new StopCMD());
+		fs.readdirSync(__dirname + '/default').forEach((file) => {
+			const command = require(__dirname + '/default/' + file);
+			this.add(new command());
+		});
 	}
 	
 	add(command) {
 		if (!(command.name in this.#commands)) {
-			this.#commands[command.name] = command;
+			if (command instanceof Command){
+				this.#commands[command.name] = command;
+				command.getAliases().forEach(alias => {
+					if(alias.length < 0) return;
+					this.#alias[alias + "CcmdAlias"] = command;
+				});
+			}
 		}
 	}
 	
 	remove(commandName) {
-		if (!(commandName in this.#commands)) {
+		if (commandName in this.#commands) {
 			delete this.#commands[commandName];
+		} else if (commandName in this.#alias) {
+			delete this.#alias[commandName + "CcmdAlias"];
 		}
 	}
 
 	has(commandName) {
 		if (commandName in this.#commands) {
+			return true;
+		} else if (commandName + "CcmdAlias" in this.#alias) {
 			return true;
 		}
 		return false;
@@ -52,6 +66,8 @@ class CommandsList {
 	get(commandName) {
 		if (commandName in this.#commands) {
 			return this.#commands[commandName];
+		} else if (commandName + "CcmdAlias" in this.#alias) {
+			return this.#alias[commandName + "CcmdAlias"];
 		}
 	}
 
@@ -81,6 +97,10 @@ class CommandsList {
 
 	getAllCommands() {
 		return this.#commands;
+	}
+
+	getAllAliases() {
+		return this.#alias;
 	}
 }
 

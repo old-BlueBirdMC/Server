@@ -1,6 +1,11 @@
 # BlueBird
 - BlueBird is an open-source bedrock server software written in Javascript.
 
+<p align="center">
+	<a href="https://discord.gg/rZ6DBFzDYe"><img src="https://img.shields.io/discord/947005464292524083?label=discord&color=7289DA&logo=discord" alt="Discord" /></a>
+	<br>
+</p>
+
 ## Status
 - Still in development.
 
@@ -13,3 +18,7 @@
 - [Discord](https://discord.gg/rZ6DBFzDYe)
 - [Plugin Example](https://github.com/BlueBirdMC/BBMC-TestPlugin)
 
+## Licensing information
+This project is licensed under GPL-3.0. Please see the LICENSE file for details.
+
+BlueBirdMC is not affiliated with Mojang. All brands and trademarks belong to their respective owners. BlueBirdMC is not a Mojang-approved software, nor is it associated with Mojang.

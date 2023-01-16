@@ -16,15 +16,21 @@
 class Command {
 	name;
 	description;
+	aliases;
 	overloads;
 
-	constructor(name, description, overloads = []) {
+	constructor(name, description, aliases = [], overloads = []) {
 		this.name = name;
 		this.description = description;
+		this.aliases = aliases;
 		this.overloads = overloads;
 	}
 
 	async run(sender, writtenCommand, args) {}
+
+	getAliases(){
+        return this.aliases;
+    }
 }
 
 module.exports = Command;
