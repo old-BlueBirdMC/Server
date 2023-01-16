@@ -74,7 +74,12 @@ class RakNetInterface {
 		});
 		this.rakNetServer.on("disconnect", (address) => {
 			this.log.debug("Disconnected, Address:", address.toString());
-			RakNetPlayerManager.unregisterPlayer(address.toString());
+			const player = RakNetPlayerManager.getPlayer(address.toString());
+			if (player !== null) {
+				player.disconnect("", true);
+				HandlersList.remove(address.toString());
+				RakNetPlayerManager.unregisterPlayer(address.toString());
+			}
 		});
 		this.rakNetServer.on("packet", async (stream, connection) => {
 			if (stream.readUnsignedByte() === Identifiers.game) {

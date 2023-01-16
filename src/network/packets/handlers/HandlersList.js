@@ -39,6 +39,14 @@ class HandlersList {
 		}
 	}
 
+	static remove(playerAddress) {
+		for (const [packetID,] of this.getAll()) {
+			if (typeof this.#handlers[packetID] === "undefined" || typeof this.#handlers[packetID][playerAddress] === "undefined") {
+				delete this.#handlers[packetID][playerAddress];
+			}
+		}
+	}
+
 	static get(packetID, playerAddress) {
 		if (typeof this.#handlers[packetID] === "undefined" && typeof this.#handlers[packetID][playerAddress] === "undefined") {
 			return;

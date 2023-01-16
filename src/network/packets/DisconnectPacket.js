@@ -19,16 +19,16 @@ const PacketsBase = require("./PacketsBase");
 class DisconnectPacket extends PacketsBase {
 	static id = Identifiers.disconnect;
 
-	hideDisconnectionNotification;
+	hideNotification;
 	message;
 
 	deserialize() {
-		this.hideDisconnectionNotification = this.readBool();
+		this.hideNotification = this.readBool();
 		this.message = this.readStringVarInt();
 	}
 
 	serialize() {
-		this.writeBool(this.hideDisconnectionNotification);
+		this.writeBool(this.hideNotification);
 		this.writeStringVarInt(this.message);
 	}
 }

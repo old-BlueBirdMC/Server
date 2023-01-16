@@ -71,7 +71,7 @@ class Player extends Human {
 	disconnect(reason, hideNotification = false) {
 		const disconnect = new DisconnectPacket();
 		disconnect.message = reason;
-		disconnect.hideDisconnectionNotification = hideNotification;
+		disconnect.hideNotification = hideNotification;
 		disconnect.sendTo(this);
 	}
 
@@ -161,9 +161,9 @@ class Player extends Human {
 		if (version !== ServerInfo.minecraftProtocolVersion) {
 			const FailedStatus = [version < ServerInfo.protocolVersion, PlayStatus.loginFailedClient, version > ServerInfo.protocolVersion, PlayStatus.loginFailedServer];
 			if (FailedStatus[0]) {
-				player.sendPlayStatus(FailedStatus[1]);
+				this.sendPlayStatus(FailedStatus[1]);
 			} else if (FailedStatus[2]) {
-				player.sendPlayStatus(FailedStatus[3]); 
+				this.sendPlayStatus(FailedStatus[3]); 
 			}
 			this.disconnect("", true);
 			return;

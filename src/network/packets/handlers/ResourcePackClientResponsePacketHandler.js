@@ -31,6 +31,7 @@ const AvailableActorIdentifiersPacket = require("../AvailableActorIdentifiersPac
 const ChatRestrictionLevel = require("../../constants/ChatRestrictionLevel");
 const canceller = require("../../../event/canceller");
 const ServerInfo = require("../../../ServerInfo");
+const crypto = require("crypto");
 
 class ResourcePackClientResponsePacketHandler extends HandlersBase {
 	async startHandling(packet) {
@@ -76,7 +77,7 @@ class ResourcePackClientResponsePacketHandler extends HandlersBase {
 				startGame.dayCycleStopTime = false;
 				startGame.eduOffer = 0;
 				startGame.eduFeaturesEnabled = false;
-				startGame.eduProductUUID = "c109c9c5-beec-42ad-a4d1-524226afad2f";
+				startGame.eduProductUUID = crypto.randomUUID();
 				startGame.rainLevel = 0.0;
 				startGame.lightningLevel = 0.0;
 				startGame.hasConfirmedPlatformLockedContent = false;
@@ -110,11 +111,11 @@ class ResourcePackClientResponsePacketHandler extends HandlersBase {
 				startGame.eduResourceURI.buttonName = "";
 				startGame.eduResourceURI.linkURI = "";
 				startGame.experimentalGameplayOverride = false;
-				startGame.levelID = "d0b70794-7c5a-45f6-bb57-9446ac562b45";
+				startGame.levelID = crypto.randomUUID();
 				startGame.chatRestrictionLevel = ChatRestrictionLevel.none;
 				startGame.playerInteractionsDisabled = false;
 				startGame.worldName = "test";
-				startGame.premiumWorldTemplateID = "1c6bbf43-a2a9-4336-bc35-954a83da1856";
+				startGame.premiumWorldTemplateID = crypto.randomUUID();
 				startGame.isTrial = false;
 				startGame.movementAuthority = 0;
 				startGame.rewindHistorySize = 0;
@@ -128,7 +129,7 @@ class ResourcePackClientResponsePacketHandler extends HandlersBase {
 				startGame.engine = ServerInfo.engine;
 				startGame.propertyData = new Compound();
 				startGame.blockPaletteChecksum = 0n;
-				startGame.worldTemplateID = "a1023eb3-bc3e-47cd-afab-e631a154dd05";
+				startGame.worldTemplateID = crypto.randomUUID();
 				startGame.clientSideGeneration = false;
 				startGame.sendTo(this.player);
 
