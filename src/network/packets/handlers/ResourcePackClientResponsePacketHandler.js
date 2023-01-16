@@ -144,8 +144,6 @@ class ResourcePackClientResponsePacketHandler extends HandlersBase {
 				creativeContent.entries = this.server.resourceManager.creativeItems;
 				creativeContent.sendTo(this.player);
 
-				console.log("SPA M");
-
 				if (!this.player.resourcePackClientResponseSent) {
 					let ev = { // joinevent place shouldnt be here
 						player: this.player,
