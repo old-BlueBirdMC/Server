@@ -21,15 +21,15 @@ class HelpCMD extends Command {
 	}
 
 	async run(sender, writtenCommand, args) {
-		var commands = [];
+		let commands = [];
 
 		sender.message("----- Help -----");
 		for (const [,command] of Object.entries(sender.server.commandsList.getAllCommands())) {
 			commands.push({name: command.name, description: command.description})
-			command.aliases.forEach(prefix => {
-				commands.push({name: prefix, description: command.description})
-			});
 		}
+		command.aliases.forEach(prefix => {
+			commands.push({name: prefix, description: command.description})
+		});
 		commands.forEach(command => {
 			sender.message("/" + command.name + ": " + command.description);
 		})
