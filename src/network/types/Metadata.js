@@ -14,7 +14,7 @@
 \******************************************/
 
 class Metadata {
-	type;
+	propertyType;
 	value;
 }
 

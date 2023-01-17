@@ -27,11 +27,13 @@ const BiomeDefinitionListPacket = require("../BiomeDefinitionListPacket");
 const CreativeContentPacket = require("../CreativeContentPacket");
 const GameMode = require("../../constants/GameMode");
 const PlayStatus = require("../../constants/PlayStatus");
-const AvailableActorIdentifiersPacket = require("../AvailableActorIdentifiersPacket");
+const AvailableEntityIdentifiersPacket = require("../AvailableEntityIdentifiersPacket");
 const ChatRestrictionLevel = require("../../constants/ChatRestrictionLevel");
 const canceller = require("../../../event/canceller");
 const ServerInfo = require("../../../ServerInfo");
 const crypto = require("crypto");
+const SetEntityDataPacket = require("../SetEntityDataPacket");
+const EntityProperty = require("../../types/EntityProperty");
 
 class ResourcePackClientResponsePacketHandler extends HandlersBase {
 	async startHandling(packet) {
@@ -137,9 +139,18 @@ class ResourcePackClientResponsePacketHandler extends HandlersBase {
 				biomeDefinitionList.nbt = this.server.resourceManager.biomeDefinitionList;
 				biomeDefinitionList.sendTo(this.player);
 
-				const availableActorIdentifiers = new AvailableActorIdentifiersPacket();
-				availableActorIdentifiers.nbt = this.server.resourceManager.availableEntityIdentifiers;
-				availableActorIdentifiers.sendTo(this.player);
+				const setEntityData = new SetEntityDataPacket();
+				setEntityData.runtimeEntityID = this.player.id;
+				setEntityData.metadata = this.player.metadataManager.getAllWithoutEditing();
+				setEntityData.properties = new EntityProperty();
+				setEntityData.properties.intProperties = [];
+				setEntityData.properties.floatProperties = [];
+				setEntityData.tick = 0;
+				setEntityData.sendTo(this.player);
+
+				const availableEntityIdentifiers = new AvailableEntityIdentifiersPacket();
+				availableEntityIdentifiers.nbt = this.server.resourceManager.availableEntityIdentifiers;
+				availableEntityIdentifiers.sendTo(this.player);
 
 				const creativeContent = new CreativeContentPacket();
 				creativeContent.entries = this.server.resourceManager.creativeItems;

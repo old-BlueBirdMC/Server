@@ -16,18 +16,27 @@
 const Identifiers = require("./Identifiers");
 const PacketsBase = require("./PacketsBase");
 
-class AvailableActorIdentifiersPacket extends PacketsBase {
-	static id = Identifiers.availableActorIdentifiers;
+class SetEntityDataPacket extends PacketsBase {
+	static id = Identifiers.setEntityData;
 
-	nbt;
+	runtimeEntityID;
+	metadata;
+	properties;
+	tick;
 
 	deserialize() {
-		this.nbt = this.readNBT();
+		this.runtimeEntityID = this.readRuntimeEntityID();
+		this.metadata = this.readMetadataList();
+		this.properties = this.readEntityProperties();
+		this.tick = this.readVarInt();
 	}
 
 	serialize() {
-		this.writeNBT(this.nbt);
+		this.writeRuntimeEntityID(this.runtimeEntityID);
+		this.writeMetadataList(this.metadata);
+		this.writeEntityProperties(this.properties);
+		this.writeVarInt(this.tick);
 	}
 }
 
-module.exports = AvailableActorIdentifiersPacket;
+module.exports = SetEntityDataPacket;

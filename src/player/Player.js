@@ -30,6 +30,7 @@ const PlayStatus = require("../network/constants/PlayStatus");
 const CommandData = require("../network/types/CommandData");
 const AvailableCommandsPacket = require("../network/packets/AvailableCommandsPacket");
 const RakNetPlayerManager = require("../managers/RakNetPlayerManager");
+const EntityMetaDataFlags = require("../network/constants/EntityMetaDataFlags");
 
 class Player extends Human {
 	connection;
@@ -54,6 +55,7 @@ class Player extends Human {
 		this.rotation = new Vector2F(); // TEMP UP UNLTI WORLDS ARE MADE
 		this.rotation.x = 0.0;
 		this.rotation.z = 0.0;
+		this.updateMetadata();
 	}
 
 	message(value) {
@@ -155,6 +157,10 @@ class Player extends Human {
 		text.xuid = xuid;
 		text.platformChatID = platformChatID;
 		text.sendTo(this);
+	}
+
+	updateMetadata() {
+		this.metadataManager.setEntityFlag(EntityMetaDataFlags.breathing, true);
 	}
 
 	checkProtocol(version) {

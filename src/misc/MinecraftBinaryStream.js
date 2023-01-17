@@ -36,8 +36,8 @@ const BitArray = require("../network/constants/BitArray");
 const BlockStorage = require("../world/chunk/BlockStorage");
 const SubChunk = require("../world/chunk/SubChunk");
 const Chunk = require("../world/chunk/Chunk");
-const MetadataTypes = require("../network/constants/MetadataTypes");
 const Metadata = require("../network/types/Metadata");
+const MetadataPropertyTypes = require("../network/constants/MetadataPropertyTypes");
 const EntityLink = require("../network/types/EntityLink");
 const CommandOriginData = require("../network/types/CommandOriginData");
 const CommandOriginDataTypes = require("../network/constants/CommandOriginDataTypes");
@@ -46,6 +46,7 @@ const CommandArgumentFlags = require("../network/constants/CommandArgumentFlags"
 const CommandParam = require("../network/types/CommandParam");
 const CommandData = require("../network/types/CommandData");
 const CommandEnumConstraint = require("../network/types/CommandEnumConstraint");
+const EntityProperty = require("../network/types/EntityProperty");
 
 class MinecraftBinaryStream extends BinaryStream {
 	readStringVarInt() {
@@ -672,72 +673,71 @@ class MinecraftBinaryStream extends BinaryStream {
 		this.writeUnsignedByte(0);
 	}
 
-	readMetadata(type) {
-		let value;
-		switch (type) {
-			case MetadataTypes.byte:
-				value = this.readByte();
+	readMetadataProperty(propertyTypeID) {
+		let value = new Metadata();
+		value.propertyType = propertyTypeID;
+		switch (propertyTypeID) {
+			case MetadataPropertyTypes.byte:
+				value.value = this.readByte();
 				break;
-			case MetadataTypes.short:
-				value = this.readVarInt();
+			case MetadataPropertyTypes.short:
+				value.value = this.readVarInt();
 				break;
-			case MetadataTypes.int:
-				value = this.readSignedVarInt();
+			case MetadataPropertyTypes.int:
+				value.value = this.readSignedVarInt();
 				break;
-			case MetadataTypes.float:
-				value = this.readFloatLE();
+			case MetadataPropertyTypes.float:
+				value.value = this.readFloatLE();
 				break;
-			case MetadataTypes.str:
-				value = this.readStringVarInt();
+			case MetadataPropertyTypes.str:
+				value.value = this.readStringVarInt();
 				break;
-			case MetadataTypes.nbt:
-				value = this.readNBTLE();
+			case MetadataPropertyTypes.nbt:
+				value.value = this.readNBTLE();
 				break;
-			case MetadataTypes.vec3i:
-				value = this.readVector3I();
+			case MetadataPropertyTypes.vec3i:
+				value.value = this.readVector3I();
 				break;
-			case MetadataTypes.long:
-				value = this.readSignedVarLong();
+			case MetadataPropertyTypes.long:
+				value.value = this.readSignedVarLong();
 				break;
-			case MetadataTypes.vec3f:
-				value = this.readVector3F();
+			case MetadataPropertyTypes.vec3f:
+				value.value = this.readVector3F();
 				break;
 			default:
 				throw new Error("Invalid metadata type");
 		}
-		let metadata = new Metadata();
-		metadata.type = type;
-		metadata.value = value;
-		return metadata;
+		return value;
 	}
 
-	writeMetadata(value) {
-		switch (value.type) {
-			case MetadataTypes.byte:
+	writeMetadataProperty(value) {
+		this.writeVarInt(value.propertyType);
+		switch (value.propertyType) {
+			case MetadataPropertyTypes.byte:
 				this.writeByte(value.value);
 				break;
-			case MetadataTypes.short:
+			case MetadataPropertyTypes.short:
 				this.writeShortLE(value.value);
 				break;
-			case MetadataTypes.int:
+			case MetadataPropertyTypes.int:
 				this.writeSignedVarInt(value.value);
 				break;
-			case MetadataTypes.float:
+			case MetadataPropertyTypes.float:
 				this.writeFloatLE(value.value);
 				break;
-			case MetadataTypes.str:
+			case MetadataPropertyTypes.str:
 				this.writeStringVarInt(value.value);
 				break;
-			case MetadataTypes.nbt:
+			case MetadataPropertyTypes.nbt:
 				this.writeNBTLE(value.value);
 				break;
-			case MetadataTypes.vec3i:
+			case MetadataPropertyTypes.vec3i:
 				this.writeVector3I(value.value);
 				break;
-			case MetadataTypes.long:
+			case MetadataPropertyTypes.long:
 				this.writeSignedVarLong(value.value);
 				break;
-			case MetadataTypes.vec3f:
+			case MetadataPropertyTypes.vec3f:
 				this.writeVector3F(value.value);
 				break;
 			default:
@@ -746,22 +746,20 @@ class MinecraftBinaryStream extends BinaryStream {
 	}
 
 	readMetadataList() {
-		let values = {};
+		let value = {};
 		for (let i = 0; i < this.readVarInt(); ++i) {
-			let key = this.readVarInt();
-			let type = this.readVarInt();
-
-			values[key] = this.readMetadata(type);
+			let index = this.readVarInt();
+			let propertyType = this.readVarInt();
+			value[index] = this.readMetadataProperty(propertyType);
 		}
-		return values;
+		return value;
 	}
 
 	writeMetadataList(value) {
-		this.writeVarInt(value.length);
-		Object.entries(value).forEach(([key, value]) => {
-			this.writeVarInt(key);
-			this.writeVarInt(value.type);
-			this.writeMetadata(value);
+		this.writeVarInt(Object.entries(value).length);
+		Object.entries(value).forEach(([index, value]) => {
+			this.writeVarInt(index);
+			this.writeMetadataProperty(value);
 		});
 	}
 
@@ -952,6 +950,52 @@ class MinecraftBinaryStream extends BinaryStream {
 		for (const [value] of value.constraints) {
 			this.writeUnsignedByte(value);
 		}
+	}
+
+	readEntityProperties() {
+		let value = new EntityProperty();
+		value.intProperties = this.readIntEntityProperties();
+		value.floatProperties = this.readFloatEntityProperties();
+		return value;
+	}
+
+	writeEntityProperties(value) {
+		this.writeIntEntityProperties(value.intProperties);
+		this.writeFloatEntityProperties(value.floatProperties);
+	}
+
+	readIntEntityProperties() {
+		let value = {};
+		for (let i = 0; i < this.readVarInt(); ++i) {
+			value[this.readVarInt()] = this.readSignedVarInt();
+		}
+		return value;
+	}
+
+	writeIntEntityProperties(value) {
+		this.writeVarInt(value.length);
+		Object.entries(value).forEach((index, val) => {
+			this.writeVarInt(value[index]);
+			this.writeSignedVarInt(value[val]);
+		});
+		return value;
+	}
+
+	readFloatEntityProperties() {
+		let value = {};
+		for (let i = 0; i < this.readVarInt(); ++i) {
+			value[this.readVarInt()] = this.readFloatLE();
+		}
+		return value;
+	}
+
+	writeFloatEntityProperties(value) {
+		this.writeVarInt(value.length);
+		Object.entries(value).forEach((index, val) => {
+			this.writeVarInt(value[index]);
+			this.writeFloatLE(value[val]);
+		});
+		return value;
 	}
 }
 

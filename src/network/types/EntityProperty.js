@@ -13,9 +13,9 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class EducationSharedResourceURI {
-	buttonName;
-	linkURI;
+class EntityProperty {
+	intProperties;
+	floatProperties;
 }
 
-module.exports = EducationSharedResourceURI;
+module.exports = EntityProperty;

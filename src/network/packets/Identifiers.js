@@ -27,7 +27,7 @@ class Identifiers {
 	static networkChunkPublisherUpdate = 0x79;
 	static requestChunkRadius = 0x45;
 	static chunkRadiusUpdated = 0x46;
-	static availableActorIdentifiers = 0x77;
+	static availableEntityIdentifiers = 0x77;
 	static interact = 0x21;
 	static containerOpen = 0x2e;
 	static containerClose = 0x2f;
@@ -38,6 +38,7 @@ class Identifiers {
 	static modalFormRequest = 0x64;
 	static networkSettings = 0x8f;
 	static requestNetworkSettings = 0xc1;
+	static setEntityData = 0x27;
 }
 
 module.exports = Identifiers;

@@ -13,11 +13,15 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
+const EntityMetadataManager = require("../managers/EntityMetadataManager");
+
 class Entity {
 	id = 0;
+	metadataManager;
 
 	constructor() {
 		this.id++;
+		this.metadataManager = new EntityMetadataManager();
 	}
 }
 
