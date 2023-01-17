@@ -13,11 +13,16 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
+const MetadataListProperties = require("../network/constants/MetadataListProperties");
 const MetadataPropertyTypes = require("../network/constants/MetadataPropertyTypes");
 const Metadata = require("../network/types/Metadata");
 
 class EntityMetadataManager {
-    #list = {};
+    #list;
+
+    constructor() {
+        this.#list = {};
+    }
 
     setByte(flag, value) {
         this.setFlag(flag, MetadataPropertyTypes.byte, value);
@@ -88,39 +93,45 @@ class EntityMetadataManager {
     }
 
     setFlag(flag, propertyTypeID, value) {
-        this.#list[flag + ":" + propertyTypeID] = new Metadata();
-        this.#list[flag + ":" + propertyTypeID].propertyType = propertyTypeID;
-        this.#list[flag + ":" + propertyTypeID].value = value;
+        // console.log(flag  + ":" + propertyTypeID);
+        if (propertyTypeID + ":" + flag in this.#list) {
+            return;
+        }
+        let val = new Metadata();
+        val.propertyType = propertyTypeID;
+        val.value = value;
+        this.#list = this.#list;
+        this.#list[propertyTypeID + ":" + flag] = val;
     }
 
-    getFlag(flag, propertyTypeID) {
-        if (!(flag + ":" + propertyTypeID in this.#list)) {
+    getFlag(propertyTypeID, flag) {
+        if (!((propertyTypeID + ":" + flag) in this.#list)) {
             return null;
         }
-        if (!(this.#list[flag + ":" + propertyTypeID].propertyType === propertyTypeID)) {
+        if (!(this.#list[propertyTypeID + ":" + flag].propertyType === propertyTypeID)) {
             return null;
         }
-        return this.#list[flag + ":" + propertyTypeID].value;
+        return this.#list[propertyTypeID + ":" + flag].value;
     }
 
-    // long extended, long
-    setEntityFlag(flag, value, extended = false) {
+    setEntityFlag(flag, value) {
+        let extended = flag < 64 ? false : true;
         let val = this.getEntityFlag(flag, extended);
-        if (val === undefined || val === null || val !== value) {
+        if (val === null || val !== value) {
             let flags;
-            if ( val === undefined || val === null) {
+            if (val === null) {
                 flags = 0n;
             } else if (extended === false) {
-                flags = BigInt(this.getLong(0));
+                flags = BigInt(this.getLong(MetadataListProperties.flags));
             } else {
-                flags = BigInt(this.getLong(92));
+                flags = BigInt(this.getLong(MetadataListProperties.flagsExtended));
             }
             if (extended === false) {
                 flags ^= (1n << BigInt(flag));
-                this.setLong(0, flags);
+                this.setLong(MetadataListProperties.flags, flags);
             } else {
                 flags ^= (1n << BigInt(flag));
-                this.setLong(92, flags);
+                this.setLong(MetadataListProperties.flagsExtended, flags);
             }
         }
     }
@@ -128,16 +139,18 @@ class EntityMetadataManager {
     getEntityFlag(flag, extended = false) {
         let flags;
         if (extended === false) {
-            flags = this.getLong(0);
+            flags = this.getLong(MetadataListProperties.flags);
         } else {
-            flags = this.getLong(92);
+            flags = this.getLong(MetadataListProperties.flagsExtended);
         }
         if (flags !== undefined && flags !== null) {
-            return (flags & (1n << BigInt(flag))) > 0;
+            return (BigInt(flags) & (1n << BigInt(flag))) > 0;
         }
+        return null;
     }
 
     getAllWithoutEditing() {
+        console.log(this.#list);
         return this.#list;
     }
 

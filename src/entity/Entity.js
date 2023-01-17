@@ -18,10 +18,19 @@ const EntityMetadataManager = require("../managers/EntityMetadataManager");
 class Entity {
 	id = 0;
 	metadataManager;
+	scaleValue = 1.0;
+	onFire = false;
+	fireImmune = false;
+	noAI = true;
+	canClimb = true;
+	canDash = true;
+	canFly = false;
+	canPowerJump = true;
+	swmming = false;
 
 	constructor() {
 		this.id++;
-		this.metadataManager = new EntityMetadataManager();
+		this.metadataManager = new EntityMetadataManager(); // todo: fix
 	}
 }
 
