@@ -16,76 +16,45 @@
 const MetadataListProperties = require("../network/constants/MetadataListProperties");
 const MetadataPropertyTypes = require("../network/constants/MetadataPropertyTypes");
 const Metadata = require("../network/types/Metadata");
+const MetadataEntry = require("../network/types/MetadataEntry");
 
 class EntityMetadataManager {
     #list;
 
     constructor() {
-        this.#list = {};
+        this.#list = [];
     }
 
     setByte(flag, value) {
         this.setFlag(flag, MetadataPropertyTypes.byte, value);
     }
 
-    getByte(flag) {
-        return this.getFlag(flag, MetadataPropertyTypes.byte);
-    }
-
     setShort(flag, value) {
         this.setFlag(flag, MetadataPropertyTypes.short, value);
-    }
-
-    getShort(flag) {
-        return this.getFlag(flag, MetadataPropertyTypes.short);
     }
 
     setInt(flag, value) {
         this.setFlag(flag, MetadataPropertyTypes.int, value);
     }
 
-    getInt(flag) {
-        return this.getFlag(flag, MetadataPropertyTypes.int);
-    }
-
     setFloat(flag, value) {
         this.setFlag(flag, MetadataPropertyTypes.float, value);
-    }
-
-    getFloat(flag) {
-        return this.getFlag(flag, MetadataPropertyTypes.float);
     }
 
     setStr(flag, value) {
         this.setFlag(flag, MetadataPropertyTypes.str, value);
     }
 
-    getStr(flag) {
-        return this.getFlag(flag, MetadataPropertyTypes.str);
-    }
-
     setNBT(flag, value) {
         this.setFlag(flag, MetadataPropertyTypes.nbt, value);
-    }
-
-    getNBT(flag) {
-        return this.getFlag(flag, MetadataPropertyTypes.nbt);
     }
 
     setVec3i(flag, value) {
         this.setFlag(flag, MetadataPropertyTypes.vec3i, value);
     }
 
-    getVec3i(flag) {
-        return this.getFlag(flag, MetadataPropertyTypes.vec3i);
-    }
-
     setLong(flag, value) {
         this.setFlag(flag, MetadataPropertyTypes.long, value);
-    }
-
-    getLong(flag) {
-        return this.getFlag(flag, MetadataPropertyTypes.long);
     }
 
     setVec3f(flag, value) {
@@ -93,25 +62,26 @@ class EntityMetadataManager {
     }
 
     setFlag(flag, propertyTypeID, value) {
-        // console.log(flag  + ":" + propertyTypeID);
-        if (propertyTypeID + ":" + flag in this.#list) {
-            return;
-        }
-        let val = new Metadata();
-        val.propertyType = propertyTypeID;
-        val.value = value;
-        this.#list = this.#list;
-        this.#list[propertyTypeID + ":" + flag] = val;
+        let val = new MetadataEntry();
+        val.typeID = flag;
+        val.metadata = new Metadata();
+        val.metadata.propertyType = propertyTypeID;
+        val.metadata.value = value;
+        this.#list.push(val);
     }
 
-    getFlag(propertyTypeID, flag) {
-        if (!((propertyTypeID + ":" + flag) in this.#list)) {
-            return null;
+    #getLong(flag) { // temp until i say so
+        let entry = this.#list[flag];
+        if (typeof entry !== "undefined") {
+            if (entry.metadata.typeID === flag) {
+                if (entry.metadata.propertyType !== MetadataPropertyTypes.long) {
+                    throw new Error("Recevied unknown typeid of metadata property type. (EntityMetadataManager)");
+                } else {
+                    return entry.metadata.value;
+                }
+            }
         }
-        if (!(this.#list[propertyTypeID + ":" + flag].propertyType === propertyTypeID)) {
-            return null;
-        }
-        return this.#list[propertyTypeID + ":" + flag].value;
+        return null;
     }
 
     setEntityFlag(flag, value) {
@@ -122,12 +92,13 @@ class EntityMetadataManager {
             if (val === null) {
                 flags = 0n;
             } else if (extended === false) {
-                flags = BigInt(this.getLong(MetadataListProperties.flags));
+                flags = BigInt(this.#getLong(MetadataListProperties.flags));
             } else {
-                flags = BigInt(this.getLong(MetadataListProperties.flagsExtended));
+                flags = BigInt(this.#getLong(MetadataListProperties.flagsExtended));
             }
             if (extended === false) {
                 flags ^= (1n << BigInt(flag));
+                // console.log(flags);
                 this.setLong(MetadataListProperties.flags, flags);
             } else {
                 flags ^= (1n << BigInt(flag));
@@ -139,27 +110,19 @@ class EntityMetadataManager {
     getEntityFlag(flag, extended = false) {
         let flags;
         if (extended === false) {
-            flags = this.getLong(MetadataListProperties.flags);
+            flags = this.#getLong(MetadataListProperties.flags);
         } else {
-            flags = this.getLong(MetadataListProperties.flagsExtended);
+            flags = this.#getLong(MetadataListProperties.flagsExtended);
         }
-        if (flags !== undefined && flags !== null) {
+        if (flags !== null) {
             return (BigInt(flags) & (1n << BigInt(flag))) > 0;
         }
         return null;
     }
 
-    getAllWithoutEditing() {
-        console.log(this.#list);
+    getAll() {
+        // console.log(this.#list);
         return this.#list;
-    }
-
-    getAllObjectEntries() {
-        return Object.entries(this.#list);
-    }
-
-    getLength() {
-        return this.getAllObjectEntries().length;
     }
 }
 

@@ -31,6 +31,9 @@ const CommandData = require("../network/types/CommandData");
 const AvailableCommandsPacket = require("../network/packets/AvailableCommandsPacket");
 const RakNetPlayerManager = require("../managers/RakNetPlayerManager");
 const EntityMetaDataFlags = require("../network/constants/EntityMetaDataFlags");
+const MetadataListProperties = require("../network/constants/MetadataListProperties");
+const SetEntityDataPacket = require("../network/packets/SetEntityDataPacket");
+const EntityProperty = require("../network/types/EntityProperty");
 
 class Player extends Human {
 	connection;
@@ -41,6 +44,7 @@ class Player extends Human {
 	position;
 	rotation;
 	gamemode = GameMode.creative;
+	breathing = true;
 	resourcePackClientResponseSent = false; // fix spamming
 	readyToLogin = false;
 
@@ -160,7 +164,33 @@ class Player extends Human {
 	}
 
 	updateMetadataFlags() {
-		this.metadataManager.setEntityFlag(EntityMetaDataFlags.breathing, true);
+		// this.metadataManager.setFloat(MetadataListProperties.scale, this.scaleValue);
+		this.metadataManager.setEntityFlag(EntityMetaDataFlags.breathing, this.breathing);
+		// this.metadataManager.setEntityFlag(EntityMetaDataFlags.onFire, this.onFire);
+		// this.metadataManager.setEntityFlag(EntityMetaDataFlags.fireImmune, this.fireImmune);
+		// this.metadataManager.setEntityFlag(EntityMetaDataFlags.noAI, this.noAI);
+		// this.metadataManager.setEntityFlag(EntityMetaDataFlags.canClimb, this.canClimb);
+		// this.metadataManager.setEntityFlag(EntityMetaDataFlags.canDash, this.canDash);
+		// this.metadataManager.setEntityFlag(EntityMetaDataFlags.canFly, this.canFly);
+		// this.metadataManager.setEntityFlag(EntityMetaDataFlags.canPowerJump, this.canPowerJump);
+		// this.metadataManager.setEntityFlag(EntityMetaDataFlags.swimming, this.swmming);
+	}
+
+	updateData(viewers = []) {
+		const setEntityData = new SetEntityDataPacket();
+		setEntityData.runtimeEntityID = this.id;
+		setEntityData.metadata = this.metadataManager.getAll();
+		setEntityData.properties = new EntityProperty();
+		setEntityData.properties.intProperties = [];
+		setEntityData.properties.floatProperties = [];
+		setEntityData.tick = 0;
+		if (viewers.length > 0) {
+			viewers.forEach(viewer => {
+				setEntityData.sendTo(viewer);
+			});
+			return;
+		}
+		setEntityData.sendTo(this);
 	}
 
 	checkProtocol(version) {

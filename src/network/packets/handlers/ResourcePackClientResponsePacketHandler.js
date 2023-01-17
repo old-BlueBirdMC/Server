@@ -141,7 +141,7 @@ class ResourcePackClientResponsePacketHandler extends HandlersBase {
 
 				const setEntityData = new SetEntityDataPacket();
 				setEntityData.runtimeEntityID = this.player.id;
-				setEntityData.metadata = this.player.metadataManager.getAllWithoutEditing();
+				setEntityData.metadata = this.player.metadataManager.getAll();
 				setEntityData.properties = new EntityProperty();
 				setEntityData.properties.intProperties = [];
 				setEntityData.properties.floatProperties = [];

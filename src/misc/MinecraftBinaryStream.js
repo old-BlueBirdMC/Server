@@ -47,6 +47,7 @@ const CommandParam = require("../network/types/CommandParam");
 const CommandData = require("../network/types/CommandData");
 const CommandEnumConstraint = require("../network/types/CommandEnumConstraint");
 const EntityProperty = require("../network/types/EntityProperty");
+const MetadataEntry = require("../network/types/MetadataEntry");
 
 class MinecraftBinaryStream extends BinaryStream {
 	readStringVarInt() {
@@ -673,101 +674,75 @@ class MinecraftBinaryStream extends BinaryStream {
 		this.writeUnsignedByte(0);
 	}
 
-	readMetadataProperty(propertyTypeID) {
-		let value = new Metadata();
-		value.propertyType = propertyTypeID;
-		switch (propertyTypeID) {
-			case MetadataPropertyTypes.byte:
-				value.value = this.readByte();
-				break;
-			case MetadataPropertyTypes.short:
-				value.value = this.readVarInt();
-				break;
-			case MetadataPropertyTypes.int:
-				value.value = this.readSignedVarInt();
-				break;
-			case MetadataPropertyTypes.float:
-				value.value = this.readFloatLE();
-				break;
-			case MetadataPropertyTypes.str:
-				value.value = this.readStringVarInt();
-				break;
-			case MetadataPropertyTypes.nbt:
-				value.value = this.readNBTLE();
-				break;
-			case MetadataPropertyTypes.vec3i:
-				value.value = this.readVector3I();
-				break;
-			case MetadataPropertyTypes.long:
-				value.value = this.readSignedVarLong();
-				break;
-			case MetadataPropertyTypes.vec3f:
-				value.value = this.readVector3F();
-				break;
-			default:
-				throw new Error("Invalid metadata type");
-		}
-		return value;
-	}
-
-	writeMetadataProperty(value) {
-		this.writeVarInt(value.propertyType);
-		switch (value.propertyType) {
-			case MetadataPropertyTypes.byte:
-				this.writeByte(value.value);
-				break;
-			case MetadataPropertyTypes.short:
-				this.writeShortLE(value.value);
-				break;
-			case MetadataPropertyTypes.int:
-				this.writeSignedVarInt(value.value);
-				break;
-			case MetadataPropertyTypes.float:
-				this.writeFloatLE(value.value);
-				break;
-			case MetadataPropertyTypes.str:
-				this.writeStringVarInt(value.value);
-				break;
-			case MetadataPropertyTypes.nbt:
-				this.writeNBTLE(value.value);
-				break;
-			case MetadataPropertyTypes.vec3i:
-				this.writeVector3I(value.value);
-				break;
-			case MetadataPropertyTypes.long:
-				this.writeSignedVarLong(value.value);
-				break;
-			case MetadataPropertyTypes.vec3f:
-				this.writeVector3F(value.value);
-				break;
-			default:
-				throw new Error("Invalid type");
-		}
-	}
-
 	readMetadataList() {
-		let value = {};
+		let value = [];
+		let entry = new MetadataEntry();
 		for (let i = 0; i < this.readVarInt(); ++i) {
 			let index = this.readVarInt();
 			let propertyType = this.readVarInt();
-			value[index] = this.readMetadataProperty(propertyType);
+			entry.typeID = index;
+			entry.metadata = new Metadata();
+			entry.metadata.propertyType = propertyType;
+			if (propertyType == MetadataPropertyTypes.byte) {
+				entry.metadata.value = this.readByte();
+			} else if (propertyType == MetadataPropertyTypes.short) {
+				entry.metadata.value = this.readShortLE();
+			} else if (propertyType == MetadataPropertyTypes.int) {
+				entry.metadata.value = this.readSignedVarInt();
+			} else if (propertyType == MetadataPropertyTypes.float) {
+				entry.metadata.value = this.readFloatLE();
+			} else if (propertyType == MetadataPropertyTypes.str) {
+				entry.metadata.value = this.readStringVarInt();
+			} else if (propertyType == MetadataPropertyTypes.nbt) {
+				entry.metadata.value = this.readNBTLE();
+			} else if (propertyType == MetadataPropertyTypes.vec3i) {
+				entry.metadata.value = this.readVector3I();
+			} else if (propertyType == MetadataPropertyTypes.long) {
+				entry.metadata.value = this.readSignedVarLong();
+			} else if (propertyType == MetadataPropertyTypes.vec3f) {
+				entry.metadata.value = this.readVector3F();
+			} else {
+				throw new Error("Invalid type");
+			}
+			value.push(entry);
 		}
 		return value;
 	}
 
 	writeMetadataList(value) {
-		this.writeVarInt(Object.entries(value).length);
-		Object.entries(value).forEach(([index, value]) => {
-			this.writeVarInt(index);
-			this.writeMetadataProperty(value);
-		});
+		this.writeVarInt(value.length);
+		for (let i = 0; i < value.length; ++i) {
+			this.writeVarInt(value[i].typeID);
+			this.writeVarInt(value[i].metadata.propertyType);
+			if (value[i].metadata.propertyType == MetadataPropertyTypes.byte) {
+				this.writeByte(value[i].metadata.value);
+			} else if (value[i].metadata.propertyType == MetadataPropertyTypes.short) {
+				this.writeShortLE(value[i].metadata.value);
+			} else if (value[i].metadata.propertyType == MetadataPropertyTypes.int) {
+				this.writeSignedVarInt(value[i].metadata.value);
+			} else if (value[i].metadata.propertyType == MetadataPropertyTypes.float) {
+				this.writeFloatLE(value[i].metadata.value);
+			} else if (value[i].metadata.propertyType == MetadataPropertyTypes.str) {
+				this.writeStringVarInt(value[i].metadata.value);
+			} else if (value[i].metadata.propertyType == MetadataPropertyTypes.nbt) {
+				this.writeNBTLE(value[i].metadata.value);
+			} else if (value[i].metadata.propertyType == MetadataPropertyTypes.vec3i) {
+				this.writeVector3I(value[i].metadata.value);
+			} else if (value[i].metadata.propertyType == MetadataPropertyTypes.long) {
+				this.writeSignedVarLong(value[i].metadata.value);
+			} else if (value[i].metadata.propertyType == MetadataPropertyTypes.vec3f) {
+				this.writeVector3F(value[i].metadata.value);
+			} else {
+				throw new Error("Invalid type");
+			}
+		}
 	}
 
 	readEntityLink() {
 		let value = new EntityLink();
 		value.riddenRuntimeEntityID = this.readRuntimeEntityID();
 		value.riderRuntimeEntityID = this.readRuntimeEntityID();
-		value.type = this.readByte();
+		value.type = this.readUnsignedByte();
 		value.immediate = this.readBool();
 		value.byRider = this.readBool();
 		return value;
@@ -776,7 +751,7 @@ class MinecraftBinaryStream extends BinaryStream {
 	writeEntityLink(value) {
 		this.writeRuntimeEntityID(value.riddenRuntimeEntityID);
 		this.writeRuntimeEntityID(value.riderRuntimeEntityID);
-		this.writeByte(value.type);
+		this.writeUnsignedByte(value.type);
 		this.writeBool(value.immediate);
 		this.writeBool(value.byRider);
 	}
