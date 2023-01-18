@@ -157,18 +157,6 @@ class ResourcePackClientResponsePacketHandler extends HandlersBase {
 				creativeContent.sendTo(this.player);
 
 				if (!this.player.resourcePackClientResponseSent) {
-					let ev = { // joinevent place shouldnt be here
-						player: this.player,
-						message: "",
-						canceller: new canceller()
-					};
-					this.server.addEvent(ev, "join");
-					if (ev.canceller.isCancelled()) {
-						delete this.server.players[this.player.connection.address.toString()];
-						this.player.disconnect("Join cancelled", false);
-						return;
-					}
-					this.server.log.info(ev.message ? ev.message : `Player ${this.server.getPlayerName(this.player)} joined the game`);
 					this.player.sendCommands();
 					this.player.resourcePackClientResponseSent = true;
 				}

@@ -39,6 +39,7 @@ class Identifiers {
 	static networkSettings = 0x8f;
 	static requestNetworkSettings = 0xc1;
 	static setEntityData = 0x27;
+	static setLocalPlayerAsInitalized = 0x71;
 }
 
 module.exports = Identifiers;
