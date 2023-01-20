@@ -21,6 +21,7 @@ class Identifiers {
 	static resourcePacksInfo = 0x06;
 	static resourcePackStack = 0x07;
 	static resourcePackClientResponse = 0x08;
+    static levelEvent = 0x19;
 	static biomeDefinitionList = 0x7a;
 	static creativeContent = 0x91;
 	static levelChunk = 0x3a;

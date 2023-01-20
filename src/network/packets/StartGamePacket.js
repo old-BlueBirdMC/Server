@@ -124,7 +124,7 @@ class StartGamePacket extends PacketsBase {
 		this.experimentsPreviouslyUsed = this.readBool();
 		this.bonusChest = this.readBool();
 		this.mapEnabled = this.readBool();
-		this.permissionLevel = this.readSignedVarInt();
+		this.permissionLevel = this.readUnsignedByte();
 		this.serverChunkTickRange = this.readIntLE();
 		this.hasLockedBehaviorPack = this.readBool();
 		this.hasLockedTexturepack = this.readBool();
@@ -197,7 +197,7 @@ class StartGamePacket extends PacketsBase {
 		this.writeBool(this.experimentsPreviouslyUsed);
 		this.writeBool(this.bonusChest);
 		this.writeBool(this.mapEnabled);
-		this.writeSignedVarInt(this.permissionLevel);
+		this.writeUnsignedByte(this.permissionLevel);
 		this.writeIntLE(this.serverChunkTickRange);
 		this.writeBool(this.hasLockedBehaviorPack);
 		this.writeBool(this.hasLockedTexturepack);
