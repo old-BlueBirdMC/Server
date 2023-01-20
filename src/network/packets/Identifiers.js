@@ -41,6 +41,7 @@ class Identifiers {
 	static requestNetworkSettings = 0xc1;
 	static setEntityData = 0x27;
 	static setLocalPlayerAsInitalized = 0x71;
+    static levelSoundEvent = 0x7b;
 }
 
 module.exports = Identifiers;
