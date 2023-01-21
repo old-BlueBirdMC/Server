@@ -18,12 +18,12 @@ const PacketsBase = require("./PacketsBase");
 class AvailableCommandsPacket extends PacketsBase {
 	static id = Identifiers.availableCommands;
 
-	enumValues = [];
-	suffixes = [];
-	enums = [];
-	commandData = [];
-	dynamicEnums = [];
-	enumConstraints = [];
+	enumValues;
+	suffixes;
+	enums;
+	commandData;
+	dynamicEnums;
+	enumConstraints;
 
 	deserialize() {
 		for (let i = 0; i < this.readVarInt(); ++i) {
