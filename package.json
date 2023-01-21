@@ -8,7 +8,7 @@
   },
   "keywords": [],
   "author": "bbmc",
-  "license": "GPL-3.0",
+  "license": "MIT",
   "dependencies": {
     "bbmc-binarystream": "^1.0.0",
     "bbmc-nbt": "https://github.com/BlueBirdMC/NBT.git",

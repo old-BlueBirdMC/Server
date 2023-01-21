@@ -28,4 +28,4 @@ The last step is to run "node ." or "node index.js".
 
 ## License
 
-[GPL-3.0](/LICENSE)
+[MIT](/LICENSE)
