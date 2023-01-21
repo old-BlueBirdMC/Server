@@ -21,7 +21,7 @@ class Enum {
 				list.forEach(element => {
 					this[element] = values[i];
 					i++;
-				})
+				});
 			} else {
 				list.forEach(element => {
 					this[element] = values[i];
@@ -35,7 +35,7 @@ class Enum {
 				list.forEach(element => {
 					this[element] = i;
 					i++;
-				})
+				});
 			} else {
 				list.forEach(element => {
 					this[element] = i;
