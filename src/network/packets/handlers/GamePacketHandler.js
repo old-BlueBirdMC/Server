@@ -26,7 +26,11 @@ class GamePacketHandler extends HandlersBase {
 			let packet = PacketsList.get(stream.readVarInt());
 			if (packet instanceof PacketsBase) {
 				packet.buffer = stream.buffer;
-				HandlersList.get(packet.getId(), this.player.connection.address.toString()).startHandling(packet);
+				console.log(packet.constructor.name);
+				let handled = HandlersList.get(packet.getID(), this.player.connection.address.toString());
+				if (handled !== null) {
+					handled.startHandling(packet);
+				}
 			}
 		});
 	}

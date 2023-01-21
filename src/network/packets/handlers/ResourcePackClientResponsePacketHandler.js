@@ -141,7 +141,7 @@ class ResourcePackClientResponsePacketHandler extends HandlersBase {
 
 				const setEntityData = new SetEntityDataPacket();
 				setEntityData.runtimeEntityID = this.player.id;
-				setEntityData.metadata = this.player.metadataManager.getAll();
+				setEntityData.metadata = this.player.metadataToSend;
 				setEntityData.properties = new EntityProperty();
 				setEntityData.properties.intProperties = [];
 				setEntityData.properties.floatProperties = [];
@@ -157,7 +157,7 @@ class ResourcePackClientResponsePacketHandler extends HandlersBase {
 				creativeContent.sendTo(this.player);
 
 				if (!this.player.resourcePackClientResponseSent) {
-					this.player.sendCommands();
+					this.player.sendAvailableCommands();
 					this.player.resourcePackClientResponseSent = true;
 				}
 				this.player.sendPlayStatus(PlayStatus.playerSpawn);

@@ -48,8 +48,8 @@ class HandlersList {
 	}
 
 	static get(packetID, playerAddress) {
-		if (typeof this.#handlers[packetID] === "undefined" && typeof this.#handlers[packetID][playerAddress] === "undefined") {
-			return;
+		if (typeof this.#handlers[packetID] === "undefined" || typeof this.#handlers[packetID][playerAddress] === "undefined") {
+			return null;
 		}
 		return this.#handlers[packetID][playerAddress];
 	}

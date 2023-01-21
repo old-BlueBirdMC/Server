@@ -19,59 +19,17 @@ const Metadata = require("../network/types/Metadata");
 const MetadataEntry = require("../network/types/MetadataEntry");
 
 class EntityMetadataManager {
-    #list;
-
-    constructor() {
-        this.#list = [];
-    }
-
-    setByte(flag, value) {
-        this.setFlag(flag, MetadataPropertyTypes.byte, value);
-    }
-
-    setShort(flag, value) {
-        this.setFlag(flag, MetadataPropertyTypes.short, value);
-    }
-
-    setInt(flag, value) {
-        this.setFlag(flag, MetadataPropertyTypes.int, value);
-    }
-
-    setFloat(flag, value) {
-        this.setFlag(flag, MetadataPropertyTypes.float, value);
-    }
-
-    setStr(flag, value) {
-        this.setFlag(flag, MetadataPropertyTypes.str, value);
-    }
-
-    setNBT(flag, value) {
-        this.setFlag(flag, MetadataPropertyTypes.nbt, value);
-    }
-
-    setVec3i(flag, value) {
-        this.setFlag(flag, MetadataPropertyTypes.vec3i, value);
-    }
-
-    setLong(flag, value) {
-        this.setFlag(flag, MetadataPropertyTypes.long, value);
-    }
-
-    setVec3f(flag, value) {
-        this.setFlag(flag, MetadataPropertyTypes.vec3f, value);
-    }
-
-    setFlag(flag, propertyTypeID, value) {
+    createFlag(flag, propertyTypeID, value) {
         let val = new MetadataEntry();
         val.typeID = flag;
         val.metadata = new Metadata();
         val.metadata.propertyType = propertyTypeID;
         val.metadata.value = value;
-        this.#list.push(val);
+        return val;
     }
 
-    #getLong(flag) { // temp until i say so
-        let entry = this.#list[flag];
+    #getLong(flag, list) { // temp until i say so
+        let entry = typeof list !== "undefined" ? (value.length > 0 ? list[flag] : undefined) : undefined;
         if (typeof entry !== "undefined") {
             if (entry.metadata.typeID === flag) {
                 if (entry.metadata.propertyType !== MetadataPropertyTypes.long) {
@@ -84,7 +42,8 @@ class EntityMetadataManager {
         return null;
     }
 
-    setEntityFlag(flag, value) {
+    createEntityFlag(list, flag, value) {
+        let listGT;
         let extended = flag < 64 ? false : true;
         let val = this.getEntityFlag(flag, extended);
         if (val === null || val !== value) {
@@ -92,19 +51,20 @@ class EntityMetadataManager {
             if (val === null) {
                 flags = 0n;
             } else if (extended === false) {
-                flags = BigInt(this.#getLong(MetadataListProperties.flags));
+                flags = BigInt(this.#getLong(MetadataListProperties.flags, list));
             } else {
-                flags = BigInt(this.#getLong(MetadataListProperties.flagsExtended));
+                flags = BigInt(this.#getLong(MetadataListProperties.flagsExtended, list));
             }
             if (extended === false) {
                 flags ^= (1n << BigInt(flag));
                 // console.log(flags);
-                this.setLong(MetadataListProperties.flags, flags);
+                listGT = this.createFlag(MetadataListProperties.flags, MetadataPropertyTypes.long, flags);
             } else {
                 flags ^= (1n << BigInt(flag));
-                this.setLong(MetadataListProperties.flagsExtended, flags);
+                listGT = this.createFlag(MetadataListProperties.flagsExtended, MetadataPropertyTypes.long, flags);
             }
         }
+        return listGT !== undefined ? listGT : null;
     }
 
     getEntityFlag(flag, extended = false) {
@@ -118,11 +78,6 @@ class EntityMetadataManager {
             return (BigInt(flags) & (1n << BigInt(flag))) > 0;
         }
         return null;
-    }
-
-    getAll() {
-        // console.log(this.#list);
-        return this.#list;
     }
 }
 

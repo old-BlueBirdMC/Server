@@ -811,13 +811,13 @@ class MinecraftBinaryStream extends BinaryStream {
 	writeCommandEnum(value, enumValues) {
 		this.writeStringVarInt(value.name);
 		this.writeVarInt(value.values.length);
-		for (const [val] of value.values) {
+		for (let i = 0; i < value.values.length; ++i) {
 			if (enumValues.length < 255) {
-				this.writeUnsignedByte(val);
+				this.writeUnsignedByte(value.values[i]);
 			} else if (enumValues.length < 65536) {
-				this.writeUnsigendShortLE(val);
+				this.writeUnsigendShortLE(value.values[i]);
 			} else {
-				this.writeUnsignedIntLE(val);
+				this.writeUnsignedIntLE(value.values[i]);
 			}
 		}
 	}

@@ -18,15 +18,21 @@ class Command {
 	description;
 	aliases;
 	overloads;
+	enums;
 
-	constructor(name, description, aliases = [], overloads = []) {
+	constructor(name, description, aliases = [], overloads = [], enums = []) {
 		this.name = name;
 		this.description = description;
 		this.aliases = aliases;
 		this.overloads = overloads;
+		this.enums = enums;
 	}
 
 	async run(sender, writtenCommand, args) {}
+
+	setPerm(value) {}
+
+	getPerm() {}
 
 	getAliases(){
         return this.aliases;

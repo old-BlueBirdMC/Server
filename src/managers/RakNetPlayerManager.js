@@ -44,6 +44,10 @@ class RakNetPlayerManager {
         return Object.entries(this.#savedPlayers);
     }
 
+    static getAllObjectValues() {
+        return Object.values(this.#savedPlayers);
+    }
+
     static getLength() {
         return this.getAllObjectEntries().length;
     }

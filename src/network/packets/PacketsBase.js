@@ -23,7 +23,7 @@ class PacketsBase extends MinecraftBinaryStream {
 	/**
 	 * @returns {Number}
 	 */
-	getId() {
+	getID() {
 		return this.constructor.id;
 	}
 
@@ -37,7 +37,7 @@ class PacketsBase extends MinecraftBinaryStream {
 	deserializeA() {
 		this.rewind();
 		let packetId = this.readVarInt();
-		if (packetId !== this.getId()) {
+		if (packetId !== this.getID()) {
 			throw new Error("Wrong packetId, result=" + packetId);
 		}
 		this.deserialize();
@@ -45,7 +45,7 @@ class PacketsBase extends MinecraftBinaryStream {
 
 	serializeA() {
 		this.reset();
-		this.writeVarInt(this.getId());
+		this.writeVarInt(this.getID());
 		this.serialize();
 		this.serialized = true;
 	}

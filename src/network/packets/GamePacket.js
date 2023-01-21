@@ -77,7 +77,7 @@ class GamePacket extends PacketsBase {
 
 	async serializeA() {
 		this.reset();
-		this.writeUnsignedByte(this.getId());
+		this.writeUnsignedByte(this.getID());
 		await this.serialize();
 		this.serialized = true;
 	}

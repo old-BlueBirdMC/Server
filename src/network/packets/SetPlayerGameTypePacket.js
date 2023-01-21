@@ -13,26 +13,21 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const EntityMetadataManager = require("../managers/EntityMetadataManager");
+const Identifiers = require("./Identifiers");
+const PacketsBase = require("./PacketsBase");
 
-class Entity {
-	id = 0;
-	metadataManager;
-	scaleValue = 1.0;
-	onFire = false;
-	fireImmune = false;
-	noAI = true;
-	canClimb = true;
-	canDash = true;
-	canFly = false;
-	canPowerJump = true;
-	swmming = false;
-	metadataToSend = [];
+class SetPlayerGameTypePacket extends PacketsBase {
+	static id = Identifiers.setPlayerGameType;
 
-	constructor() {
-		this.id++;
-		this.metadataManager = new EntityMetadataManager();
+	mode;
+
+	deserialize() {
+		this.mode = this.readSignedVarInt();
+	}
+
+	serialize() {
+		this.writeSignedVarInt(this.mode);
 	}
 }
 
-module.exports = Entity;
+module.exports = SetPlayerGameTypePacket;

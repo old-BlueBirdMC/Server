@@ -31,6 +31,7 @@ const RakNetInterface = require("./network/RakNetInterface");
 const PacketsList = require("./network/packets/PacketsList");
 const ConfigIniManager = require("./managers/ConfgIniManager");
 const PluginDescription = require("./plugin/PluginDescription");
+const os = require("os");
 
 class Server {
 	rakNetServer;
@@ -46,6 +47,10 @@ class Server {
 	testWorld;
 
 	constructor() {
+		if (os.version().includes("Windows") === false && false) {
+			console.log("other support than windows is not accepted util some fixes");
+			return;
+		}
 		let startTime = Date.now();
 		this.resourceManager = new ResourceManager();
 		this.configManager = new ConfigIniManager();
@@ -67,13 +72,13 @@ class Server {
 		BlocksList.refresh();
 		this.rakNetInterface.handlePong();
 		this.rakNetInterface.handle();
-		if (!fs.existsSync("worlds")) {
+		if (!(fs.existsSync("worlds"))) {
 			fs.mkdirSync("worlds");
 		}
-		if (!fs.existsSync("players_data")) {
+		if (!(fs.existsSync("players_data"))) {
 			fs.mkdirSync("players_data");
 		}
-		if (!fs.existsSync("plugins")) {
+		if (!(fs.existsSync("plugins"))) {
 			fs.mkdirSync("plugins");
 		}
 		this.log.info("Loading Plugins");
@@ -104,7 +109,16 @@ class Server {
 	}
 
 	getPlayerName(player) {
-		return (typeof player.loginIdentity === "undefined") ? player.connection.address.toString() : (typeof player.loginIdentity[2] === "undefined") ? player.connection.address.toString() : (player.loginIdentity[2]["extraData"]["displayName"]);
+		let retVal;
+		if (typeof player.loginIdentity === "undefined") {
+			console.log(player.connection);
+			retVal = player.connection.address.toString();
+		} else if (typeof player.loginIdentity[2] === "undefined") {
+			retVal = player.connection.address.toString();
+		} else {
+			retVal = player.loginIdentity[2]["extraData"]["displayName"];
+		}
+		return retVal;
 	}
 
 	addEvent(event, eventName) {

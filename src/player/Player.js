@@ -34,6 +34,8 @@ const EntityMetaDataFlags = require("../network/constants/EntityMetaDataFlags");
 const MetadataListProperties = require("../network/constants/MetadataListProperties");
 const SetEntityDataPacket = require("../network/packets/SetEntityDataPacket");
 const EntityProperty = require("../network/types/EntityProperty");
+const SetPlayerGameTypePacket = require("../network/packets/SetPlayerGameTypePacket");
+const CommandEnum = require("../network/types/CommandEnum");
 
 class Player extends Human {
 	connection;
@@ -63,15 +65,15 @@ class Player extends Human {
 	}
 
 	message(value) {
-		this.textPacket(TextTypes.raw, value);
+		this.text(TextTypes.raw, value);
 	}
 
 	popup(value) {
-		this.textPacket(TextTypes.popup, value);
+		this.text(TextTypes.popup, value);
 	}
 
 	tip(value) {
-		this.textPacket(TextTypes.tip, value);
+		this.text(TextTypes.tip, value);
 	}
 
 	disconnect(reason, hideNotification = false) {
@@ -105,8 +107,9 @@ class Player extends Human {
 		levelChunk.sendTo(this);
 	}
 
-	sendCommands() {
+	sendAvailableCommands() {
 		let data = [];
+		// let enums = {};
 		Object.values(this.server.commandsList.getAllCommands()).forEach((value) => {
 			if (typeof data[value.name] !== "undefined") {
 				return;
@@ -130,10 +133,14 @@ class Player extends Human {
 				}
 			}
 			data.push(cmdData);
+			// if (value.enums.length > 0) {
+			// 	enums = {"name": value.name, "enums": value.enums};
+			// }
 		});
-		let pk = new AvailableCommandsPacket();
-		pk.commandData = data;
-		pk.sendTo(this);
+		let availableCommands = new AvailableCommandsPacket();
+		availableCommands.commandData = data;
+		// availableCommands.enums = enums;
+		availableCommands.sendTo(this);
 	}
 
 	sendPlayStatus(status) {
@@ -151,7 +158,7 @@ class Player extends Human {
 		}
 	}
 
-	textPacket(id, message, needsTranslation = false, sourceName = "", parameters = [], xuid = "", platformChatID = "") {
+	text(id, message, needsTranslation = false, sourceName = "", parameters = [], xuid = "", platformChatID = "") {
 		const text = new TextPacket();
 		text.typeID = id;
 		text.message = message;
@@ -164,8 +171,12 @@ class Player extends Human {
 	}
 
 	updateMetadataFlags() {
-		// this.metadataManager.setFloat(MetadataListProperties.scale, this.scaleValue);
-		this.metadataManager.setEntityFlag(EntityMetaDataFlags.breathing, this.breathing);
+		// let valScale = this.metadataManager.createFlag(MetadataListProperties.scale, this.scaleValue);
+		// this.metadataToSend.push(valScale);
+		let valBreath = this.metadataManager.createEntityFlag(this.metadataToSend, EntityMetaDataFlags.breathing, this.breathing); // smth wrong with mcbs: confirm
+		this.metadataToSend.push(valBreath);
+		// let valFire = this.metadataManager.createEntityFlag(this.metadataToSend, EntityMetaDataFlags.onFire, this.onFire);
+		// this.metadataToSend.push(valFire);
 		// this.metadataManager.setEntityFlag(EntityMetaDataFlags.onFire, this.onFire);
 		// this.metadataManager.setEntityFlag(EntityMetaDataFlags.fireImmune, this.fireImmune);
 		// this.metadataManager.setEntityFlag(EntityMetaDataFlags.noAI, this.noAI);
@@ -176,10 +187,47 @@ class Player extends Human {
 		// this.metadataManager.setEntityFlag(EntityMetaDataFlags.swimming, this.swmming);
 	}
 
+	setPlayerGameType(value) {
+		let translatedGM = this.translateGM(value);
+		if (translatedGM === -1) {
+			return null;
+		}
+		if (this.gamemode !== translatedGM) {
+			const setPlayerGameType = new SetPlayerGameTypePacket();
+			setPlayerGameType.mode = translatedGM;
+			setPlayerGameType.sendTo(this);
+			this.gamemode = translatedGM;
+		}
+	}
+
+	translateGM(value) {
+		let gm = -1;
+		switch (value.toLowerCase()) {
+			case "survival":
+			case  "s":
+				gm = GameMode.survival;
+				break;
+			case "creative":
+			case "c":
+				gm = GameMode.creative;
+				break;
+			case "adventure":
+			case "a":
+				gm = GameMode.adventure;
+				break;
+			case "spectator":
+			case "v":
+				gm = GameMode.spectator;
+				break;
+		}
+		console.log(gm);
+		return gm;
+	}
+
 	updateData(viewers = []) {
 		const setEntityData = new SetEntityDataPacket();
 		setEntityData.runtimeEntityID = this.id;
-		setEntityData.metadata = this.metadataManager.getAll();
+		setEntityData.metadata = this.metadataToSend;
 		setEntityData.properties = new EntityProperty();
 		setEntityData.properties.intProperties = [];
 		setEntityData.properties.floatProperties = [];
