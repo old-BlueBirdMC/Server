@@ -19,38 +19,38 @@ class Logger {
 
 	constructor(options = {
 		Name: "",
-		AllowDebugging: false,
+		AllowDebugging: true,
 		WithColors: false
 	}) {
 		this.options = options;
 	}
 
 	info() {
-		this.log(arguments, "Info", ConsoleColors.blue);
+		this.#log(arguments, "Info", ConsoleColors.blue);
 	}
 
 	alert() {
-		this.log(arguments, "Alert", ConsoleColors.darkAqua);
+		this.#log(arguments, "Alert", ConsoleColors.darkAqua);
 	}
 
 	error() {
-		this.log(arguments, "Error", ConsoleColors.red)
+		this.#log(arguments, "Error", ConsoleColors.red)
 	}
 
 	debug() {
 		if (this.options.AllowDebugging === false) {
 			return;
 		}
-		this.log(arguments, "Debug", ConsoleColors.gray);
+		this.#log(arguments, "Debug", ConsoleColors.gray);
 	}
 
-	log(msg, name, color) {
+	#log(msg, name, color) {
 		const date = new Date();
 		let [seconds, minutes, hours] = [date.getSeconds(), date.getMinutes(), date.getHours()];
 		if (this.options.WithColors === true) {
-			console.log(`${ConsoleColors.bold}${ConsoleColors.gold}[${this.options.Name}|${name}|${seconds}:${minutes}:${hours}]${ConsoleColors.darkPurple} >${ConsoleColors.reset}${color}`, ...msg, `\u001b[0m`);
+			console.log(`${ConsoleColors.bold}${ConsoleColors.gold}[${name}] ${ConsoleColors.gray}${seconds}:${minutes}:${hours} ${ConsoleColors.darkPurple}>${ConsoleColors.reset}${color}`, ...msg, `\u001b[0m`);
 		} else {
-			console.log(`[${this.options.Name}|${name}|${seconds}:${minutes}:${hours}] >`, ...msg);
+			console.log(`[${this.options.Name} ${name}] ${seconds}:${minutes}:${hours} >`, ...msg);
 		}
 	}
 }
