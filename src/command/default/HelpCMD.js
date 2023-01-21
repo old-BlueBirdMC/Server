@@ -24,6 +24,9 @@ class HelpCMD extends Command {
 
 		sender.message("----- Help -----");
 		for (const [,command] of Object.entries(sender.server.commandsList.getAllCommands())) {
+			command.aliases.forEach(prefix => {
+				commands.push({name: prefix, description: command.description});
+			});
 			commands.push({name: command.name, description: command.description});
 		}
 		commands.forEach(command => {
