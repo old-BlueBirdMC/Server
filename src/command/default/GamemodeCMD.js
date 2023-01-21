@@ -21,7 +21,7 @@ const CommandEnum = require("../../network/types/CommandEnum");
 const CommandParam = require("../../network/types/CommandParam");
 const Command = require("../Command");
 
-class ListCMD extends Command {
+class GamemodeCMD extends Command {
 	constructor() {
 		let cmdParamGM = new CommandParam();
 		cmdParamGM.name = "gamemode";
@@ -54,4 +54,4 @@ class ListCMD extends Command {
 	}
 }
 
-module.exports = ListCMD;
+module.exports = GamemodeCMD;
