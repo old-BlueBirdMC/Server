@@ -1,5 +1,6 @@
-node_modules
+node_modules/
 package-lock.json
-/plugins
-/songs
-/worlds
+plugins/
+songs/
+worlds/
+players_data/

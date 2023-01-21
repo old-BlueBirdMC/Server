@@ -46,11 +46,8 @@ class Server {
 	testWorld;
 
 	constructor() {
-		if (os.version().includes("Windows") === false && false) {
-			console.log("other support than windows is not accepted util some fixes");
-			return;
-		}
 		let startTime = Date.now();
+		this.log = new Logger({Name: "Server", AllowDebugging: false, WithColors: true});
 		this.resourceManager = new ResourceManager();
 		this.configManager = new ConfigIniManager();
 		this.generatorManager = new GeneratorManager(this.resourceManager.blockStatesMap);
@@ -61,7 +58,6 @@ class Server {
 		minecraftVersion: ServerInfo.minecraftVersion, maxPlayerCount: this.configManager.getMaxPlayerCount(),
 		subMotd: this.configManager.getSubMotd(), gameMode: this.configManager.getGamemode()};
 		this.rakNetInterface = new RakNetInterface(this, new InternetAddress("0.0.0.0", this.configManager.getServerPort(), this.configManager.getAddressVersion()), rakNetMsgFH);
-		this.log = new Logger({Name: "Server", AllowDebugging: false, WithColors: true});
 		this.log.info("Loading Server");
 		this.commandsList = new CommandsList();
 		this.commandsList.refresh();
@@ -71,31 +67,30 @@ class Server {
 		BlocksList.refresh();
 		this.rakNetInterface.handlePong();
 		this.rakNetInterface.handle();
-		if (!(fs.existsSync("worlds"))) {
+
+		if (!fs.existsSync("worlds") && !fs.existsSync("players_data") && !fs.existsSync("plugins")) {
 			fs.mkdirSync("worlds");
-		}
-		if (!(fs.existsSync("players_data"))) {
 			fs.mkdirSync("players_data");
-		}
-		if (!(fs.existsSync("plugins"))) {
+			fs.mkdirSync("plugins");
+		} else if (!(fs.existsSync("worlds"))) {
+			fs.mkdirSync("worlds");
+		} else if (!(fs.existsSync("players_data"))) {
+			fs.mkdirSync("players_data");
+		} else if (!(fs.existsSync("plugins"))) {
 			fs.mkdirSync("plugins");
 		}
-		this.log.info("Loading Plugins");
 		this.enablePlugins();
-		this.log.info("Plugins Loaded");
 		this.log.info("Server Loaded");
-		let doneTime = Date.now();
-		let processingTime = (doneTime - startTime) / 1000;
-		this.log.info("Done in (" + processingTime + ")s!");
+		this.log.info("Done in (" + (Date.now() - startTime) / 1000 + ")s!");
 		this.handleProcess();
 	}
 
 	handleProcess() {
 		process.on("SIGHUP", () => {
-			this.commandsList.dispatch(this.consoleCommandReader.consoleCommandSender, "stop");
+			this.shutdown();
 		});
 		process.on("SIGINT", () => {
-			this.commandsList.dispatch(this.consoleCommandReader.consoleCommandSender, "stop");
+			this.shutdown();
 		});
 	}
 
@@ -109,13 +104,13 @@ class Server {
 
 	getPlayerName(player) {
 		let retVal;
-		if (typeof player.loginIdentity === "undefined") {
-			console.log(player.connection);
+		if (typeof player.this.loginIdentity === "undefined") {
+			console.this.log(player.connection);
 			retVal = player.connection.address.toString();
-		} else if (typeof player.loginIdentity[2] === "undefined") {
+		} else if (typeof player.this.loginIdentity[2] === "undefined") {
 			retVal = player.connection.address.toString();
 		} else {
-			retVal = player.loginIdentity[2]["extraData"]["displayName"];
+			retVal = player.this.loginIdentity[2]["extraData"]["displayName"];
 		}
 		return retVal;
 	}
@@ -132,6 +127,7 @@ class Server {
     }
 
 	enablePlugins() {
+		this.log.info("Loading Plugins");
 		fs.readdirSync("plugins").forEach(async (pluginsDir) => {
 			if (fs.lstatSync(`plugins/${pluginsDir}`).isDirectory()) {
 				let pluginPackage = `plugins/${pluginsDir}/package.json`;
@@ -174,6 +170,7 @@ class Server {
 				}
 			}
 		});
+		this.log.info("Plugins Loaded");
 	}
 
 	disableAllPlugins() {
