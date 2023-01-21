@@ -25,4 +25,4 @@ jobs:
     - name: Build
       run: |
         npm install
-        node index.js
+        npm run test
