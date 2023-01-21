@@ -137,8 +137,13 @@ class Player extends Human {
 			// }
 		});
 		let availableCommands = new AvailableCommandsPacket();
+		availableCommands.enumValues = [];
+		availableCommands.suffixes = [];
+		// todo availableCommands.enums = enums;
+		availableCommands.enums = [];
 		availableCommands.commandData = data;
-		// availableCommands.enums = enums;
+		availableCommands.dynamicEnums = [];
+		availableCommands.enumConstraints = [];
 		availableCommands.sendTo(this);
 	}
 
@@ -219,7 +224,6 @@ class Player extends Human {
 				gm = GameMode.spectator;
 				break;
 		}
-		console.log(gm);
 		return gm;
 	}
 
