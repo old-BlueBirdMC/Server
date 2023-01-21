@@ -128,6 +128,10 @@ class Server {
 		}
 	}
 
+    getEventsHandler() {
+        return this.#eventsHandler;
+    }
+
 	enablePlugins() {
 		fs.readdirSync("plugins").forEach(async (pluginsDir) => {
 			if (fs.lstatSync("plugins/" + pluginsDir).isDirectory()) {

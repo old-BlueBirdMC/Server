@@ -27,25 +27,25 @@ class Logger {
 	}
 
 	info() {
-		this.#log(arguments, "Info", ConsoleColors.blue);
+		this.log(arguments, "Info", ConsoleColors.blue);
 	}
 
 	alert() {
-		this.#log(arguments, "Alert", ConsoleColors.darkAqua);
+		this.log(arguments, "Alert", ConsoleColors.darkAqua);
 	}
 
 	error() {
-		this.#log(arguments, "Error", ConsoleColors.red)
+		this.log(arguments, "Error", ConsoleColors.red)
 	}
 
 	debug() {
 		if (this.options.AllowDebugging === false) {
 			return;
 		}
-		this.#log(arguments, "Debug", ConsoleColors.gray);
+		this.log(arguments, "Debug", ConsoleColors.gray);
 	}
 
-	#log(msg, name, color) {
+	log(msg, name, color) {
 		const date = new Date();
 		let [seconds, minutes, hours] = [date.getSeconds(), date.getMinutes(), date.getHours()];
 		if (this.options.WithColors === true) {

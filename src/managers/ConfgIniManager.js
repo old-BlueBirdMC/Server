@@ -23,8 +23,8 @@ class ConfigIniManager { // this is not an complete reader but it works so who c
 		let fileContents = (fs.readFileSync(path.join(__dirname, `..${path.sep}..${path.sep}config.ini`))).toString();
 		let fileLen = fileContents.length;
 		this.#content = fileContents.split(/\r?\n/);
-		let fixedContent = this.#fixContent(fileLen);
-		this.#content = this.#turnIntoObject(fixedContent);
+		let fixedContent = this.fixContent(fileLen);
+		this.#content = this.turnIntoObject(fixedContent);
 	}
 
 	getMotd() {
@@ -63,7 +63,7 @@ class ConfigIniManager { // this is not an complete reader but it works so who c
 		return this.#content.worldName;
 	}
 
-	#fixContent(fileLen) {
+	fixContent(fileLen) {
 		let content = "";
 		let obj = {};
 		for (let i = 0; i < fileLen; ++i) {
@@ -79,17 +79,17 @@ class ConfigIniManager { // this is not an complete reader but it works so who c
 		return obj;
 	}
 
-	#turnIntoObject(fixedContent) {
+	turnIntoObject(fixedContent) {
 		let obj = {};
 		Object.values(fixedContent).forEach(realArray => {
 			let index = realArray[0];
 			let indexVal = realArray[1];
-			obj[index] = this.#removeQuotes(indexVal);
+			obj[index] = this.removeQuotes(indexVal);
 		});
 		return obj;
 	}
 
-	#removeQuotes(indexVal) {
+	removeQuotes(indexVal) {
 		for (let i = 0; i < 2; ++i) {
 			if (/\"+/.test(indexVal)) {
 				indexVal = indexVal.replace(/\"+/, "");

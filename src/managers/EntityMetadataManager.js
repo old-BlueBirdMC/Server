@@ -28,7 +28,7 @@ class EntityMetadataManager {
         return val;
     }
 
-    #getLong(flag, list) { // temp until i say so
+    getLong(flag, list) { // temp until i say so
         let entry = typeof list !== "undefined" ? (value.length > 0 ? list[flag] : undefined) : undefined;
         if (typeof entry !== "undefined") {
             if (entry.metadata.typeID === flag) {
@@ -51,9 +51,9 @@ class EntityMetadataManager {
             if (val === null) {
                 flags = 0n;
             } else if (extended === false) {
-                flags = BigInt(this.#getLong(MetadataListProperties.flags, list));
+                flags = BigInt(this.getLong(MetadataListProperties.flags, list));
             } else {
-                flags = BigInt(this.#getLong(MetadataListProperties.flagsExtended, list));
+                flags = BigInt(this.getLong(MetadataListProperties.flagsExtended, list));
             }
             if (extended === false) {
                 flags ^= (1n << BigInt(flag));
@@ -70,9 +70,9 @@ class EntityMetadataManager {
     getEntityFlag(flag, extended = false) {
         let flags;
         if (extended === false) {
-            flags = this.#getLong(MetadataListProperties.flags);
+            flags = this.getLong(MetadataListProperties.flags);
         } else {
-            flags = this.#getLong(MetadataListProperties.flagsExtended);
+            flags = this.getLong(MetadataListProperties.flagsExtended);
         }
         if (flags !== null) {
             return (BigInt(flags) & (1n << BigInt(flag))) > 0;

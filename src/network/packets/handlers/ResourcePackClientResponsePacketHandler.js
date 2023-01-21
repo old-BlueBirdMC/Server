@@ -34,8 +34,14 @@ const ServerInfo = require("../../../ServerInfo");
 const crypto = require("crypto");
 const SetEntityDataPacket = require("../SetEntityDataPacket");
 const EntityProperty = require("../../types/EntityProperty");
+const MinecraftBinaryStream = require("../../../misc/MinecraftBinaryStream");
 
 class ResourcePackClientResponsePacketHandler extends HandlersBase {
+    randomUUID() {
+        let stream = new MinecraftBinaryStream(crypto.randomBytes(16));
+        return stream.readUUID();
+    }
+
 	async startHandling(packet) {
 		await super.startHandling(packet);
 		switch(packet.responseStatus) {
@@ -79,7 +85,7 @@ class ResourcePackClientResponsePacketHandler extends HandlersBase {
 				startGame.dayCycleStopTime = false;
 				startGame.eduOffer = 0;
 				startGame.eduFeaturesEnabled = false;
-				startGame.eduProductUUID = crypto.randomUUID();
+				startGame.eduProductUUID = this.randomUUID();
 				startGame.rainLevel = 0.0;
 				startGame.lightningLevel = 0.0;
 				startGame.hasConfirmedPlatformLockedContent = false;
@@ -113,11 +119,11 @@ class ResourcePackClientResponsePacketHandler extends HandlersBase {
 				startGame.eduResourceURI.buttonName = "";
 				startGame.eduResourceURI.linkURI = "";
 				startGame.experimentalGameplayOverride = false;
-				startGame.levelID = crypto.randomUUID();
+				startGame.levelID = this.randomUUID();
 				startGame.chatRestrictionLevel = ChatRestrictionLevel.none;
 				startGame.playerInteractionsDisabled = false;
 				startGame.worldName = "test";
-				startGame.premiumWorldTemplateID = crypto.randomUUID();
+				startGame.premiumWorldTemplateID = this.randomUUID();
 				startGame.isTrial = false;
 				startGame.movementAuthority = 0;
 				startGame.rewindHistorySize = 0;
@@ -131,7 +137,7 @@ class ResourcePackClientResponsePacketHandler extends HandlersBase {
 				startGame.engine = ServerInfo.engine;
 				startGame.propertyData = new Compound();
 				startGame.blockPaletteChecksum = 0n;
-				startGame.worldTemplateID = crypto.randomUUID();
+				startGame.worldTemplateID = this.randomUUID();
 				startGame.clientSideGeneration = false;
 				startGame.sendTo(this.player);
 
