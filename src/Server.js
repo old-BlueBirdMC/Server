@@ -134,42 +134,45 @@ class Server {
 
 	enablePlugins() {
 		fs.readdirSync("plugins").forEach(async (pluginsDir) => {
-			if (fs.lstatSync("plugins/" + pluginsDir).isDirectory()) {
-				fs.readdirSync(`plugins/${pluginsDir}`).forEach(async () => {
-					let pluginPackage = `plugins/${pluginsDir}/package.json`;
-					if (fs.existsSync(pluginPackage)) {
-						let data = JSON.parse(fs.readFileSync(pluginPackage).toString("utf-8"));
-						let pluginName = typeof data["name"] !== "undefined" ? data["name"] : "";
-						let main = typeof data["main"] !== "undefined" ? data["main"] : "";
-						let author = typeof data["author"] !== "undefined" ? data["author"] : "";
-						let description = typeof data["description"] !== "undefined" ? data["description"] : "";
-						let version = typeof data["version"] !== "undefined" ? data["version"] : "";
-						if (!(pluginName in this.#workingPlugins)) {
-							let dataPath = `plugins/${pluginsDir}/data`;
-							let req = require(path.join(`../plugins/${pluginsDir}`, main.replace(".js", "")));
-							let mainClass = new req(this, dataPath, pluginName);
-							if (!(mainClass instanceof PluginStructure)) {
-								this.log.error("Cant load plugin " + pluginName + ", cause: The plugin is not instance of PluginStructure");
-								return;
-							}
-							mainClass.description = new PluginDescription();
-							mainClass.description.pluginName = pluginName;
-							mainClass.description.verison = version;
-							mainClass.description.description = description;
-							mainClass.description.author = author;
-							this.#workingPlugins[pluginName] = mainClass;
-							if (!(fs.existsSync(dataPath))) {
-								fs.mkdirSync(dataPath);
-							} else {
-								if (!(fs.lstatSync(dataPath).isDirectory())) {
-									fs.mkdirSync(dataPath);
-								}
-							}
-							this.#workingPlugins[pluginName].successfullyEnabled();
-							this.#workingPlugins[pluginName].handleEvents();
+			if (fs.lstatSync(`plugins/${pluginsDir}`).isDirectory()) {
+				let pluginPackage = `plugins/${pluginsDir}/package.json`;
+				if (fs.existsSync(pluginPackage)) {
+					let data = JSON.parse(fs.readFileSync(pluginPackage).toString("utf-8"));
+					let pluginName = typeof data["name"] !== "undefined" ? data["name"] : "";
+					let main = typeof data["main"] !== "undefined" ? data["main"] : "";
+					let author = typeof data["author"] !== "undefined" ? data["author"] : "";
+					let description = typeof data["description"] !== "undefined" ? data["description"] : "";
+					let version = typeof data["version"] !== "undefined" ? data["version"] : "";
+                    let apiVersion = typeof data["api"] !== "undefined" ? data["api"] : "";
+                    if (apiVersion !== ServerInfo.apiVersion) {
+                        this.log.error(`Cant load plugin ${pluginName}, due to incompatible api version (${apiVersion})`);
+                        return;
+                    }
+					if (!(pluginName in this.#workingPlugins)) {
+						let dataPath = `plugins/${pluginsDir}/data`;
+						let req = require(path.join(`../plugins/${pluginsDir}`, main.replace(".js", "")));
+						let mainClass = new req(this, dataPath, pluginName);
+						if (!(mainClass instanceof PluginStructure)) {
+							this.log.error("Cant load plugin " + pluginName + ", cause: The plugin is not instance of PluginStructure");
+							return;
 						}
+						mainClass.description = new PluginDescription();
+						mainClass.description.pluginName = pluginName;
+						mainClass.description.verison = version;
+						mainClass.description.description = description;
+						mainClass.description.author = author;
+						this.#workingPlugins[pluginName] = mainClass;
+						if (!(fs.existsSync(dataPath))) {
+							fs.mkdirSync(dataPath);
+						} else {
+							if (!(fs.lstatSync(dataPath).isDirectory())) {
+								fs.mkdirSync(dataPath);
+							}
+						}
+						this.#workingPlugins[pluginName].successfullyEnabled();
+						this.#workingPlugins[pluginName].handleEvents();
 					}
-				});
+				}
 			}
 		});
 	}
