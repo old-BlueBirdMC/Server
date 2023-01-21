@@ -63,7 +63,7 @@ class HelpCMD extends Command {
             		if (page < 1) page = 1;
 
             		sender.message("----- Help (" + page + " of " + Math.ceil(sorted_commands.length / 4) + ") -----");
-            		sorted_commands.forEach(command => {
+            		sorted_commands.slice(((page*4)-4), (page*4)).forEach(command => {
                 		sender.message("/" + command.name + ": " + command.description);
             		});
         	} else {
