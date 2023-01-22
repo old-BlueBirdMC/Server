@@ -118,7 +118,7 @@ class Player extends Human {
 			cmdData.description = value.description;
 			cmdData.flags = 0;
 			cmdData.permissionLevel = 0;
-			cmdData.aliases = []; // soon
+			cmdData.aliases = value.aliases;
 			let cmdOverloads = value.overloads;
 			if (Array.isArray(cmdOverloads)) {
 				if (cmdOverloads.length !== 0) {
