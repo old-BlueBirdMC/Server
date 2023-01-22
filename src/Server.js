@@ -68,15 +68,13 @@ class Server {
 		this.rakNetInterface.handlePong();
 		this.rakNetInterface.handle();
 
-		if (!fs.existsSync("worlds") && !fs.existsSync("players_data") && !fs.existsSync("plugins")) {
+		if (!(fs.existsSync("worlds"))) {
 			fs.mkdirSync("worlds");
+		}
+		if (!(fs.existsSync("players_data"))) {
 			fs.mkdirSync("players_data");
-			fs.mkdirSync("plugins");
-		} else if (!(fs.existsSync("worlds"))) {
-			fs.mkdirSync("worlds");
-		} else if (!(fs.existsSync("players_data"))) {
-			fs.mkdirSync("players_data");
-		} else if (!(fs.existsSync("plugins"))) {
+		}
+		if (!(fs.existsSync("plugins"))) {
 			fs.mkdirSync("plugins");
 		}
 		this.enablePlugins();
@@ -104,13 +102,13 @@ class Server {
 
 	getPlayerName(player) {
 		let retVal;
-		if (typeof player.this.loginIdentity === "undefined") {
-			console.this.log(player.connection);
+		if (typeof player.loginIdentity === "undefined") {
+			console.log(player.connection);
 			retVal = player.connection.address.toString();
-		} else if (typeof player.this.loginIdentity[2] === "undefined") {
+		} else if (typeof player.loginIdentity[2] === "undefined") {
 			retVal = player.connection.address.toString();
 		} else {
-			retVal = player.this.loginIdentity[2]["extraData"]["displayName"];
+			retVal = player.loginIdentity[2]["extraData"]["displayName"];
 		}
 		return retVal;
 	}
