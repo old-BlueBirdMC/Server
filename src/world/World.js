@@ -33,7 +33,6 @@ class World {
         let xz = this.hashXZ(x, z);
         if (!(xz in this.chunks)) {
             if (false === false) {
-                this.chunks[xz] = null;
                 this.chunks[xz] = await this.getGenerator().generate(x, z);
             } else {
                 this.chunks[xz] = "read the chunk;";
