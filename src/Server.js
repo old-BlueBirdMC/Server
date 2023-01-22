@@ -30,7 +30,6 @@ const RakNetInterface = require("./network/RakNetInterface");
 const PacketsList = require("./network/packets/PacketsList");
 const ConfigIniManager = require("./managers/ConfgIniManager");
 const PluginDescription = require("./plugin/PluginDescription");
-const os = require("os");
 
 class Server {
 	rakNetServer;

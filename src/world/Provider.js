@@ -12,16 +12,19 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class Generator {
-    static generatorName;
+class Provider {
+    static providerName;
 
-    blockStatesMap;
+    path;
+	world;
 
-    constructor(blockStatesMap) {
-        this.blockStatesMap = blockStatesMap
+    constructor(path) {
+        this.path = path;
     }
 
-    generate(x, z) {}
+    write(chunk) {}
+
+	readChunk(x, z) {}
 }
 
-module.exports = Generator;
+module.exports = Provider;

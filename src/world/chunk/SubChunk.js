@@ -17,10 +17,10 @@ const BlockStorage = require("./BlockStorage");
 class SubChunk {
 	blockStorages;
 
-	constructor(runtime_id) {
+	constructor(runtimeID) {
 		this.blockStorages = [
-			new BlockStorage(runtime_id),
-			new BlockStorage(runtime_id)
+			new BlockStorage(runtimeID),
+			new BlockStorage(runtimeID)
 		];
 	}
 
