@@ -16,9 +16,11 @@ Server under active development.
 
 ## Getting started
 
-1. Clone this repo, `git clone https://github.com/BlueBirdMC/Server.git`
-2. Install the Packages, `npm i`
-3. Run the Server, `npm run start` or `node .`
+```bash
+Begin by downloading the git using the command "git clone https://github.com/BlueBirdMC/Server.git" or by selecting the zip file from the code dropdown. 
+Next, open a terminal inside the download or git folder and type "npm install".
+The last step is to run "node ." or "node index.js".
+```
 
 ## Related
 
