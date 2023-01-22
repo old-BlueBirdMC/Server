@@ -30,10 +30,10 @@ class EntityMetadataStorage {
         return null;
     }
           
-    setEntry(key, value, entry_type) {
+    setEntry(key, value, entryType) {
         let entry = new MetadataEntry();
         entry.value = value;
-        entry.type = entry_type;
+        entry.type = entryType;
         this.metadata[key] = entry;
     }
           
