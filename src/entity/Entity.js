@@ -12,11 +12,11 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const EntityMetadataManager = require("../managers/EntityMetadataManager");
+const EntityMetadataStorage = require("./EntityMetadataStorage");
 
 class Entity {
 	id = 0;
-	metadataManager;
+	metadataStorage;
 	scaleValue = 1.0;
 	onFire = false;
 	fireImmune = false;
@@ -25,12 +25,11 @@ class Entity {
 	canDash = true;
 	canFly = false;
 	canPowerJump = true;
-	swmming = false;
-	metadataToSend = [];
+	swimming = false;
 
 	constructor() {
 		this.id++;
-		this.metadataManager = new EntityMetadataManager();
+		this.metadataStorage = new EntityMetadataStorage();
 	}
 }
 

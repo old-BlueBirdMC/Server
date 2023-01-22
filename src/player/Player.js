@@ -175,20 +175,14 @@ class Player extends Human {
 	}
 
 	updateMetadataFlags() {
-		// let valScale = this.metadataManager.createFlag(MetadataListProperties.scale, this.scaleValue);
-		// this.metadataToSend.push(valScale);
-		let valBreath = this.metadataManager.createEntityFlag(this.metadataToSend, EntityMetaDataFlags.breathing, this.breathing); // smth wrong with mcbs: confirm
-		this.metadataToSend.push(valBreath);
-		// let valFire = this.metadataManager.createEntityFlag(this.metadataToSend, EntityMetaDataFlags.onFire, this.onFire);
-		// this.metadataToSend.push(valFire);
-		// this.metadataManager.setEntityFlag(EntityMetaDataFlags.onFire, this.onFire);
-		// this.metadataManager.setEntityFlag(EntityMetaDataFlags.fireImmune, this.fireImmune);
-		// this.metadataManager.setEntityFlag(EntityMetaDataFlags.noAI, this.noAI);
-		// this.metadataManager.setEntityFlag(EntityMetaDataFlags.canClimb, this.canClimb);
-		// this.metadataManager.setEntityFlag(EntityMetaDataFlags.canDash, this.canDash);
-		// this.metadataManager.setEntityFlag(EntityMetaDataFlags.canFly, this.canFly);
-		// this.metadataManager.setEntityFlag(EntityMetaDataFlags.canPowerJump, this.canPowerJump);
-		// this.metadataManager.setEntityFlag(EntityMetaDataFlags.swimming, this.swmming);
+		this.metadataStorage.setFlag(EntityMetaDataFlags.breathing, this.breathing);
+		this.metadataStorage.setFlag(EntityMetaDataFlags.onFire, this.onFire);
+        this.metadataStorage.setFlag(EntityMetaDataFlags.onFire, this.fireImmune);
+        this.metadataStorage.setFlag(EntityMetaDataFlags.onFire, this.noAI);
+        this.metadataStorage.setFlag(EntityMetaDataFlags.onFire, this.canClimb);
+        this.metadataStorage.setFlag(EntityMetaDataFlags.onFire, this.canDash);
+        this.metadataStorage.setFlag(EntityMetaDataFlags.onFire, this.canPowerJump);
+        this.metadataStorage.setFlag(EntityMetaDataFlags.onFire, this.swimming);
 	}
 
 	setPlayerGameType(value) {
@@ -230,7 +224,7 @@ class Player extends Human {
 	updateData(viewers = []) {
 		const setEntityData = new SetEntityDataPacket();
 		setEntityData.runtimeEntityID = this.id;
-		setEntityData.metadata = this.metadataToSend;
+		setEntityData.metadata = this.metadataStorage.metadata;
 		setEntityData.properties = new EntityProperty();
 		setEntityData.properties.intProperties = [];
 		setEntityData.properties.floatProperties = [];

@@ -35,7 +35,7 @@ const BitArray = require("../network/constants/BitArray");
 const BlockStorage = require("../world/chunk/BlockStorage");
 const SubChunk = require("../world/chunk/SubChunk");
 const Chunk = require("../world/chunk/Chunk");
-const Metadata = require("../network/types/Metadata");
+const MetadataEntry = require("../entity/MetadataEntry");
 const MetadataPropertyTypes = require("../network/constants/MetadataPropertyTypes");
 const EntityLink = require("../network/types/EntityLink");
 const CommandOriginData = require("../network/types/CommandOriginData");
@@ -46,7 +46,6 @@ const CommandParam = require("../network/types/CommandParam");
 const CommandData = require("../network/types/CommandData");
 const CommandEnumConstraint = require("../network/types/CommandEnumConstraint");
 const EntityProperty = require("../network/types/EntityProperty");
-const MetadataEntry = require("../network/types/MetadataEntry");
 
 class MinecraftBinaryStream extends BinaryStream {
 	readStringVarInt() {
@@ -674,63 +673,61 @@ class MinecraftBinaryStream extends BinaryStream {
 	}
 
 	readMetadataList() {
-		let value = [];
-		let entry = new MetadataEntry();
-		for (let i = 0; i < this.readVarInt(); ++i) {
-			let index = this.readVarInt();
-			let propertyType = this.readVarInt();
-			entry.typeID = index;
-			entry.metadata = new Metadata();
-			entry.metadata.propertyType = propertyType;
-			if (propertyType == MetadataPropertyTypes.byte) {
-				entry.metadata.value = this.readByte();
-			} else if (propertyType == MetadataPropertyTypes.short) {
-				entry.metadata.value = this.readShortLE();
-			} else if (propertyType == MetadataPropertyTypes.int) {
-				entry.metadata.value = this.readSignedVarInt();
-			} else if (propertyType == MetadataPropertyTypes.float) {
-				entry.metadata.value = this.readFloatLE();
-			} else if (propertyType == MetadataPropertyTypes.str) {
-				entry.metadata.value = this.readStringVarInt();
-			} else if (propertyType == MetadataPropertyTypes.nbt) {
-				entry.metadata.value = this.readNBTLE();
-			} else if (propertyType == MetadataPropertyTypes.vec3i) {
-				entry.metadata.value = this.readVector3I();
-			} else if (propertyType == MetadataPropertyTypes.long) {
-				entry.metadata.value = this.readSignedVarLong();
-			} else if (propertyType == MetadataPropertyTypes.vec3f) {
-				entry.metadata.value = this.readVector3F();
+		let value = {};
+        let metadataListSize = this.readVarInt();
+		for (let i = 0; i < metadataListSize; ++i) {
+            let metadataKey = this.readVarInt();
+            let entry = new MetadataEntry();
+            entry.type = this.readVarInt();
+			if (entry.type == MetadataPropertyTypes.byte) {
+				entry.value = this.readByte();
+			} else if (entry.type == MetadataPropertyTypes.short) {
+				entry.value = this.readShortLE();
+			} else if (entry.type == MetadataPropertyTypes.int) {
+				entry.value = this.readSignedVarInt();
+			} else if (entry.type == MetadataPropertyTypes.float) {
+				entry.value = this.readFloatLE();
+			} else if (entry.type == MetadataPropertyTypes.str) {
+				entry.value = this.readStringVarInt();
+			} else if (entry.type == MetadataPropertyTypes.nbt) {
+				entry.value = this.readNBTLE();
+			} else if (entry.type == MetadataPropertyTypes.vec3i) {
+				entry.value = this.readVector3I();
+			} else if (entry.type == MetadataPropertyTypes.long) {
+				entry.value = this.readSignedVarLong();
+			} else if (entry.type == MetadataPropertyTypes.vec3f) {
+				entry.value = this.readVector3F();
 			} else {
 				throw new Error("Invalid type");
 			}
-			value.push(entry);
+            value[metadataKey] = entry;
 		}
 		return value;
 	}
 
 	writeMetadataList(value) {
-		this.writeVarInt(value.length);
-		for (let i = 0; i < value.length; ++i) {
-			this.writeVarInt(value[i].typeID);
-			this.writeVarInt(value[i].metadata.propertyType);
-			if (value[i].metadata.propertyType == MetadataPropertyTypes.byte) {
-				this.writeByte(value[i].metadata.value);
-			} else if (value[i].metadata.propertyType == MetadataPropertyTypes.short) {
-				this.writeShortLE(value[i].metadata.value);
-			} else if (value[i].metadata.propertyType == MetadataPropertyTypes.int) {
-				this.writeSignedVarInt(value[i].metadata.value);
-			} else if (value[i].metadata.propertyType == MetadataPropertyTypes.float) {
-				this.writeFloatLE(value[i].metadata.value);
-			} else if (value[i].metadata.propertyType == MetadataPropertyTypes.str) {
-				this.writeStringVarInt(value[i].metadata.value);
-			} else if (value[i].metadata.propertyType == MetadataPropertyTypes.nbt) {
-				this.writeNBTLE(value[i].metadata.value);
-			} else if (value[i].metadata.propertyType == MetadataPropertyTypes.vec3i) {
-				this.writeVector3I(value[i].metadata.value);
-			} else if (value[i].metadata.propertyType == MetadataPropertyTypes.long) {
-				this.writeSignedVarLong(value[i].metadata.value);
-			} else if (value[i].metadata.propertyType == MetadataPropertyTypes.vec3f) {
-				this.writeVector3F(value[i].metadata.value);
+		this.writeVarInt(Object.values(value).length);
+        for (const [metadataKey, entry] of Object.entries(value)) {
+			this.writeVarInt(metadataKey);
+			this.writeVarInt(entry.type);
+			if (entry.type == MetadataPropertyTypes.byte) {
+				this.writeByte(entry.value);
+			} else if (entry.type == MetadataPropertyTypes.short) {
+				this.writeShortLE(entry.value);
+			} else if (entry.type == MetadataPropertyTypes.int) {
+				this.writeSignedVarInt(entry.value);
+			} else if (entry.type == MetadataPropertyTypes.float) {
+				this.writeFloatLE(entry.value);
+			} else if (entry.type == MetadataPropertyTypes.str) {
+				this.writeStringVarInt(entry.value);
+			} else if (entry.type == MetadataPropertyTypes.nbt) {
+				this.writeNBTLE(entry.value);
+			} else if (entry.type == MetadataPropertyTypes.vec3i) {
+				this.writeVector3I(entry.value);
+			} else if (entry.type == MetadataPropertyTypes.long) {
+				this.writeSignedVarLong(entry.value);
+			} else if (entry.type == MetadataPropertyTypes.vec3f) {
+				this.writeVector3F(entry.value);
 			} else {
 				throw new Error("Invalid type");
 			}
