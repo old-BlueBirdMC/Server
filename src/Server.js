@@ -47,7 +47,6 @@ class Server {
 
 	constructor() {
 		let startTime = Date.now();
-		this.log = new Logger({Name: "Server", AllowDebugging: false, WithColors: true});
 		this.resourceManager = new ResourceManager();
 		this.configManager = new ConfigIniManager();
 		this.generatorManager = new GeneratorManager(this.resourceManager.blockStatesMap);
@@ -58,6 +57,7 @@ class Server {
 		minecraftVersion: ServerInfo.minecraftVersion, maxPlayerCount: this.configManager.getMaxPlayerCount(),
 		subMotd: this.configManager.getSubMotd(), gameMode: this.configManager.getGamemode()};
 		this.rakNetInterface = new RakNetInterface(this, new InternetAddress("0.0.0.0", this.configManager.getServerPort(), this.configManager.getAddressVersion()), rakNetMsgFH);
+		this.log = new Logger({Name: "Server", AllowDebugging: false, WithColors: true});
 		this.log.info("Loading Server");
 		this.commandsList = new CommandsList();
 		this.commandsList.refresh();
@@ -67,17 +67,22 @@ class Server {
 		BlocksList.refresh();
 		this.rakNetInterface.handlePong();
 		this.rakNetInterface.handle();
-
+		this.log.info("Loading worlds");
 		if (!(fs.existsSync("worlds"))) {
 			fs.mkdirSync("worlds");
 		}
+		this.log.info("Worlds Loaded");
+		this.log.info("Loading PlayersData");
 		if (!(fs.existsSync("players_data"))) {
 			fs.mkdirSync("players_data");
 		}
+		this.log.info("PlayersData Loaded");
+		this.log.info("Loading Plugins");
 		if (!(fs.existsSync("plugins"))) {
 			fs.mkdirSync("plugins");
 		}
 		this.enablePlugins();
+		this.log.info("Plugins Loaded");
 		this.log.info("Server Loaded");
 		this.log.info("Done in (" + (Date.now() - startTime) / 1000 + ")s!");
 		this.handleProcess();
@@ -114,7 +119,7 @@ class Server {
 	}
 
 	addEvent(event, eventName) {
-		if (!this.#workingEvents.includes(eventName)) {
+		if (!(this.#workingEvents.includes(eventName))) {
 			this.#workingEvents.push(eventName);
 			this.#eventsHandler.emit(eventName, event);
 		}
@@ -125,7 +130,6 @@ class Server {
     }
 
 	enablePlugins() {
-		this.log.info("Loading Plugins");
 		fs.readdirSync("plugins").forEach(async (pluginsDir) => {
 			if (fs.lstatSync(`plugins/${pluginsDir}`).isDirectory()) {
 				let pluginPackage = `plugins/${pluginsDir}/package.json`;
@@ -168,7 +172,6 @@ class Server {
 				}
 			}
 		});
-		this.log.info("Plugins Loaded");
 	}
 
 	disableAllPlugins() {
