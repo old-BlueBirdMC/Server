@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js",
-    "start": "node ."
+    "test": "node .",
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "bbmc",
