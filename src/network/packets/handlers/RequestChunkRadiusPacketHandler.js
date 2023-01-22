@@ -25,7 +25,7 @@ class RequestChunkRadiusPacketHandler extends HandlersBase {
 
 		for (let chunkX = -this.player.chunkRadius; chunkX <= this.player.chunkRadius; ++chunkX) {
 			for (let chunkZ = -this.player.chunkRadius; chunkZ <= this.player.chunkRadius; ++chunkZ) {
-				//this.player.sendChunk(await this.server.testWorld.loadChunk(chunkX, chunkZ));
+				// this.player.sendChunk(await this.server.testWorld.loadChunk(chunkX, chunkZ));
 			}
 		}
 		this.player.sendNetworkChunkPublisherUpdate();
