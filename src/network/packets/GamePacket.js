@@ -16,7 +16,6 @@ const PacketsBase = require("./PacketsBase");
 const BinaryStream = require("bbmc-binarystream");
 const Identifiers = require("./Identifiers");
 const zlib = require("zlib");
-const { default: TPromise } = require("thread-promises");
 
 class GamePacket extends PacketsBase {
 	static id = Identifiers.game;
@@ -25,13 +24,13 @@ class GamePacket extends PacketsBase {
 	streams = [];
 
 	async decompress(buffer) {
-		return new TPromise(resolve => {
+		return new Promise(resolve => {
 			resolve(this.compression ? zlib.inflateRawSync(buffer) : buffer);
 		});
 	}
 
 	async compress(buffer) {
-		return new TPromise(resolve => {
+		return new Promise(resolve => {
 			resolve(this.compression ? zlib.deflateRawSync(buffer) : buffer);
 		});
 	}

@@ -13,7 +13,6 @@
   "dependencies": {
     "bbmc-binarystream": "^1.0.0",
     "bbmc-nbt": "https://github.com/BlueBirdMC/NBT.git",
-    "bbmc-raknet": "^1.0.3",
-    "thread-promises": "^1.5.2"
+    "bbmc-raknet": "^1.0.3"
   }
 }

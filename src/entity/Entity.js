@@ -26,6 +26,8 @@ class Entity {
 	canFly = false;
 	canPowerJump = true;
 	swimming = false;
+    hasCollision = true;
+    affectedByGravity = true;
 
 	constructor() {
 		this.id++;

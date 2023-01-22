@@ -21,24 +21,34 @@ class World {
         this.chunks = {};
     }
 
+    hashXZ(x, z) {
+        return (BigInt(x & 0xffffffff) << 16n) | (BigInt(z & 0xffffffff));
+    }
+
+    unhashXZ(xz) {
+        return [BigInt.asIntN(32, xz << 16n), BigInt.asIntN(32, xz & 0xffffffff)];
+    }
+
     async loadChunk(x, z) {
-        if (!(`${x}:${z}` in this.chunks)) {
+        let xz = this.hashXZ(x, z);
+        if (!(xz in this.chunks)) {
             if (false === false) {
-                this.chunks[`${x}:${z}`] = null;
-                this.chunks[`${x}:${z}`] = await this.getGenerator().generate(x, z);
+                this.chunks[xz] = null;
+                this.chunks[xz] = await this.getGenerator().generate(x, z);
             } else {
-                this.chunks[`${x}:${z}`] = "read the chunk;";
+                this.chunks[xz] = "read the chunk;";
             }
-        } else if (this.chunks[`${x}:${z}`] === null) {
+        } else if (this.chunks[xz] === null) {
             setTimeout(this.loadChunk(x, z), 10);
         }
-        return this.chunks[`${x}:${z}`];
+        return this.chunks[xz];
     }
 
     async unloadChunk(x, z) {
+        let xz = this.hashXZ(x, z);
         await this.saveChunk();
-        if (`${x}:${z}` in this.chunks) {
-            delete this.chunks[`${x}:${z}`];
+        if (xz in this.chunks) {
+            delete this.chunks[xz];
         }
     }
 
@@ -51,11 +61,13 @@ class World {
     }
 
     getBlockRuntimeID(x, y, z, layer) {
-        return this.chunks[`${x >> 4}:${z >> 4}`].getBlockRuntimeID(x & 0x0f, y, z & 0x0f, layer);
+        let xz = this.hashXZ(x >> 4, z >> 4);
+        return this.chunks[xz].getBlockRuntimeID(x & 0x0f, y, z & 0x0f, layer);
     }
 
     setBlockRuntimeID(x, y, z, layer, runtimeID) {
-        this.chunks[`${x >> 4}:${z >> 4}`].setBlockRuntimeID(x & 0x0f, y, z & 0x0f, layer, runtimeID);
+        let xz = this.hashXZ(x >> 4, z >> 4);
+        this.chunks[xz].setBlockRuntimeID(x & 0x0f, y, z & 0x0f, layer, runtimeID);
     }
 }
 

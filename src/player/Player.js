@@ -183,6 +183,8 @@ class Player extends Human {
         this.metadataStorage.setFlag(EntityMetaDataFlags.onFire, this.canDash);
         this.metadataStorage.setFlag(EntityMetaDataFlags.onFire, this.canPowerJump);
         this.metadataStorage.setFlag(EntityMetaDataFlags.onFire, this.swimming);
+        this.metadataStorage.setFlag(EntityMetaDataFlags.hasCollision, this.hasCollision);
+        this.metadataStorage.setFlag(EntityMetaDataFlags.affectedByGravity, this.affectedByGravity);
 	}
 
 	setPlayerGameType(value) {

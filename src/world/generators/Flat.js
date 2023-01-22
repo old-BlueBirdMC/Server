@@ -12,7 +12,6 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const { default: TPromise } = require("thread-promises");
 const Chunk = require("../chunk/Chunk");
 const Generator = require("../Generator");
 
@@ -20,7 +19,7 @@ class Flat extends Generator {
     static generatorName = "flat";
 
     generate(x, z) {
-        return new TPromise(resolve => {
+        return new Promise(resolve => {
             let chunk = new Chunk(x, z, this.blockStatesMap.legacyToRuntime("minecraft:air", 0));
             let bedrock = this.blockStatesMap.legacyToRuntime("minecraft:bedrock", 0);
             let dirt = this.blockStatesMap.legacyToRuntime("minecraft:dirt", 0);
