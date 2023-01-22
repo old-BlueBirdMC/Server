@@ -48,7 +48,7 @@ class Logger {
 		const date = new Date();
 		let [seconds, minutes, hours] = [date.getSeconds(), date.getMinutes(), date.getHours()];
 		if (this.options.WithColors === true) {
-			console.log(`${ConsoleColors.bold}${ConsoleColors.gold}[${this.options.Name}][${name}] ${ConsoleColors.gray}${seconds}:${minutes}:${hours} ${ConsoleColors.darkPurple}>${ConsoleColors.reset}${color}`, ...msg, `\u001b[0m`);
+			console.log(`${ConsoleColors.bold}${ConsoleColors.gold}[${this.options.Name}] [${name}] ${ConsoleColors.gray}${seconds}:${minutes}:${hours} ${ConsoleColors.darkPurple}>${ConsoleColors.reset}${color}`, ...msg, `\u001b[0m`);
 		} else {
 			console.log(`[${this.options.Name} ${name}] ${seconds}:${minutes}:${hours} >`, ...msg);
 		}

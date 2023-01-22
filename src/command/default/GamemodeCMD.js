@@ -44,12 +44,10 @@ class GamemodeCMD extends Command {
 
 	async run(sender, writtenCommand, args) {
 		// if (!(sender.hasPerm(this.getPerm()))) {}
-		let moreCheck = sender.setPlayerGameType(args[0]);
-		if (moreCheck === null) {
+		if (typeof args[0] == "undefined") return sender.message(`${MinecraftTextColors.red}Please provide one of the following: "survival,"  "creative," or "adventure."`);
+		if (sender.setPlayerGameType(args[0]) === null) { 
 			sender.message(`${MinecraftTextColors.red}The gamemode requested is invalid`);
-		} else {
-			sender.message(`${MinecraftTextColors.green}[SUCCESS] gamemode has been changed`);
-		}
+		} else { sender.message(`${MinecraftTextColors.green}[SUCCESS] gamemode has been changed`); }
 	}
 }
 
