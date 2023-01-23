@@ -51,7 +51,7 @@ class Player extends Human {
 	breathing = true;
 	resourcePackClientResponseSent = false; // fix spamming
 	readyToLogin = false;
-    attributes = [];
+   	attributes = [];
 
 	constructor(connection, server) {
 		super();
@@ -67,7 +67,7 @@ class Player extends Human {
 		this.boundingBox.x = 0.6; // width
 		this.boundingBox.z = 1.9; // height
 		this.updateMetadataFlags();
-        this.updateAttributes();
+		this.updateAttributes();
 	}
 
 	updateName(updateFName = false) {
@@ -221,7 +221,7 @@ class Player extends Human {
             new PlayerAttribute(-1024, 1024, 0, 0, "minecraft:luck"),
             new PlayerAttribute(0, 2, 0.7, 0.7, "minecraft:horse.jump_strength"),
             new PlayerAttribute(0, 1, 0, 0, "minecraft:zombie.spawn_reinforcements"),
-            new PlayerAttribute(0, 3.4028234663852886e+38, 0.02, 0.02, "minecraft:lava_movemen"),
+            new PlayerAttribute(0, 3.4028234663852886e+38, 0.02, 0.02, "minecraft:lava_movement"),
         ];
     }
 
