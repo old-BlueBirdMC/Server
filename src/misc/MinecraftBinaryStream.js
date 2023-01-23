@@ -650,26 +650,26 @@ class MinecraftBinaryStream extends BinaryStream {
 			this.writeUnsignedIntLE(word);
 		}
 		this.writeSignedVarInt(value.palette.length);
-        for (const entry of value.palette) {
-            this.writeSignedVarInt(entry);
-        }
+        for (let i = 0; i < value.palette.length; ++i) {
+			this.writeSignedVarInt(value.palette[i]);
+		}
 	}
 	
 	writeSubChunk(value) {
 		this.writeUnsignedByte(8);
 		this.writeUnsignedByte(value.blockStorages.length);
-        for (const storage of value.blockStorages) {
-            this.writeBlockStorage(storage);
-        }
+		for (let i = 0; i < value.blockStorages.length; ++i) {
+			this.writeBlockStorage(value.blockStorages[i]);
+		}
 	}
 
 	writeChunk(value, count) {
 		for (let i = 0; i < count; ++i) {
 			this.writeSubChunk(value.subChunks[i]);
 		}
-        for (const storage of value.biomes) {
-            this.writeBlockStorage(storage);
-        }
+		for (let i = 0; i < value.biomes.length; ++i) {
+			this.writeBlockStorage(value.biomes[i]);
+		}
 		this.writeUnsignedByte(0);
 	}
 
