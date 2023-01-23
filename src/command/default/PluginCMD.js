@@ -15,20 +15,20 @@
 const MinecraftTextColors = require("../../color/MinecraftTextColors");
 const Command = require("../Command");
 
-class pluginCMD extends Command {
+class PluginCMD extends Command {
 	constructor() {
 		super("plugin", "Shows a list of plugins", ["pl"], []);
 	}
 
 	async run(sender, writtenCommand, args) {
-        let list = "";
-        const getPlugins = sender.server.getAllPlugins();
-        sender.message("Plugin(s) (" + getPlugins.length + ") ")
-        getPlugins.forEach(plugin => {
-            list += plugin[1].description.pluginName
-        });
-        sender.message(`${MinecraftTextColors.green}${list}`)
+		let list = "";
+		const getPlugins = sender.server.getAllPlugins();
+       		sender.message("Server plugins: (" + getPlugins.length + ") ");
+		getPlugins.forEach(plugin => {
+			list += plugin[1].description.pluginName;
+		});
+		sender.message(`${MinecraftTextColors.green}${list}`)
 	}
 }
 
-module.exports = pluginCMD;
+module.exports = PluginCMD;
