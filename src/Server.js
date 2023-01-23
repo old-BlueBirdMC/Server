@@ -169,6 +169,10 @@ class Server {
 		}
 	}
 
+	getAllPlugins() {
+		return Object.entries(this.#workingPlugins);
+	}
+
 	registerDefaultGenerators() {
 		this.generatorManager.registerGenerator(Flat);
 	}
