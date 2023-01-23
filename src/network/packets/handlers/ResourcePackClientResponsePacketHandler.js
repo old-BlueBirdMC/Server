@@ -37,10 +37,10 @@ const MinecraftBinaryStream = require("../../../misc/MinecraftBinaryStream");
 const UpdateAttributesPacket = require("../UpdateAttributesPacket");
 
 class ResourcePackClientResponsePacketHandler extends HandlersBase {
-    randomUUID() {
-        let stream = new MinecraftBinaryStream(crypto.randomBytes(16));
-        return stream.readUUID();
-    }
+	randomUUID() {
+		let stream = new MinecraftBinaryStream(crypto.randomBytes(16));
+		return stream.readUUID();
+	}
 
 	async startHandling(packet) {
 		await super.startHandling(packet);
@@ -154,11 +154,11 @@ class ResourcePackClientResponsePacketHandler extends HandlersBase {
 				setEntityData.tick = 0;
 				setEntityData.sendTo(this.player);
 
-                const updateAttributesPacket = new UpdateAttributesPacket();
-                updateAttributesPacket.runtimeEntityID = this.player.id;
-                updateAttributesPacket.attributes = this.player.attributes;
-                updateAttributesPacket.tick = 0;
-                updateAttributesPacket.sendTo(this.player);
+				const updateAttributes = new UpdateAttributesPacket();
+				updateAttributes.runtimeEntityID = this.player.id;
+				updateAttributes.attributes = this.player.attributes;
+				updateAttributes.tick = 0;
+				updateAttributes.sendTo(this.player);
 
 				const availableEntityIdentifiers = new AvailableEntityIdentifiersPacket();
 				availableEntityIdentifiers.nbt = this.server.resourceManager.availableEntityIdentifiers;
@@ -168,7 +168,7 @@ class ResourcePackClientResponsePacketHandler extends HandlersBase {
 				creativeContent.entries = this.server.resourceManager.creativeItems;
 				creativeContent.sendTo(this.player);
 
-				if (!this.player.resourcePackClientResponseSent) {
+				if (!this.player.resourcePackClientResponseSent) {//todo: remove after an packet impl
 					this.player.sendAvailableCommands();
 					this.player.resourcePackClientResponseSent = true;
 				}
