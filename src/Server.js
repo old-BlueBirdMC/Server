@@ -30,6 +30,8 @@ const RakNetInterface = require("./network/RakNetInterface");
 const PacketsList = require("./network/packets/PacketsList");
 const ConfigIniManager = require("./managers/ConfgIniManager");
 const PluginDescription = require("./plugin/PluginDescription");
+const RakNetPlayerManager = require('./managers/RakNetPlayerManager');
+const Player = require("./player/Player");
 
 class Server {
 	rakNetServer;
@@ -171,6 +173,17 @@ class Server {
 
 	getAllPlugins() {
 		return Object.entries(this.#workingPlugins);
+	}
+
+	getPlayer(name) {
+		for (let i = 0; i < RakNetPlayerManager.getLength(); ++i) {
+			const foundPlayer = RakNetPlayerManager.getAllObjectValues()[i];
+			if (foundPlayer instanceof Player) {
+				if (foundPlayer.getRealName() === name) {
+					return foundPlayer;
+				}
+			}
+		}
 	}
 
 	registerDefaultGenerators() {
