@@ -19,7 +19,7 @@ class RequestChunkRadiusPacketHandler extends HandlersBase {
 	async startHandling(packet) {
 		await super.startHandling(packet);
 
-        //this.player.chunkRadius = packet.chunkRadius;
+        this.player.chunkRadius = packet.chunkRadius;
         this.player.chunkRadius = 2;
 
 		let chunkRadiusUpdated = new ChunkRadiusUpdatedPacket();

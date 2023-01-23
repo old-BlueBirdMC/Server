@@ -636,24 +636,23 @@ class MinecraftBinaryStream extends BinaryStream {
 				}
 				break;
 		}
-		this.writeUnsignedByte((version[0] << 1) | 1);
+		this.writeUnsignedByte(version.header);
 		let position = 0;
-		for (let i = 0; i < version[2]; ++i) {
+		for (let i = 0; i < version.wordsPerChunk; ++i) {
 			let word = 0;
-			for (let j = 0; j < version[1]; ++j) {
+			for (let j = 0; j < version.blocksPerWord; ++j) {
 				if (position >= 4096) {
 					break;
 				}
-				let state = value.blocks[position];
-				word |= state << (version[0] * j);
-				++position;
+				let state = value.blocks[position++];
+				word |= state << (version.bitsPerBlock * j);
 			}
 			this.writeUnsignedIntLE(word);
 		}
 		this.writeSignedVarInt(value.palette.length);
-		for (let i = 0; i < value.palette.length; ++i) {
-			this.writeSignedVarInt(value.palette[i]);
-		}
+        value.palette.forEach((entry) => {
+            this.writeSignedVarInt(entry);
+        });
 	}
 	
 	writeSubChunk(value) {
