@@ -213,12 +213,13 @@ class Player extends Human {
 		this.metadataStorage.setFlag(EntityMetaDataFlags.onFire, this.onFire);
         this.metadataStorage.setFlag(EntityMetaDataFlags.fireImmune, this.fireImmune);
         //this.metadataStorage.setFlag(EntityMetaDataFlags.noAI, this.noAI);
-        //this.metadataStorage.setFlag(EntityMetaDataFlags.canClimb, this.canClimb);
-        //this.metadataStorage.setFlag(EntityMetaDataFlags.canDash, this.canDash);
-        //this.metadataStorage.setFlag(EntityMetaDataFlags.canPowerJump, this.canPowerJump);
+        this.metadataStorage.setFlag(EntityMetaDataFlags.canClimb, this.canClimb);
+        this.metadataStorage.setFlag(EntityMetaDataFlags.canDash, this.canDash);
+        this.metadataStorage.setFlag(EntityMetaDataFlags.canPowerJump, this.canPowerJump);
         this.metadataStorage.setFlag(EntityMetaDataFlags.swimming, this.swimming);
         this.metadataStorage.setFlag(EntityMetaDataFlags.hasCollision, this.hasCollision);
         this.metadataStorage.setFlag(EntityMetaDataFlags.affectedByGravity, this.affectedByGravity);
+        this.metadataStorage.setFlag(EntityMetaDataFlags.sprinting, false);
 	}
 
 	setPlayerGameType(value) {
