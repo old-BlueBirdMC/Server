@@ -12,13 +12,14 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
+const ConsoleColors = require("../color/ConsoleColors");
 const CommandSender = require("../command/sender/CommandSender");
 
 class ConsoleCommandSender extends CommandSender {
 	name = "Console";
 
 	message(message) {
-		this.server.log.info(message);
+		this.server.log.info(ConsoleColors.McClrToConsole(message));
 	}
 }
 

@@ -104,19 +104,6 @@ class Server {
 		await this.rakNetInterface.queuePacket(packet, player);
 	}
 
-	getPlayerName(player) {
-		let retVal;
-		if (typeof player.loginIdentity === "undefined") {
-			console.log(player.connection);
-			retVal = player.connection.address.toString();
-		} else if (typeof player.loginIdentity[2] === "undefined") {
-			retVal = player.connection.address.toString();
-		} else {
-			retVal = player.loginIdentity[2]["extraData"]["displayName"];
-		}
-		return retVal;
-	}
-
 	addEvent(event, eventName) {
 		if (!(this.#workingEvents.includes(eventName))) {
 			this.#workingEvents.push(eventName);

@@ -12,6 +12,7 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
+const Vector2F = require("../network/types/Vector2F");
 const EntityMetadataStorage = require("./EntityMetadataStorage");
 
 class Entity {
@@ -28,10 +29,12 @@ class Entity {
 	swimming = false;
     hasCollision = true;
     affectedByGravity = true;
+	boundingBox;
 
 	constructor() {
 		this.id++;
 		this.metadataStorage = new EntityMetadataStorage();
+		this.boundingBox = new Vector2F();
 	}
 }
 

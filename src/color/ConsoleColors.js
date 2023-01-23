@@ -12,6 +12,8 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
+const MinecraftTextColors = require("./MinecraftTextColors");
+
 class ConsoleColors {
 	static bold = "\u001b[1m";
 	static obfuscated = "";
@@ -35,6 +37,84 @@ class ConsoleColors {
 	static yellow = "\u001b[38;5;227m";
 	static white = "\u001b[38;5;231m";
 	static minecoinGold = "\u001b[38;5;185m";
+
+	static McClrToConsole(message) {
+		if (message.indexOf("§") !== -1) {
+			const clr = message.charAt(message.indexOf("§") + 1);
+			switch ("§" + clr) {
+				case MinecraftTextColors.black:
+					message = message.replace("§"+ clr, ConsoleColors.black);
+					break;
+				case MinecraftTextColors.darkBlue:
+					message = message.replace("§"+ clr, ConsoleColors.darkBlue);
+					break;
+				case MinecraftTextColors.darkGreen:
+					message = message.replace("§"+ clr, ConsoleColors.darkGreen);
+					break;
+				case MinecraftTextColors.darkAqua:
+					message = message.replace("§"+ clr, ConsoleColors.darkAqua);
+					break;
+				case MinecraftTextColors.darkRed:
+					message = message.replace("§"+ clr, ConsoleColors.darkRed);
+					break;
+				case MinecraftTextColors.darkPurple:
+					message = message.replace("§"+ clr, ConsoleColors.darkPurple);
+					break;
+				case MinecraftTextColors.gold:
+					message = message.replace("§"+ clr, ConsoleColors.gold);
+					break;
+				case MinecraftTextColors.gray:
+					message = message.replace("§"+ clr, ConsoleColors.gray);
+					break;
+				case MinecraftTextColors.darkGray:
+					message = message.replace("§"+ clr, ConsoleColors.darkGray);
+					break;
+				case MinecraftTextColors.blue:
+					message = message.replace("§"+ clr, ConsoleColors.blue);
+					break;
+				case MinecraftTextColors.green:
+					message = message.replace("§"+ clr, ConsoleColors.green);
+					break;
+				case MinecraftTextColors.aqua:
+					message = message.replace("§"+ clr, ConsoleColors.aqua);
+					break;
+				case MinecraftTextColors.red:
+					message = message.replace("§"+ clr, ConsoleColors.red);
+					break;
+				case MinecraftTextColors.purple:
+					message = message.replace("§"+ clr, ConsoleColors.purple);
+					break;
+				case MinecraftTextColors.yellow:
+					message = message.replace("§"+ clr, ConsoleColors.yellow);
+					break;
+				case MinecraftTextColors.white:
+					message = message.replace("§"+ clr, ConsoleColors.white);
+					break;
+				case MinecraftTextColors.minecoinGold:
+					message = message.replace("§"+ clr, ConsoleColors.minecoinGold);
+					break;
+				case MinecraftTextColors.bold:
+					message = message.replace("§"+ clr, ConsoleColors.bold);
+					break;
+				case MinecraftTextColors.underline:
+					message = message.replace("§"+ clr, ConsoleColors.underline);
+					break;
+				case MinecraftTextColors.itallic:
+					message = message.replace("§"+ clr, ConsoleColors.itallic);
+					break;
+				case MinecraftTextColors.magic:
+					message = message.replace("§"+ clr, ConsoleColors.magic);
+					break;
+				case MinecraftTextColors.strike:
+					message = message.replace("§"+ clr, ConsoleColors.strike);
+					break;
+				case MinecraftTextColors.reset:
+					message = message.replace("§"+ clr, ConsoleColors.reset);
+					break;
+			}
+		}
+		return message;
+	}
 }
 
 module.exports = ConsoleColors;

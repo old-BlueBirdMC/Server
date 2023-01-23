@@ -44,6 +44,8 @@ class Player extends Human {
 	chunkRadius;
 	position;
 	rotation;
+	realName;
+	name;
 	gamemode = GameMode.creative;
 	breathing = true;
 	resourcePackClientResponseSent = false; // fix spamming
@@ -60,7 +62,32 @@ class Player extends Human {
 		this.rotation = new Vector2F(); // TEMP UP UNLTI WORLDS ARE MADE
 		this.rotation.x = 0.0;
 		this.rotation.z = 0.0;
+		this.boundingBox.x = 0.6; // width
+		this.boundingBox.z = 1.9; // height
 		this.updateMetadataFlags();
+	}
+
+	updateName(updateFName = false) {
+		let retVal;
+		if (typeof this.loginIdentity === "undefined") {
+			retVal = this.connection.address.toString();
+		} else if (typeof this.loginIdentity[2] === "undefined") {
+			retVal = this.connection.address.toString();
+		} else {
+			retVal = this.loginIdentity[2]["extraData"]["displayName"];
+		}
+		this.realName = retVal;
+		if (updateFName === true) {
+			this.name = retVal;
+		}
+	}
+
+	getRealName() {
+		return this.realName;
+	}
+
+	getName() {
+		return this.name;
 	}
 
 	message(value) {
@@ -158,7 +185,7 @@ class Player extends Human {
 		if (value.length >= 256) return;
 		if (value.trim() === "") return;
  		for (const [,player] of RakNetPlayerManager.getAllObjectEntries()) {
-			player.message(`<${this.server.getPlayerName(this)}> ${value}`);
+			player.message(`<${this.getRealName()}> ${value}`);
 		}
 	}
 
@@ -175,6 +202,8 @@ class Player extends Human {
 	}
 
 	updateMetadataFlags() {
+		this.metadataStorage.setFloat(MetadataListProperties.boundingBoxWidth, this.boundingBox.x);
+		this.metadataStorage.setFloat(MetadataListProperties.boundingBoxHeight, this.boundingBox.z);
 		this.metadataStorage.setFlag(EntityMetaDataFlags.breathing, this.breathing);
 		this.metadataStorage.setFlag(EntityMetaDataFlags.onFire, this.onFire);
         this.metadataStorage.setFlag(EntityMetaDataFlags.onFire, this.fireImmune);

@@ -32,6 +32,8 @@ class LoginPacketHandler extends HandlersBase {
 		});
 		player.loginClient = loginClient;
 		player.loginIdentity = loginIdentity;
+		
+		player.updateName(true);
 
 		let ev = {
 			player: this.player,

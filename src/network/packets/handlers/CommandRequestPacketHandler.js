@@ -20,7 +20,7 @@ class CommandRequestPacketHandler extends HandlersBase {
 		super.startHandling(packet);
 		if (packet.data.typeID === CommandOriginDataTypes.player) {
 			let cmd = packet.command;
-			if (!cmd.startsWith("/")) {
+			if (!(cmd.startsWith("/"))) {
 				return;
 			}
 			this.server.commandsList.dispatch(this.player, cmd.substring(1));
