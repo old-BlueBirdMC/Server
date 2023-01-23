@@ -658,18 +658,18 @@ class MinecraftBinaryStream extends BinaryStream {
 	writeSubChunk(value) {
 		this.writeUnsignedByte(8);
 		this.writeUnsignedByte(value.blockStorages.length);
-		for (let i = 0; i < value.blockStorages.length; ++i) {
-			this.writeBlockStorage(value.blockStorages[i]);
-		}
+        value.blockStorages.forEach((storage) => {
+            this.writeBlockStorage(storage);
+        });
 	}
 
 	writeChunk(value, count) {
 		for (let i = 0; i < count; ++i) {
 			this.writeSubChunk(value.subChunks[i]);
 		}
-		for (let i = 0; i < value.biomes.length; ++i) {
-			this.writeBlockStorage(value.biomes[i]);
-		}
+        value.biomes.forEach((storage) => {
+            this.writeBlockStorage(storage);
+        });
 		this.writeUnsignedByte(0);
 	}
 
