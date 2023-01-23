@@ -20,11 +20,11 @@ class PlayerAttribute {
     name;
     modifiers;
 
-    constructor(min = 0.0, max = 0.0, current = 0.0, default_value = 0.0, name = "", modifiers = []) {
+    constructor(min = 0.0, max = 0.0, current = 0.0, defaultValue = 0.0, name = "", modifiers = []) {
         this.min = min;
         this.max = max;
         this.current = current;
-        this.default = default_value;
+        this.default = defaultValue;
         this.name = name;
         this.modifiers = modifiers;
     }
