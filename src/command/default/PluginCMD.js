@@ -23,7 +23,7 @@ class PluginCMD extends Command {
 	async run(sender, writtenCommand, args) {
 		let list = "";
 		const getPlugins = sender.server.getAllPlugins();
-       		sender.message("Server plugins: (" + getPlugins.length + ") ");
+       		sender.message("Plugins: (" + getPlugins.length + ") ");
 		getPlugins.forEach(plugin => {
 			list += plugin[1].description.pluginName;
 		});
