@@ -204,14 +204,19 @@ class Player extends Human {
 	updateMetadataFlags() {
 		this.metadataStorage.setFloat(MetadataListProperties.boundingBoxWidth, this.boundingBox.x);
 		this.metadataStorage.setFloat(MetadataListProperties.boundingBoxHeight, this.boundingBox.z);
+        this.metadataStorage.setShort(MetadataListProperties.maxAir, 400);
+        this.metadataStorage.setShort(MetadataListProperties.air, 0);
+        this.metadataStorage.setLong(MetadataListProperties.leadHolderEntityID, -1);
+        this.metadataStorage.setFloat(MetadataListProperties.scale, 1);
+
 		this.metadataStorage.setFlag(EntityMetaDataFlags.breathing, this.breathing);
 		this.metadataStorage.setFlag(EntityMetaDataFlags.onFire, this.onFire);
-        this.metadataStorage.setFlag(EntityMetaDataFlags.onFire, this.fireImmune);
-        this.metadataStorage.setFlag(EntityMetaDataFlags.onFire, this.noAI);
-        this.metadataStorage.setFlag(EntityMetaDataFlags.onFire, this.canClimb);
-        this.metadataStorage.setFlag(EntityMetaDataFlags.onFire, this.canDash);
-        this.metadataStorage.setFlag(EntityMetaDataFlags.onFire, this.canPowerJump);
-        this.metadataStorage.setFlag(EntityMetaDataFlags.onFire, this.swimming);
+        this.metadataStorage.setFlag(EntityMetaDataFlags.fireImmune, this.fireImmune);
+        //this.metadataStorage.setFlag(EntityMetaDataFlags.noAI, this.noAI);
+        //this.metadataStorage.setFlag(EntityMetaDataFlags.canClimb, this.canClimb);
+        //this.metadataStorage.setFlag(EntityMetaDataFlags.canDash, this.canDash);
+        //this.metadataStorage.setFlag(EntityMetaDataFlags.canPowerJump, this.canPowerJump);
+        this.metadataStorage.setFlag(EntityMetaDataFlags.swimming, this.swimming);
         this.metadataStorage.setFlag(EntityMetaDataFlags.hasCollision, this.hasCollision);
         this.metadataStorage.setFlag(EntityMetaDataFlags.affectedByGravity, this.affectedByGravity);
 	}
