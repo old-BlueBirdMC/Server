@@ -232,11 +232,10 @@ class Player extends Human {
         this.metadataStorage.setShort(MetadataListProperties.air, 0);
         this.metadataStorage.setLong(MetadataListProperties.leadHolderEntityID, -1);
         this.metadataStorage.setFloat(MetadataListProperties.scale, 1);
-
 		this.metadataStorage.setFlag(EntityMetaDataFlags.breathing, this.breathing);
 		this.metadataStorage.setFlag(EntityMetaDataFlags.onFire, this.onFire);
         this.metadataStorage.setFlag(EntityMetaDataFlags.fireImmune, this.fireImmune);
-        //this.metadataStorage.setFlag(EntityMetaDataFlags.noAI, this.noAI);
+        this.metadataStorage.setFlag(EntityMetaDataFlags.noAI, this.noAI);
         this.metadataStorage.setFlag(EntityMetaDataFlags.canClimb, this.canClimb);
         this.metadataStorage.setFlag(EntityMetaDataFlags.canDash, this.canDash);
         this.metadataStorage.setFlag(EntityMetaDataFlags.canPowerJump, this.canPowerJump);

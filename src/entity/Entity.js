@@ -21,7 +21,7 @@ class Entity {
 	scaleValue = 1.0;
 	onFire = false;
 	fireImmune = false;
-	noAI = true;
+	noAI = false;
 	canClimb = true;
 	canDash = true;
 	canFly = false;
