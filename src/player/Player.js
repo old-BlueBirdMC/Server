@@ -35,6 +35,7 @@ const SetEntityDataPacket = require("../network/packets/SetEntityDataPacket");
 const EntityProperty = require("../network/types/EntityProperty");
 const SetPlayerGameTypePacket = require("../network/packets/SetPlayerGameTypePacket");
 const CommandEnum = require("../network/types/CommandEnum");
+const PlayerAttribute = require("../network/types/PlayerAttribute");
 
 class Player extends Human {
 	connection;
@@ -50,6 +51,7 @@ class Player extends Human {
 	breathing = true;
 	resourcePackClientResponseSent = false; // fix spamming
 	readyToLogin = false;
+    attributes = [];
 
 	constructor(connection, server) {
 		super();
@@ -65,6 +67,7 @@ class Player extends Human {
 		this.boundingBox.x = 0.6; // width
 		this.boundingBox.z = 1.9; // height
 		this.updateMetadataFlags();
+        this.updateAttributes();
 	}
 
 	updateName(updateFName = false) {
@@ -200,6 +203,27 @@ class Player extends Human {
 		text.platformChatID = platformChatID;
 		text.sendTo(this);
 	}
+
+    updateAttributes() {
+        this.attributes = [
+            new PlayerAttribute(0, 3.4028234663852886e+38, 0, 0, "minecraft:absorption"),
+            new PlayerAttribute(0, 20, 20, 20, "minecraft:player.saturation"),
+            new PlayerAttribute(0, 5, 0, 0, "minecraft:player.exhaustion"),
+            new PlayerAttribute(0, 1, 0, 0, "minecraft:knockback_resistance"),
+            new PlayerAttribute(0, 20, 20, 20, "minecraft:health"),
+            new PlayerAttribute(0, 3.4028234663852886e+38, 0.10, 0.10, "minecraft:movement"),
+            new PlayerAttribute(0, 2048, 16, 16, "minecraft:follow_range"),
+            new PlayerAttribute(0, 20, 20, 20, "minecraft:player.hunger"),
+            new PlayerAttribute(0, 3.4028234663852886e+38, 1, 1, "minecraft:attack_damage"),
+            new PlayerAttribute(0, 24791, 0, 0, "minecraft:player.level"),
+            new PlayerAttribute(0, 1, 0, 0, "minecraft:player.experience"),
+            new PlayerAttribute(0, 3.4028234663852886e+38, 0.02, 0.02, "minecraft:underwater_movement"),
+            new PlayerAttribute(-1024, 1024, 0, 0, "minecraft:luck"),
+            new PlayerAttribute(0, 2, 0.7, 0.7, "minecraft:horse.jump_strength"),
+            new PlayerAttribute(0, 1, 0, 0, "minecraft:zombie.spawn_reinforcements"),
+            new PlayerAttribute(0, 3.4028234663852886e+38, 0.02, 0.02, "minecraft:lava_movemen"),
+        ];
+    }
 
 	updateMetadataFlags() {
 		this.metadataStorage.setFloat(MetadataListProperties.boundingBoxWidth, this.boundingBox.x);

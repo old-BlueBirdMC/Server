@@ -42,6 +42,7 @@ class Identifiers {
 	static setLocalPlayerAsInitalized = 0x71;
     static levelSoundEvent = 0x7b;
 	static setPlayerGameType = 0x3e;
+    static updateAttributes = 0x1d;
 }
 
 module.exports = Identifiers;

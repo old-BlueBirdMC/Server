@@ -46,6 +46,8 @@ const CommandParam = require("../network/types/CommandParam");
 const CommandData = require("../network/types/CommandData");
 const CommandEnumConstraint = require("../network/types/CommandEnumConstraint");
 const EntityProperty = require("../network/types/EntityProperty");
+const PlayerAttribute = require("../network/types/PlayerAttribute");
+const PlayerAttributeModifier = require("../network/types/PlayerAttributeModifier");
 
 class MinecraftBinaryStream extends BinaryStream {
 	readStringVarInt() {
@@ -968,6 +970,68 @@ class MinecraftBinaryStream extends BinaryStream {
 		});
 		return value;
 	}
+
+    readPlayerAttributeModifier() {
+        let modifier = new PlayerAttributeModifier();
+        modifier.id = this.readStringVarInt();
+        modifier.name = this.readStringVarInt();
+        modifier.amount = this.readFloatLE();
+        modifier.operation = this.readIntLE();
+        modifier.operand = this.readIntLE();
+        modifier.serializable = this.readBool();
+        return modifier;
+    }
+
+    writePlayerAttributeModifier(modifier) {
+        this.writeStringVarInt(modifier.id);
+        this.writeStringVarInt(modifier.name);
+        this.writeFloatLE(modifier.amount);
+        this.writeIntLE(modifier.operation);
+        this.writeIntLE(modifier.operand);
+        this.writeBool(modifier.serializable);
+    }
+
+    readPlayerAttribute() {
+        let attribute = new PlayerAttribute();
+        attribute.min = this.readFloatLE();
+        attribute.max = this.readFloatLE();
+        attribute.current = this.readFloatLE();
+        attribute.default = this.readFloatLE();
+        attribute.name = this.readStringVarInt();
+        let modifiersCount = this.readVarInt();
+        for (let i = 0; i < modifiersCount; ++i) {
+            attribute.modifiers.push(this.readPlayerAttributeModifier());
+        }
+        return attribute;
+    }
+
+    writePlayerAttribute(attribute) {
+        this.writeFloatLE(attribute.min);
+        this.writeFloatLE(attribute.max);
+        this.writeFloatLE(attribute.current);
+        this.writeFloatLE(attribute.default);
+        this.writeStringVarInt(attribute.name);
+        this.writeVarInt(attribute.modifiers.length);
+        attribute.modifiers.forEach((value) => {
+            this.writePlayerAttributeModifier(value);
+        });
+    }
+
+    readPlayerAttributes() {
+        let attributes = [];
+        let attributesCount = this.readVarInt();
+        for (let i = 0; i < attributesCount; ++i) {
+            attributes.push(this.readPlayerAttribute());
+        }
+        return attributes;
+    }
+
+    writePlayerAttributes(attributes) {
+        this.writeVarInt(attributes.length);
+        attributes.forEach((value) => {
+            this.writePlayerAttribute(value);
+        });
+    }
 }
 
 module.exports = MinecraftBinaryStream;

@@ -34,6 +34,7 @@ const crypto = require("crypto");
 const SetEntityDataPacket = require("../SetEntityDataPacket");
 const EntityProperty = require("../../types/EntityProperty");
 const MinecraftBinaryStream = require("../../../misc/MinecraftBinaryStream");
+const UpdateAttributesPacket = require("../UpdateAttributesPacket");
 
 class ResourcePackClientResponsePacketHandler extends HandlersBase {
     randomUUID() {
@@ -152,6 +153,12 @@ class ResourcePackClientResponsePacketHandler extends HandlersBase {
 				setEntityData.properties.floatProperties = [];
 				setEntityData.tick = 0;
 				setEntityData.sendTo(this.player);
+
+                const updateAttributesPacket = new UpdateAttributesPacket();
+                updateAttributesPacket.runtimeEntityID = this.player.id;
+                updateAttributesPacket.attributes = this.player.attributes;
+                updateAttributesPacket.tick = 0;
+                updateAttributesPacket.sendTo(this.player);
 
 				const availableEntityIdentifiers = new AvailableEntityIdentifiersPacket();
 				availableEntityIdentifiers.nbt = this.server.resourceManager.availableEntityIdentifiers;
