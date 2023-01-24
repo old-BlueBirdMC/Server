@@ -30,6 +30,7 @@ const SprucePlanks = require("./default/SprucePlanks");
 const Stone = require("./default/Stone");
 const CrimsonPlanks = require("./default/CrimsonPlanks");
 const WarpedPlanks = require("./default/WarpedPlanks");
+const Chest = require("./default/Chest");
 
 class BlocksList {
 	static #list = {};
@@ -53,24 +54,25 @@ class BlocksList {
 		this.add(new DarkOakPlanks());
 		this.add(new CrimsonPlanks());
 		this.add(new WarpedPlanks());
+		this.add(new Chest());
 	}
 
 	static add(block) {
-		let blockAndMetadata = block.blockName + ">" + block.metadata;
+		let blockAndMetadata = `${block.blockName} ${block.metadata}`;
 		if (!(blockAndMetadata in this.#list)) {
 			this.#list[blockAndMetadata] = block;
 		}
 	}
 
 	static remove(block) {
-		let blockAndMetadata = block.blockName + ">" + block.metadata;
+		let blockAndMetadata = `${block.blockName} ${block.metadata}`;
 		if (blockAndMetadata in this.#list) {
 			delete this.#list[blockAndMetadata];
 		}
 	}
 
 	static get(blockName, metadata = 0) {
-		let blockAndMetadata = blockName + ">" + metadata;
+		let blockAndMetadata = `${blockName} ${metadata}`;
 		if (!(blockAndMetadata in this.#list)) {
 			throw new Error("Trying to get unregistered block");
 		}

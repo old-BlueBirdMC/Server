@@ -12,28 +12,11 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class Block {
-	blockName;
-	metadata;
-	maxStack;
-	tool;
-	blastResistance;
-	hardness;
-	isLuminant;
-	isTransparrent;
-	isFlammable;
-	catchesFireFromLava;
-
-	constructor(blockName, metadata = 0) {
-		this.blockName = blockName;
-		this.metadata = metadata;
-	}
-
-	interact(source, position, blockFace) {}
-
-	toRuntimeID(resourceManager) {
-		return resourceManager.blockStatesMap.legacyToRuntime(this.blockName, this.metadata);
-	}
+class UpdateBlockFlags {
+	static neighbors = 1;
+	static network = 2;
+	static noGraphic = 3;
+	static priority = 16;
 }
 
-module.exports = Block;
+module.exports = UpdateBlockFlags;

@@ -35,9 +35,6 @@ const SetEntityDataPacket = require("../network/packets/SetEntityDataPacket");
 const EntityProperty = require("../network/types/EntityProperty");
 const SetPlayerGameTypePacket = require("../network/packets/SetPlayerGameTypePacket");
 const PlayerAttribute = require("../network/types/PlayerAttribute");
-const MovePlayerPacket = require("../network/packets/MovePlayerPacket");
-const MovePlayerModes = require("../network/constants/MovePlayerModes");
-const Chunk = require("../world/chunk/Chunk");
 
 class Player extends Human {
 	connection;
@@ -52,6 +49,7 @@ class Player extends Human {
 	onGround = true;
 	gamemode = GameMode.creative;
 	breathing = true;
+	sprint = false;
 	resourcePackClientResponseSent = false; // fix spamming
 	readyToLogin = false;
    	attributes = [];
@@ -245,7 +243,7 @@ class Player extends Human {
         this.metadataStorage.setFlag(EntityMetaDataFlags.swimming, this.swimming);
         this.metadataStorage.setFlag(EntityMetaDataFlags.hasCollision, this.hasCollision);
         this.metadataStorage.setFlag(EntityMetaDataFlags.affectedByGravity, this.affectedByGravity);
-        this.metadataStorage.setFlag(EntityMetaDataFlags.sprinting, false);
+        this.metadataStorage.setFlag(EntityMetaDataFlags.sprinting, this.sprinting);
 	}
 
 	setPlayerGameType(value) {
@@ -284,7 +282,10 @@ class Player extends Human {
 		return gm;
 	}
 
-	updateData(viewers = []) {
+	updateData(viewers = [], updateFlags = false) {
+		if (updateFlags === true) {
+			this.updateMetadataFlags();
+		}
 		const setEntityData = new SetEntityDataPacket();
 		setEntityData.runtimeEntityID = this.id;
 		setEntityData.metadata = this.metadataStorage.metadata;
@@ -299,21 +300,6 @@ class Player extends Human {
 			return;
 		}
 		setEntityData.sendTo(this);
-	}
-
-	async move(position, rotation) {
-		let x = position.x.toFixed(4);
-		let y = position.y.toFixed(4);
-		let z = position.z.toFixed(4);
-		let rotX = Math.ffmd(Math.round(rotation.x), 360);
-		let rotY = Math.ffmd(Math.round(rotation.y), 360);
-		// let rotZ = Math.ffmd(Math.round(rotation.z), 360);
-
-		this.position.x = x;
-		this.position.y = y;
-		this.position.z = z;
-		this.rotation.x = rotX;
-		this.rotation.y = rotY;
 	}
 
 	checkProtocol(version) {

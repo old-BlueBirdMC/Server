@@ -44,6 +44,8 @@ class Identifiers {
 	static setPlayerGameType = 0x3e;
     static updateAttributes = 0x1d;
 	static movePlayer = 0x13;
+	static playerAction = 0x24;
+	static updateBlock = 0x15;
 }
 
 module.exports = Identifiers;

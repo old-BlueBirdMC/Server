@@ -40,10 +40,10 @@ class GamemodeCMD extends Command {
   async run(sender, writtenCommand, args) {
     // if (!(sender.hasPerm(this.getPerm()))) {}
     if (typeof args[0] !== 'undefined' && typeof args[1] !== 'undefined') {
-	  const player = sender.server.getPlayer(args[1]);
-	  if (player) {
+      const player = sender.server.getOnlinePlayer(args[1]);
+      if (typeof player !== "undefined") {
         this.changeGM(sender, player, args[0]);
-	  }
+      }
       sender.message(`${MinecraftTextColors.red}[ERROR] The player is invalid, if he is in write his full name`);
       return;
     }
@@ -72,9 +72,9 @@ class GamemodeCMD extends Command {
   isAcceptedGM(argument) {
     argument = argument.toLowerCase();
     const isAcceptedGM = (argument.includes('survival') || argument.includes('s')) ||
-		(argument.includes('creative') || argument.includes('c')) ||
-		(argument.includes('adventure') || argument.includes('a')) ||
-		(argument.includes('spectator') || argument.includes('v'));
+      (argument.includes('creative') || argument.includes('c')) ||
+      (argument.includes('adventure') || argument.includes('a')) ||
+      (argument.includes('spectator') || argument.includes('v'));
     if (!(isAcceptedGM)) {
       return false;
     }

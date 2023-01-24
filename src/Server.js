@@ -175,15 +175,46 @@ class Server {
 		return Object.entries(this.#workingPlugins);
 	}
 
-	getPlayer(name) {
-		for (let i = 0; i < RakNetPlayerManager.getLength(); ++i) {
-			const foundPlayer = RakNetPlayerManager.getAllObjectValues()[i];
-			if (foundPlayer instanceof Player) {
-				if (foundPlayer.getRealName() === name) {
-					return foundPlayer;
-				}
+	getOnlinePlayer(name) {
+		let foundPlayer;
+		this.getOnlinePlayers().forEach((player) => {
+			if (player.getRealName() === name) {
+				foundPlayer = player;
 			}
-		}
+		});
+		return foundPlayer;
+	}
+
+	getOnlinePlayerByID(id) {
+		let foundPlayer;
+		this.getOnlinePlayers().forEach((player) => {
+			console.log(player.id === id);
+			if (player.id === id) {
+				foundPlayer = player;
+			}
+		});
+		return foundPlayer;
+	}
+
+	getOnlinePlayerByRID(id) {
+		let foundPlayer;
+		this.getOnlinePlayers().forEach((player) => {
+			console.log(player.id === id);
+			if (BigInt(player.id) === id) {
+				foundPlayer = player;
+			}
+		});
+		return foundPlayer;
+	}
+
+	getOnlinePlayers() {
+		let players = [];
+		RakNetPlayerManager.getAllObjectValues().forEach((player) => {
+			if (player instanceof Player) {
+				players.push(player);
+			}
+		});
+		return players;
 	}
 
 	registerDefaultGenerators() {
