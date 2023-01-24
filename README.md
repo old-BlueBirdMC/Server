@@ -12,7 +12,7 @@
 
 ## Status
 
-Server under active development.
+BBMC under active development.
 
 ## Getting started
 
