@@ -188,7 +188,6 @@ class Server {
 	getOnlinePlayerByID(id) {
 		let foundPlayer;
 		this.getOnlinePlayers().forEach((player) => {
-			console.log(player.id === id);
 			if (player.id === id) {
 				foundPlayer = player;
 			}
