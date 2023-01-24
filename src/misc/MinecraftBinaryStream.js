@@ -663,9 +663,9 @@ class MinecraftBinaryStream extends BinaryStream {
 		}
 	}
 
-	writeChunk(value, count) {
+	writeChunk(value, count, runtimeID) {
 		for (let i = 0; i < count; ++i) {
-			this.writeSubChunk(value.subChunks[i]);
+			this.writeSubChunk(value.subChunks.has(i) ? value.subChunks.get(i) : new SubChunk(runtimeID));
 		}
 		for (let i = 0; i < value.biomes.length; ++i) {
 			this.writeBlockStorage(value.biomes[i]);

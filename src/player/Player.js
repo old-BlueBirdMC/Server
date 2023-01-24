@@ -132,7 +132,7 @@ class Player extends Human {
 		levelChunk.x = chunk.x;
 		levelChunk.z = chunk.z;
 		let stream = new MinecraftBinaryStream();
-		stream.writeChunk(chunk, levelChunk.subChunkCount);
+		stream.writeChunk(chunk, levelChunk.subChunkCount, this.server.resourceManager.blockStatesMap.legacyToRuntime("minecraft:air", 0));
 		levelChunk.payload = stream.buffer;
 		levelChunk.sendTo(this);
 	}
