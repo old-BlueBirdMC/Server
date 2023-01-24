@@ -12,25 +12,13 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const Path = require("path");
+const HandlersBase = require("./HandlersBase");
 
-global.bbmcPath = Path.normalize(__dirname);
-Math.ffmd = (x, z) => {
-	let retVal = 0;
-	if (x < 0) {
-		retVal = ~(Math.abs(x));
-	} else {
-		retVal += x % z;
+class MovePlayerPacketHandler extends HandlersBase {
+	async startHandling(packet) {
+		await super.startHandling(packet);
+		this.player.move(packet.position, packet.rotation);
 	}
-	return retVal;
-};
-
-class ServerInfo {
-	static rakNetProtocolVersion = 11;
-	static minecraftProtocolVersion = 560;
-	static minecraftVersion = "1.19.50";
-	static engine = "BlueBirdMC-Server";
-    static apiVersion = "0.0.1";
 }
 
-module.exports = ServerInfo;
+module.exports = MovePlayerPacketHandler;

@@ -12,25 +12,11 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const Path = require("path");
-
-global.bbmcPath = Path.normalize(__dirname);
-Math.ffmd = (x, z) => {
-	let retVal = 0;
-	if (x < 0) {
-		retVal = ~(Math.abs(x));
-	} else {
-		retVal += x % z;
-	}
-	return retVal;
-};
-
-class ServerInfo {
-	static rakNetProtocolVersion = 11;
-	static minecraftProtocolVersion = 560;
-	static minecraftVersion = "1.19.50";
-	static engine = "BlueBirdMC-Server";
-    static apiVersion = "0.0.1";
+class MovePlayerModes {
+	static normal = 0;
+	static reset = 1;
+	static teleport = 2;
+	static pitch = 3;
 }
 
-module.exports = ServerInfo;
+module.exports = MovePlayerModes;

@@ -43,6 +43,7 @@ class Identifiers {
     static levelSoundEvent = 0x7b;
 	static setPlayerGameType = 0x3e;
     static updateAttributes = 0x1d;
+	static movePlayer = 0x13;
 }
 
 module.exports = Identifiers;
