@@ -46,6 +46,8 @@ class Identifiers {
 	static movePlayer = 0x13;
 	static playerAction = 0x24;
 	static updateBlock = 0x15;
+	static playerSkin = 0x5d;
+	static playerList = 0x3f;
 }
 
 module.exports = Identifiers;

@@ -12,12 +12,21 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class EntityLink {
-	riddenEntityID;
-	riderEntityID;
-	type;
-	immediate;
-	byRider;
+const PlayerSkinPacket = require("../PlayerSkinPacket");
+const HandlersBase = require("./HandlersBase");
+
+class PlayerSkinPacketHandler extends HandlersBase {
+	async startHandling(packet) {
+		await super.startHandling(packet);
+		const playerSkin = new PlayerSkinPacket();
+		playerSkin.uuid = this.player.identity;
+		playerSkin.skin = packet.skin;
+		playerSkin.oldSkinName = "";
+		playerSkin.newSkinName = "";
+		this.server.getOnlinePlayers().forEach(viewers => { // impl wg,w,c,rr
+			playerSkin.sendTo(viewers);
+		});
+	}
 }
 
-module.exports = EntityLink;
+module.exports = PlayerSkinPacketHandler;

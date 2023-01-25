@@ -12,12 +12,10 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class EntityLink {
-	riddenEntityID;
-	riderEntityID;
-	type;
-	immediate;
-	byRider;
+class SkinImage {
+	width;
+	height;
+	data;
 }
 
-module.exports = EntityLink;
+module.exports = SkinImage;

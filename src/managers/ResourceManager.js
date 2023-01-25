@@ -64,7 +64,7 @@ class ResourceManager {
 			let item = new Item();
 			item.networkID = this.itemStatesMap.nameToRuntime(entry["name"]);
 			item.count = 1;
-			item.metadata = ("metadata" in entry) ? entry["metadata"] : 0
+			item.metadata = ("metadata" in entry) ? entry["metadata"] : 0;
 			item.blockRuntimeID = ("block_state_name" in entry) ? this.blockStatesMap.legacyToRuntime(entry["block_state_name"], entry["block_state_metadata"]) : 0;
 			item.extra = new ItemExtraData();
 			if ("nbt_b64" in entry) {

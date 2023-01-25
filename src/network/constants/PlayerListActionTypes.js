@@ -12,12 +12,9 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class EntityLink {
-	riddenEntityID;
-	riderEntityID;
-	type;
-	immediate;
-	byRider;
+class PlayerListActionTypes {
+	static add = 0;
+	static remove = 1;
 }
 
-module.exports = EntityLink;
+module.exports = PlayerListActionTypes;

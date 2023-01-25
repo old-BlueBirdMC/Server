@@ -32,6 +32,9 @@ const ConfigIniManager = require("./managers/ConfgIniManager");
 const PluginDescription = require("./plugin/PluginDescription");
 const RakNetPlayerManager = require('./managers/RakNetPlayerManager');
 const Player = require("./player/Player");
+const PlayerListActionTypes = require("./network/constants/PlayerListActionTypes");
+const PlayerListEntry = require("./network/types/PlayerListEntry");
+const PlayerListPacket = require("./network/packets/PlayerListPacket");
 
 class Server {
 	rakNetServer;
@@ -198,7 +201,6 @@ class Server {
 	getOnlinePlayerByRID(id) {
 		let foundPlayer;
 		this.getOnlinePlayers().forEach((player) => {
-			console.log(player.id === id);
 			if (BigInt(player.id) === id) {
 				foundPlayer = player;
 			}
@@ -214,6 +216,31 @@ class Server {
 			}
 		});
 		return players;
+	}
+
+	updatePlayerList(actionType = PlayerListActionTypes.add) {
+		this.getOnlinePlayers().forEach((player) => {
+			const playerList = new PlayerListPacket();
+			playerList.actionType = actionType;
+			if (actionType === PlayerListActionTypes.add) {
+				const playerListEntry = new PlayerListEntry();
+				playerListEntry.uuid = player.identity;
+				playerListEntry.entityID = player.id;
+				playerListEntry.username = player.getRealName();
+				playerListEntry.skin = player.skin;
+				playerListEntry.xuid = player.xuid;
+				playerListEntry.platformChatID = "";
+				playerListEntry.buildPlatform = player.buildPlatform;
+				playerListEntry.teacher = false;
+				playerListEntry.host = false;
+				playerList.entries = [playerListEntry];
+				playerList.sendTo(player);					
+			} else if (actionType === PlayerListActionTypes.remove) {
+				const playerListEntry = new PlayerListEntry();
+				playerListEntry.uuid = player.identity;
+				playerList.sendTo(player);
+			}
+		});
 	}
 
 	registerDefaultGenerators() {

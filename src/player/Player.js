@@ -44,6 +44,7 @@ class Player extends Human {
 	chunkRadius;
 	position;
 	rotation;
+	velocity;
 	realName;
 	name;
 	onGround = true;
@@ -53,6 +54,12 @@ class Player extends Human {
 	resourcePackClientResponseSent = false; // fix spamming
 	readyToLogin = false;
    	attributes = [];
+	xuid;
+	identity;
+	buildPlatform;
+	deviceOS;
+	deviceID;
+	skin;
 
 	constructor(connection, server) {
 		super();
@@ -65,8 +72,12 @@ class Player extends Human {
 		this.rotation = new Vector2F(); // TEMP UP UNLTI WORLDS ARE MADE
 		this.rotation.x = 0.0;
 		this.rotation.z = 0.0;
-		this.boundingBox.x = 0.6; // width
-		this.boundingBox.z = 1.9; // height
+		this.boundingBox.x = 0.6;
+		this.boundingBox.z = 1.9;
+		this.velocity = new Vector3F();
+		this.velocity.x = 0.0;
+		this.velocity.y = 0.0;
+		this.velocity.z = 0.0;
 		this.updateMetadataFlags();
 		this.updateAttributes();
 	}

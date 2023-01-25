@@ -48,6 +48,10 @@ const CommandEnumConstraint = require("../network/types/CommandEnumConstraint");
 const EntityProperty = require("../network/types/EntityProperty");
 const PlayerAttribute = require("../network/types/PlayerAttribute");
 const PlayerAttributeModifier = require("../network/types/PlayerAttributeModifier");
+const Skin = require("../network/types/Skin");
+const PlayerListEntry = require("../network/types/PlayerListEntry");
+const PlayerListActionTypes = require("../network/constants/PlayerListActionTypes");
+const SkinImage = require("../network/types/SkinImage");
 
 class MinecraftBinaryStream extends BinaryStream {
 	readStringVarInt() {
@@ -743,8 +747,8 @@ class MinecraftBinaryStream extends BinaryStream {
 
 	readEntityLink() {
 		let value = new EntityLink();
-		value.riddenRuntimeEntityID = this.readRuntimeEntityID();
-		value.riderRuntimeEntityID = this.readRuntimeEntityID();
+		value.riddenEntityID = this.readEntityID();
+		value.riderEntityID = this.readEntityID();
 		value.type = this.readUnsignedByte();
 		value.immediate = this.readBool();
 		value.byRider = this.readBool();
@@ -752,8 +756,8 @@ class MinecraftBinaryStream extends BinaryStream {
 	}
 
 	writeEntityLink(value) {
-		this.writeRuntimeEntityID(value.riddenRuntimeEntityID);
-		this.writeRuntimeEntityID(value.riderRuntimeEntityID);
+		this.writeEntityID(value.riddenEntityID);
+		this.writeEntityID(value.riderEntityID);
 		this.writeUnsignedByte(value.type);
 		this.writeBool(value.immediate);
 		this.writeBool(value.byRider);
@@ -1037,6 +1041,117 @@ class MinecraftBinaryStream extends BinaryStream {
             this.writePlayerAttribute(value);
         });
     }
+
+	readSkin() {
+		let value = new Skin();
+		value.skinID = this.readStringVarInt();
+		value.playFabID = this.readStringVarInt();
+		value.skinResourcePatch = this.readStringVarInt();
+		value.skinImage = this.readSkinImage();
+		value.animations = [];
+		value.capeImage = this.readSkinImage();
+		value.skinGeometry = this.readStringVarInt();
+		value.geometryDataEngineVersion = this.readStringVarInt();
+		value.animationData = this.readStringVarInt();
+		value.capeID = this.readStringVarInt();
+		value.fullID = this.readStringVarInt();
+		value.armSize = this.readStringVarInt();
+		value.skinColor = this.readStringVarInt();
+		value.personaPieces = [];
+		value.pieceTintColors = [];
+		value.permiumSkin = this.writeBool();
+		value.personaSkin = this.writeBool();
+		value.personaCapeOnClassic = this.writeBool();
+		value.primaryUser = this.writeBool();
+		value.validate();
+		return value;
+	}
+
+	writeSkin(value) {
+		this.writeStringVarInt(value.skinID);
+		this.writeStringVarInt(value.playFabID);
+		this.writeStringVarInt(value.skinResourcePatch);
+		this.writeSkinImage(value.skinImage);
+		this.writeIntLE(0);//animatinos
+		this.writeSkinImage(value.capeImage);
+		this.writeStringVarInt(value.skinGeometry);
+		this.writeStringVarInt(value.geometryDataEngineVersion);
+		this.writeStringVarInt(value.animationData);
+		this.writeStringVarInt(value.capeID);
+		this.writeStringVarInt(value.fullID);
+		this.writeStringVarInt(value.armSize);
+		this.writeStringVarInt(value.skinColor);
+		this.writeIntLE(0); // personapieces
+		this.writeIntLE(0); // persona tint colors
+		this.writeBool(value.permiumSkin);
+		this.writeBool(value.personaSkin);
+		this.writeBool(value.personaCapeOnClassic);
+		this.writeBool(value.primaryUser);
+		value.validate();
+	}
+
+	readSkinImage() {
+		let value = new SkinImage();
+		value.width = this.readIntLE();
+		value.height = this.readIntLE();
+		value.data = this.readByteArrayVarInt();
+		return value;
+	}
+
+	writeSkinImage(value) {
+		this.writeIntLE(value.height);
+		this.writeIntLE(value.width);
+		this.writeByteArrayVarInt(value.data);
+	}
+
+	readPlayerListEntry(actionType) {
+		let value = new PlayerListEntry();
+		if (actionType === PlayerListActionTypes.add) {
+			value.uuid = this.readUUID();
+			value.entityID = this.readEntityID();
+			value.username = this.readStringVarInt();
+			value.xuid = this.readStringVarInt();
+			value.platformChatID = this.readStringVarInt();
+			value.buildPlatform = this.readIntLE();
+			value.skin = this.readSkin();
+			value.teacher = this.readBool();
+			value.host = this.readBool();
+		} else {
+			value.uuid = this.readUUID();
+		}
+		return value;
+	}
+
+	writePlayerListEntry(value, actionType) {
+		if (actionType === PlayerListActionTypes.add) {
+			this.writeUUID(value.uuid);
+			this.writeEntityID(value.entityID);
+			this.writeStringVarInt(value.username);
+			this.writeStringVarInt(value.xuid);
+			this.writeStringVarInt(value.platformChatID);
+			this.writeIntLE(value.buildPlatform);
+			this.writeSkin(value.skin);
+			this.writeBool(value.teacher);
+			this.writeBool(value.host);
+		} else {
+			this.writeUUID(value.uuid);
+		}
+	}
+
+	readPlayerListEntries(actionType) {
+		let value = [];
+		for (let i = 0; i < this.readVarInt(); ++i) {
+			value.push(this.readPlayerListEntry(actionType));
+		}
+		return value;
+	}
+
+	writePlayerListEntries(value, actionType) {
+		this.writeVarInt(value.length);
+		for (let i = 0; i < this.readVarInt(); ++i) {
+			this.writePlayerListEntry(value[i], actionType);
+		}
+	}
 }
 
 module.exports = MinecraftBinaryStream;

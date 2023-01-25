@@ -28,13 +28,15 @@ const GameMode = require("../../constants/GameMode");
 const PlayStatus = require("../../constants/PlayStatus");
 const AvailableEntityIdentifiersPacket = require("../AvailableEntityIdentifiersPacket");
 const ChatRestrictionLevel = require("../../constants/ChatRestrictionLevel");
-const canceller = require("../../../event/canceller");
 const ServerInfo = require("../../../ServerInfo");
 const crypto = require("crypto");
 const SetEntityDataPacket = require("../SetEntityDataPacket");
 const EntityProperty = require("../../types/EntityProperty");
 const MinecraftBinaryStream = require("../../../misc/MinecraftBinaryStream");
 const UpdateAttributesPacket = require("../UpdateAttributesPacket");
+const PlayerListPacket = require("../PlayerListPacket");
+const PlayerListActionTypes = require("../../constants/PlayerListActionTypes");
+const PlayerListEntry = require("../../types/PlayerListEntry");
 
 class ResourcePackClientResponsePacketHandler extends HandlersBase {
 	randomUUID() {
@@ -170,6 +172,7 @@ class ResourcePackClientResponsePacketHandler extends HandlersBase {
 
 				if (!this.player.resourcePackClientResponseSent) {//todo: remove after an packet impl
 					this.player.sendAvailableCommands();
+					this.server.updatePlayerList();
 					this.player.resourcePackClientResponseSent = true;
 				}
 				this.player.sendPlayStatus(PlayStatus.playerSpawn);

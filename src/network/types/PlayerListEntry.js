@@ -12,12 +12,16 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class EntityLink {
-	riddenEntityID;
-	riderEntityID;
-	type;
-	immediate;
-	byRider;
+class PlayerListEntry {
+	uuid;
+	entityID;
+	username;
+	skin;
+	xuid;
+	platformChatID;
+	buildPlatform;
+	teacher;
+	host;
 }
 
-module.exports = EntityLink;
+module.exports = PlayerListEntry;
