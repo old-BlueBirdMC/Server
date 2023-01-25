@@ -234,7 +234,7 @@ class Server {
 				playerListEntry.teacher = false;
 				playerListEntry.host = false;
 				playerList.entries = [playerListEntry];
-				playerList.sendTo(player);					
+				playerList.sendTo(player);
 			} else if (actionType === PlayerListActionTypes.remove) {
 				const playerListEntry = new PlayerListEntry();
 				playerListEntry.uuid = player.identity;

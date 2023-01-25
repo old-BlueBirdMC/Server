@@ -34,9 +34,6 @@ const SetEntityDataPacket = require("../SetEntityDataPacket");
 const EntityProperty = require("../../types/EntityProperty");
 const MinecraftBinaryStream = require("../../../misc/MinecraftBinaryStream");
 const UpdateAttributesPacket = require("../UpdateAttributesPacket");
-const PlayerListPacket = require("../PlayerListPacket");
-const PlayerListActionTypes = require("../../constants/PlayerListActionTypes");
-const PlayerListEntry = require("../../types/PlayerListEntry");
 
 class ResourcePackClientResponsePacketHandler extends HandlersBase {
 	randomUUID() {
