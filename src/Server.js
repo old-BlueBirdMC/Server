@@ -219,28 +219,28 @@ class Server {
 	}
 
 	updatePlayerList(actionType = PlayerListActionTypes.add) {
-		this.getOnlinePlayers().forEach((player) => {
-			const playerList = new PlayerListPacket();
-			playerList.actionType = actionType;
-			if (actionType === PlayerListActionTypes.add) {
-				const playerListEntry = new PlayerListEntry();
-				playerListEntry.uuid = player.identity;
-				playerListEntry.entityID = player.id;
-				playerListEntry.username = player.getRealName();
-				playerListEntry.skin = player.skin;
-				playerListEntry.xuid = player.xuid;
-				playerListEntry.platformChatID = "";
-				playerListEntry.buildPlatform = player.buildPlatform;
-				playerListEntry.teacher = false;
-				playerListEntry.host = false;
-				playerList.entries = [playerListEntry];
-				playerList.sendTo(player);
-			} else if (actionType === PlayerListActionTypes.remove) {
-				const playerListEntry = new PlayerListEntry();
-				playerListEntry.uuid = player.identity;
-				playerList.sendTo(player);
-			}
-		});
+		// this.getOnlinePlayers().forEach((player) => {
+		// 	const playerList = new PlayerListPacket();
+		// 	playerList.actionType = actionType;
+		// 	if (actionType === PlayerListActionTypes.add) {
+		// 		const playerListEntry = new PlayerListEntry();
+		// 		playerListEntry.uuid = player.identity;
+		// 		playerListEntry.entityID = player.id;
+		// 		playerListEntry.username = player.getRealName();
+		// 		playerListEntry.skin = player.skin;
+		// 		playerListEntry.xuid = player.xuid;
+		// 		playerListEntry.platformChatID = "";
+		// 		playerListEntry.buildPlatform = player.buildPlatform;
+		// 		playerListEntry.teacher = false;
+		// 		playerListEntry.host = false;
+		// 		playerList.entries = [playerListEntry];
+		// 		playerList.sendTo(player);
+		// 	} else if (actionType === PlayerListActionTypes.remove) {
+		// 		const playerListEntry = new PlayerListEntry();
+		// 		playerListEntry.uuid = player.identity;
+		// 		playerList.sendTo(player);
+		// 	}
+		// });
 	}
 
 	registerDefaultGenerators() {
