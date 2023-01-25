@@ -18,8 +18,6 @@ const MinecraftTextColors = require("../color/MinecraftTextColors");
 const ConsoleCommandSender = require("../console/ConsoleCommandSender");
 const Player = require("../player/Player");
 const Command = require("./Command");
-const HelpCMD = require("./default/HelpCMD");
-const StopCMD = require("./default/StopCMD");
 const CommandSender = require("./sender/CommandSender");
 
 class CommandsList {

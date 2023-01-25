@@ -12,49 +12,16 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const Air = require("./default/Air");
-const Andesite = require("./default/Andesite");
-const Bedrock = require("./default/Bedrock");
-const BirchPlanks = require("./default/BirchPlanks");
-const DarkOakPlanks = require("./default/DarkOakPlanks");
-const Diorite = require("./default/Diorite");
-const Dirt = require("./default/Dirt");
-const Granite = require("./default/Granite");
-const Grass = require("./default/Grass");
-const JunglePlanks = require("./default/JunglePlanks");
-const OakPlanks = require("./default/OakPlanks");
-const PolishedAndesite = require("./default/PolishedAndesite");
-const PolishedDiorite = require("./default/PolishedDiorite");
-const PolishedGranite = require("./default/PolishedGranite");
-const SprucePlanks = require("./default/SprucePlanks");
-const Stone = require("./default/Stone");
-const CrimsonPlanks = require("./default/CrimsonPlanks");
-const WarpedPlanks = require("./default/WarpedPlanks");
-const Chest = require("./default/Chest");
+const fs = require("fs");
 
 class BlocksList {
 	static #list = {};
 
 	static refresh() {
-		this.add(new Air());
-		this.add(new Stone());
-		this.add(new Dirt());
-		this.add(new Grass());
-		this.add(new Bedrock());
-		this.add(new Granite());
-		this.add(new PolishedGranite());
-		this.add(new Diorite());
-		this.add(new PolishedDiorite());
-		this.add(new Andesite());
-		this.add(new PolishedAndesite());
-		this.add(new OakPlanks());
-		this.add(new SprucePlanks());
-		this.add(new BirchPlanks());
-		this.add(new JunglePlanks());
-		this.add(new DarkOakPlanks());
-		this.add(new CrimsonPlanks());
-		this.add(new WarpedPlanks());
-		this.add(new Chest());
+		fs.readdirSync(__dirname + '/default').forEach((file) => {
+			const block = require(__dirname + '/default/' + file);
+			this.add(new block());
+		});
 	}
 
 	static add(block) {
