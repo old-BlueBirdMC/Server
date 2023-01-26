@@ -29,15 +29,30 @@ const perlinPermutation = [
     72, 243, 141, 128, 195, 78, 66, 215, 61, 156, 180
 ];
 
+const perlins = [
+    [0.0625, 16],
+    [0.0625, 16],
+    [0.05, 20],
+    [0.05, 20],
+    [0.045454545454545456, 22],
+    [0.045454545454545456, 22],
+    [0.03225806451612903, 31],
+    [0.03225806451612903, 31],
+    [0.03125, 32],
+    [0.03125, 32],
+    [0.015625, 64],
+    [0.015625, 64],
+    [0.001953125, 512],
+    [0.001953125, 512]
+];
+
+const avg = 0.08031678768442099;
+
 class Perlin {
     p;
 
-    constructor(seed) {
-        this.p = new Array(512);
-        for(let x = 0; x < 512; ++x) {
-            this.p[x] = (perlinPermutation[x % 256] + seed) % 256;
-        }
-
+    constructor() {
+        this.p = perlinPermutation;
     }
 
     // 3D dot function
@@ -64,7 +79,7 @@ class Perlin {
         return v0 + t * (v1 - v0);
     }
 
-    perlin(x, y, z) {
+    noise(x, y, z) {
         let xi = Math.floor(x) & 255;
         let yi = Math.floor(y) & 255;
         let zi = Math.floor(z) & 255;
@@ -92,23 +107,32 @@ class Perlin {
         x2 = this.lerp(this.grad(abb, xf, yf - 1, zf - 1), this.grad(bbb, xf - 1, yf - 1, zf - 1), u);
         let y2 = this.lerp(x1, x2, v);
     
-        return (this.lerp(y1, y2, w) + 1) / 2;
+        return this.lerp(y1, y2, w);
     }
 
-    octavePerlin(x, y, z, octaves, persistence) {
-        let total = 0;
+    perlin(x, y, z, r = 1, scale = 1, octaves = 1, persistence = 0.2, lacunarity = 2) {
         let frequency = 1;
         let amplitude = 1;
-        let maxValue = 0;
+        let height = 0;
+
         for(let i = 0; i < octaves; ++i) {
-            total += this.perlin(x * frequency, y * frequency, z * frequency) * amplitude;
-            
-            maxValue += amplitude;
+            let sampleX = x / scale * frequency * (i + 1);
+            let sampleY = y / scale * frequency * (i + 1);
+            let sampleZ = z / scale * frequency * (i + 1)
+            let total = 0;
+            for (let j = 0; j < 14; ++j) {
+                let val = perlins[j];
+                let s = val[0];
+                let h = val[1];
+                total += this.noise(sampleX * s, sampleY * s, sampleZ * s) * amplitude * h;
+            }
+            total *= avg * 1 / (i + 1);
+            height += total;
             
             amplitude *= persistence;
-            frequency *= 2;
+            frequency *= lacunarity;
         }
-        return total / maxValue;
+        return height;
     }
 }
 
