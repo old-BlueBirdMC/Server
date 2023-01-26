@@ -32,11 +32,12 @@ const perlinPermutation = [
 class Perlin {
     p;
 
-    construct(seed) {
+    constructor(seed) {
         this.p = new Array(512);
         for(let x = 0; x < 512; ++x) {
             this.p[x] = (perlinPermutation[x % 256] + seed) % 256;
         }
+
     }
 
     // 3D dot function
@@ -64,6 +65,13 @@ class Perlin {
     }
 
     perlin(x, y, z) {
+        let xi = Math.floor(x) & 255;
+        let yi = Math.floor(y) & 255;
+        let zi = Math.floor(z) & 255;
+        let xf = x - Math.floor(x);
+        let yf = y - Math.floor(y);
+        let zf = z - Math.floor(z);
+
         let aaa = this.p[this.p[this.p[xi] + yi] + zi];
         let aba = this.p[this.p[this.p[xi] + yi + 1] + zi];
         let aab = this.p[this.p[this.p[xi] + yi] + zi + 1];
@@ -73,25 +81,18 @@ class Perlin {
         let bab = this.p[this.p[this.p[xi + 1] + yi] + zi + 1];
         let bbb = this.p[this.p[this.p[xi + 1] + yi + 1] + zi + 1];
 
-        let xi = Math.floor(x) & 255;
-        let yi = Math.floor(y) & 255;
-        let zi = Math.floor(z) & 255;
-        let xf = x - Math.floor(x);
-        let yf = y - Math.floor(y);
-        let zf = z - Math.floor(z);
-
         let u = this.fade(xf);
         let v = this.fade(yf);
         let w = this.fade(zf);
 
         let x1 = this.lerp(this.grad(aaa, xf, yf, zf), this.grad(baa, xf - 1, yf, zf), u);
-        let x2 = lerp(grad(aba, xf, yf - 1, zf), grad(bba, xf -1, yf-1, zf), u);
-        let y1 = lerp(x1, x2, v);
-        x1 = lerp(grad(aab, xf, yf, zf - 1), grad(bab, xf - 1, yf, zf - 1), u);
-        x2 = lerp(grad(abb, xf, yf - 1, zf - 1), grad(bbb, xf - 1, yf - 1, zf - 1), u);
-        let y2 = lerp(x1, x2, v);
+        let x2 = this.lerp(this.grad(aba, xf, yf - 1, zf), this.grad(bba, xf - 1, yf - 1, zf), u);
+        let y1 = this.lerp(x1, x2, v);
+        x1 = this.lerp(this.grad(aab, xf, yf, zf - 1), this.grad(bab, xf - 1, yf, zf - 1), u);
+        x2 = this.lerp(this.grad(abb, xf, yf - 1, zf - 1), this.grad(bbb, xf - 1, yf - 1, zf - 1), u);
+        let y2 = this.lerp(x1, x2, v);
     
-        return (lerp(y1, y2, w) + 1) / 2;
+        return (this.lerp(y1, y2, w) + 1) / 2;
     }
 
     octavePerlin(x, y, z, octaves, persistence) {
