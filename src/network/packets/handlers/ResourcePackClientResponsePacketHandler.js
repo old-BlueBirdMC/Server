@@ -82,7 +82,7 @@ class ResourcePackClientResponsePacketHandler extends HandlersBase {
 				startGame.spawnPosition = worldPos;
 				startGame.achievementsDisabled = false;
 				startGame.editorWorld = false;
-				startGame.dayCycleStopTime = false;
+				startGame.dayCycleStopTime = 0;
 				startGame.eduOffer = 0;
 				startGame.eduFeaturesEnabled = false;
 				startGame.eduProductUUID = this.randomUUID();
