@@ -21,7 +21,7 @@ const Experiment = require("../network/types/Experiment");
 const GameRule = require("../network/types/GameRule");
 const GameRuleTypes = require("../network/constants/GameRuleTypes");
 const EducationSharedResourceURI = require("../network/types/EducationSharedResourceURI");
-const BlockCoordinates = require("../network/types/BlockCoordinates");
+const Coordinates = require("../network/types/BlockCoordinates");
 const Vector3F = require("../network/types/Vector3F");
 const Vector2F = require("../network/types/Vector2F");
 const Vector3I = require("../network/types/Vector3I");
@@ -647,7 +647,7 @@ class MinecraftBinaryStream extends BinaryStream {
 				let state = value.blocks[position++];
 				word |= state << (version.bitsPerBlock * j);
 			}
-			this.writeUnsignedIntLE(word);
+			this.writeIntLE(word);
 		}
 		this.writeSignedVarInt(value.palette.length);
         for (let i = 0; i < value.palette.length; ++i) {
