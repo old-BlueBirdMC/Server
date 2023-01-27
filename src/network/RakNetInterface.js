@@ -49,9 +49,9 @@ class RakNetInterface {
 		this.log = new Logger({Name: "RakNet", AllowDebugging: true, WithColors: true});
 	}
 
-	async handlePong() {
+	handlePong() {
 		const pinger = setInterval(async () => {
-			return await new Promise(() => {
+			return new Promise(() => {
 				if (this.rakNetServer.isRunning === false) {
 					clearInterval(pinger);
 				}

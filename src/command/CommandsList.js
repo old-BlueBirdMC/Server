@@ -18,8 +18,6 @@ const MinecraftTextColors = require("../color/MinecraftTextColors");
 const ConsoleCommandSender = require("../console/ConsoleCommandSender");
 const Player = require("../player/Player");
 const Command = require("./Command");
-const HelpCMD = require("./default/HelpCMD");
-const StopCMD = require("./default/StopCMD");
 const CommandSender = require("./sender/CommandSender");
 
 class CommandsList {
@@ -70,17 +68,15 @@ class CommandsList {
 		}
 	}
 
-	async dispatch(sender, commandName) {
-		if (commandName === "") {
-			return;
-		}
+	dispatch(sender, commandName) {
+		if (commandName === "") return;
 		let args = commandName.split(" ");
 		commandName = args.shift();
 
 		if (this.has(commandName)) {
 			let command = this.get(commandName);
 			if (sender instanceof Player || sender instanceof CommandSender) {
-				await command.run(sender, commandName, args);
+				command.run(sender, commandName, args);
 			}
 		} else {
 			if (sender instanceof ConsoleCommandSender && commandName.trim() === "") {

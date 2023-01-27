@@ -23,7 +23,7 @@ class HandlersBase {
 		this.server = server;
 	}
 
-	async startHandling(packet) {
+	startHandling(packet) {
 		if (!packet instanceof PacketsBase) return;
 		if (this.player.connection === null)  return;
 		packet.deserializeA();
