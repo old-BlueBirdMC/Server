@@ -29,19 +29,25 @@ class World {
         return [BigInt.asIntN(32, xz << 16n), BigInt.asIntN(32, xz & 0xffffffff)];
     }
 
-    async loadChunk(x, z) {
-        let xz = this.hashXZ(x, z);
-        if (!(xz in this.chunks)) {
-            if (false === false) {
-                this.chunks[xz] = null;
-                this.chunks[xz] = await this.getGenerator().generate(x, z);
-            } else {
-                this.chunks[xz] = "read the chunk;";
-            }
-        } else if (this.chunks[xz] === null) {
-            setTimeout(this.loadChunk(x, z), 10);
-        }
-        return this.chunks[xz];
+    loadChunk(x, z) {
+        return new Promise((resolve) => {
+            let xz = this.hashXZ(x, z);
+            let loadChunkTask = setInterval(() => {
+                if (!(xz in this.chunks)) {
+                    if (false === false) {
+                        this.chunks[xz] = null;
+                        this.getGenerator().generate(x, z).then((value) => {
+                            this.chunks[xz] = value;
+                        });
+                    } else {
+                        this.chunks[xz] = "read the chunk;";
+                    }
+                } else if (this.chunks[xz] !== null) {
+                    clearInterval(loadChunkTask);
+                    resolve(this.chunks[xz]);
+                }
+            }, 10);
+        });
     }
 
     async unloadChunk(x, z) {
@@ -57,7 +63,7 @@ class World {
     }
 
     getGenerator() {
-        return this.generatorManager.getGenerator("flat");
+        return this.generatorManager.getGenerator("overworld");
     }
 
     getBlockRuntimeID(x, y, z, layer) {

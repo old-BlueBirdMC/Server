@@ -20,17 +20,19 @@ class RequestChunkRadiusPacketHandler extends HandlersBase {
 		await super.startHandling(packet);
 
         this.player.chunkRadius = packet.chunkRadius;
-        this.player.chunkRadius = 2;
+        //this.player.chunkRadius = 2;
 
 		let chunkRadiusUpdated = new ChunkRadiusUpdatedPacket();
 		chunkRadiusUpdated.chunkRadius = this.player.chunkRadius;
 		chunkRadiusUpdated.sendTo(this.player);
 
-        new Promise(async (resolve, reject) => {
+        new Promise((resolve, reject) => {
             this.player.sendNetworkChunkPublisherUpdate();
 		    for (let chunkX = -this.player.chunkRadius; chunkX <= this.player.chunkRadius; ++chunkX) {
 			    for (let chunkZ = -this.player.chunkRadius; chunkZ <= this.player.chunkRadius; ++chunkZ) {
-				    this.player.sendChunk(await this.server.testWorld.loadChunk(chunkX, chunkZ));
+                    this.server.testWorld.loadChunk(chunkX, chunkZ).then((value) => {
+                        this.player.sendChunk(value);
+                    });
 			    }
 		    }
             resolve();

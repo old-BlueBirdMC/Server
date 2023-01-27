@@ -647,7 +647,7 @@ class MinecraftBinaryStream extends BinaryStream {
 				let state = value.blocks[position++];
 				word |= state << (version.bitsPerBlock * j);
 			}
-			this.writeUnsignedIntLE(word);
+			this.writeIntLE(word);
 		}
 		this.writeSignedVarInt(value.palette.length);
         for (let i = 0; i < value.palette.length; ++i) {
