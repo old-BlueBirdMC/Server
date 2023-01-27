@@ -98,12 +98,12 @@ class Server {
 		});
 	}
 
-	async shutdown(closeMessage = undefined, exitProcess = true) {
-		await this.rakNetInterface.close(closeMessage, exitProcess);
+	shutdown(closeMessage = undefined, exitProcess = true) {
+		this.rakNetInterface.close(closeMessage, exitProcess);
 	}
 
-	async sendUnserializedMinecraftPacket(packet, player) {
-		await this.rakNetInterface.queuePacket(packet, player);
+	sendUnserializedMinecraftPacket(packet, player) {
+		this.rakNetInterface.queuePacket(packet, player);
 	}
 
 	addEvent(event, eventName) {
