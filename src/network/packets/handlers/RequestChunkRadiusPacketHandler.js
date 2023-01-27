@@ -16,8 +16,8 @@ const HandlersBase = require("./HandlersBase");
 const ChunkRadiusUpdatedPacket = require("../ChunkRadiusUpdatedPacket");
 
 class RequestChunkRadiusPacketHandler extends HandlersBase {
-	async startHandling(packet) {
-		await super.startHandling(packet);
+	startHandling(packet) {
+		super.startHandling(packet);
 
         this.player.chunkRadius = packet.chunkRadius;
         this.player.chunkRadius = 8;
