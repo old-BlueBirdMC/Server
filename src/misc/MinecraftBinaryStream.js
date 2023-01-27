@@ -641,9 +641,6 @@ class MinecraftBinaryStream extends BinaryStream {
 		for (let i = 0; i < version.wordsPerChunk; ++i) {
 			let word = 0;
 			for (let j = 0; j < version.blocksPerWord; ++j) {
-				if (position >= 4096) {
-					break;
-				}
 				let state = value.blocks[position++];
 				word |= state << (version.bitsPerBlock * j);
 			}
