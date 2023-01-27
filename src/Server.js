@@ -21,6 +21,7 @@ const fs = require("fs");
 const BlocksList = require("./block/BlocksList");
 const { EventEmitter } = require("stream");
 const Flat = require("./world/generators/Flat");
+const Overworld = require("./world/generators/Overworld");
 const World = require("./world/World");
 const PluginStructure = require("./plugin/PluginStructure");
 const path = require("path");
@@ -218,6 +219,7 @@ class Server {
 
 	registerDefaultGenerators() {
 		this.generatorManager.registerGenerator(Flat);
+        this.generatorManager.registerGenerator(Overworld);
 	}
 }
 

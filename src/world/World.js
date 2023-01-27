@@ -18,7 +18,7 @@ class World {
 
     constructor(generatorManager) {
         this.generatorManager = generatorManager;
-        this.chunks = {};
+        this.chunks = new Map();
     }
 
     hashXZ(x, z) {
@@ -33,20 +33,22 @@ class World {
         return new Promise((resolve) => {
             let xz = this.hashXZ(x, z);
             let loadChunkTask = setInterval(() => {
-                if (!(xz in this.chunks)) {
+                if (!this.chunks.has(xz)) {
                     if (false === false) {
-                        this.chunks[xz] = null;
+                        this.chunks.set(xz, null);
                         this.getGenerator().generate(x, z).then((value) => {
-                            this.chunks[xz] = value;
+                            this.chunks.set(xz, value);
                             clearInterval(loadChunkTask);
-                            resolve(this.chunks[xz]);
+                            resolve(this.chunks.get(xz));
                         });
                     } else {
-                        this.chunks[xz] = "read the chunk;";
                     }
-                } else if (this.chunks[xz] !== null) {
-                    clearInterval(loadChunkTask);
-                    resolve(this.chunks[xz]);
+                } else {
+                    let chunk = this.chunks.get(xz);
+                    if (chunk !== null) {
+                        clearInterval(loadChunkTask);
+                        resolve(chunk);
+                    }
                 }
             }, 10);
         });
@@ -55,8 +57,8 @@ class World {
     async unloadChunk(x, z) {
         let xz = this.hashXZ(x, z);
         await this.saveChunk();
-        if (xz in this.chunks) {
-            delete this.chunks[xz];
+        if (this.chunks.has(xz)) {
+            this.chunks.delete(xz);
         }
     }
 
@@ -64,17 +66,17 @@ class World {
     }
 
     getGenerator() {
-        return this.generatorManager.getGenerator("flat");
+        return this.generatorManager.getGenerator("overworld");
     }
 
     getBlockRuntimeID(x, y, z, layer) {
         let xz = this.hashXZ(x >> 4, z >> 4);
-        return this.chunks[xz].getBlockRuntimeID(x & 0x0f, y, z & 0x0f, layer);
+        return this.chunks.get(xz).getBlockRuntimeID(x & 0x0f, y, z & 0x0f, layer);
     }
 
     setBlockRuntimeID(x, y, z, layer, runtimeID) {
         let xz = this.hashXZ(x >> 4, z >> 4);
-        this.chunks[xz].setBlockRuntimeID(x & 0x0f, y, z & 0x0f, layer, runtimeID);
+        this.chunks.get(xz).setBlockRuntimeID(x & 0x0f, y, z & 0x0f, layer, runtimeID);
     }
 }
 
