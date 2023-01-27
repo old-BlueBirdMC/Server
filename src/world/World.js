@@ -38,6 +38,8 @@ class World {
                         this.chunks[xz] = null;
                         this.getGenerator().generate(x, z).then((value) => {
                             this.chunks[xz] = value;
+                            clearInterval(loadChunkTask);
+                            resolve(this.chunks[xz]);
                         });
                     } else {
                         this.chunks[xz] = "read the chunk;";
@@ -59,11 +61,10 @@ class World {
     }
 
     async saveChunk(x, z) {
-        // save
     }
 
     getGenerator() {
-        return this.generatorManager.getGenerator("overworld");
+        return this.generatorManager.getGenerator("flat");
     }
 
     getBlockRuntimeID(x, y, z, layer) {
