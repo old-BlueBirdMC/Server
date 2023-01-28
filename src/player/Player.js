@@ -137,6 +137,20 @@ class Player extends Human {
 		levelChunk.sendTo(this);
 	}
 
+    sendChunks() {
+        return new Promise((resolve) => {
+            this.sendNetworkChunkPublisherUpdate();
+		    for (let chunkX = -this.chunkRadius; chunkX <= this.chunkRadius; ++chunkX) {
+			    for (let chunkZ = -this.chunkRadius; chunkZ <= this.chunkRadius; ++chunkZ) {
+                    this.server.testWorld.loadChunk(chunkX + (this.position.x >> 4), chunkZ + (this.position.z >> 4)).then((value) => {
+                        this.sendChunk(value);
+                    });
+			    }
+		    }
+            resolve();
+        });
+    }
+
 	sendAvailableCommands() {
 		let data = [];
 		// let enums = {};

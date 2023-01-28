@@ -24,11 +24,23 @@ class MovePlayerPacketHandler extends HandlersBase {
 		let rotY = Math.ffmd(Math.round(packet.rotation.y), 360);
 		// let rotZ = Math.ffmd(Math.round(packet.rotation.z), 360);
 
+        let leftChunkRadius = false;
+
+        if (
+            ((x >> 4) / this.player.chunkRadius) != ((this.player.rotation.x >> 4) / this.player.chunkRadius) ||
+            ((z >> 4) / this.player.chunkRadius) != ((this.player.rotation.z >> 4) / this.player.chunkRadius)
+        ) {
+            leftChunkRadius = true;
+        }
+
 		this.player.position.x = x;
 		this.player.position.y = y;
 		this.player.position.z = z;
 		this.player.rotation.x = rotX;
 		this.player.rotation.y = rotY;
+        if (leftChunkRadius) {
+            this.player.sendChunks();
+        }
 	}
 }
 
