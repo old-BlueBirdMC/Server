@@ -1,0 +1,17 @@
+{
+    "name": "bluebirdmc",
+    "version": "1.0.0-stable",
+    "author": {"name": "BlueBirdMC"},
+    "main": "index.js",
+    "description": "BluebirdMC is Minecraft bedrock server software.",
+    "scripts": {
+        "install": "npm install",
+        "start": "node index.js"
+    },
+    "license": "MIT",
+    "dependencies": {
+        "bbmc-binarystream": "^1.0.0",
+        "bbmc-nbt": "https://github.com/BlueBirdMC/NBT.git",
+        "bbmc-raknet": "^1.0.3"
+    }
+}
