@@ -62,6 +62,7 @@ class StartGamePacket extends PacketsBase {
 	onlySpawnV1Villagers;
 	personaDisabled;
 	customSkinsDisabled;
+	emoteChatDisabled;
 	gameVersion;
 	limitedWorldWidth;
 	limitedWorldLength;
@@ -134,6 +135,7 @@ class StartGamePacket extends PacketsBase {
 		this.onlySpawnV1Villagers = this.readBool();
 		this.personaDisabled = this.readBool();
 		this.customSkinsDisabled = this.readBool();
+		this.emoteChatDisabled = this.readBool();
 		this.gameVersion = this.readStringVarInt();
 		this.limitedWorldWidth = this.readIntLE()();
 		this.limitedWorldLength = this.readIntLE();
@@ -207,6 +209,7 @@ class StartGamePacket extends PacketsBase {
 		this.writeBool(this.onlySpawnV1Villagers);
 		this.writeBool(this.personaDisabled);
 		this.writeBool(this.customSkinsDisabled);
+		this.writeBool(this.emoteChatDisabled);
 		this.writeStringVarInt(this.gameVersion);
 		this.writeIntLE(this.limitedWorldWidth);
 		this.writeIntLE(this.limitedWorldLength);
