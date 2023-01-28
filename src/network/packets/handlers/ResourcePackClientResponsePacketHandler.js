@@ -111,6 +111,7 @@ class ResourcePackClientResponsePacketHandler extends HandlersBase {
 				startGame.onlySpawnV1Villagers = false;
 				startGame.personaDisabled = false;
 				startGame.customSkinsDisabled = false;
+				startGame.emoteChatDisabled = true;
 				startGame.gameVersion = ServerInfo.minecraftVersion;
 				startGame.limitedWorldWidth = 0;
 				startGame.limitedWorldLength = 0;
