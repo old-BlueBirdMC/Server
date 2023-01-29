@@ -17,9 +17,9 @@ const HandlersBase = require("./HandlersBase");
 class MovePlayerPacketHandler extends HandlersBase {
 	async startHandling(packet) {
 		await super.startHandling(packet);
-		let x = packet.position.x.toFixed(4);
-		let y = packet.position.y.toFixed(4);
-		let z = packet.position.z.toFixed(4);
+		let x = packet.position.x;
+		let y = packet.position.y;
+		let z = packet.position.z;
 		let rotX = Math.ffmd(Math.round(packet.rotation.x), 360);
 		let rotY = Math.ffmd(Math.round(packet.rotation.y), 360);
 		// let rotZ = Math.ffmd(Math.round(packet.rotation.z), 360);
@@ -27,8 +27,8 @@ class MovePlayerPacketHandler extends HandlersBase {
         let leftChunkRadius = false;
 
         if (
-            ((x >> 4) / this.player.chunkRadius) != ((this.player.rotation.x >> 4) / this.player.chunkRadius) ||
-            ((z >> 4) / this.player.chunkRadius) != ((this.player.rotation.z >> 4) / this.player.chunkRadius)
+            ((x >> 4) / this.player.chunkRadius) != ((this.player.position.x >> 4) / this.player.chunkRadius) ||
+            ((z >> 4) / this.player.chunkRadius) != ((this.player.position.z >> 4) / this.player.chunkRadius)
         ) {
             leftChunkRadius = true;
         }

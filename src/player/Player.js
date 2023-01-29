@@ -53,6 +53,7 @@ class Player extends Human {
 	resourcePackClientResponseSent = false; // fix spamming
 	readyToLogin = false;
    	attributes = [];
+    spawned = false;
 
 	constructor(connection, server) {
 		super();

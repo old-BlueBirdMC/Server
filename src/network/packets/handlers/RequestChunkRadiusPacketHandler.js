@@ -25,7 +25,11 @@ class RequestChunkRadiusPacketHandler extends HandlersBase {
 		let chunkRadiusUpdated = new ChunkRadiusUpdatedPacket();
 		chunkRadiusUpdated.chunkRadius = this.player.chunkRadius;
 		chunkRadiusUpdated.sendTo(this.player);
-        this.player.sendChunks();
+
+        if (!this.player.spawned) {
+            this.player.sendChunks();
+            this.player.spawned = true;
+        }
     }
 }
 
