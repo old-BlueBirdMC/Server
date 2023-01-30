@@ -40,7 +40,7 @@ class Region {
      * @param {String} path 
      */
     constructor(path) {
-        this.log = new Logger({"Name": "Region", "AllowDebugging": true, "withColors": true});
+        this.log = new Logger({Name: "Region", AllowDebugging: true, WithColors: true});
         fs.readFile(path, "binary", (err, buffer) => {
             if (err) {
                 this.log.error(`Failed to read region file ${path}`);
