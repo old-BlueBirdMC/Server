@@ -94,7 +94,8 @@ class Region {
     /**
      * Reads the chunk data from the region
      * @param {Number} x 
-     * @param {Number} z 
+     * @param {Number} z
+     * @returns {Buffer}
      */
     readChunkData(x, z) {
         let index = this.readIndex(x, z);
