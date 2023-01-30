@@ -14,10 +14,12 @@
 
 class RegionIndex {
     /**
+     * Sector index in 4KB blocks from the start of the file
      * @type {Number}
      */
     offset;
     /**
+     * Sector count in 4KB blocks from the offset
      * @type {Number}
      */
     length;

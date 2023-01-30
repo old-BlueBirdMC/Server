@@ -20,18 +20,25 @@ const Logger = require("../../../console/Logger");
 
 class Region {
     /**
+     * Holds the data stream of the region file
      * @type {BinaryStream}
      */
     stream;
     /**
+     * Holds usable indexes that where freed
      * @type {Array.<RegionIndex>}
      */
     freeIndexes;
     /**
+     * The file path of the region file
      * @type {String}
      */
     path;
 
+    /**
+     * Loads a region file
+     * @param {String} path 
+     */
     constructor(path) {
         this.log = new Logger({"Name": "Region", "AllowDebugging": true, "withColors": true});
         fs.readFile(path, "binary", (err, buffer) => {
@@ -45,6 +52,9 @@ class Region {
         });
     }
 
+    /**
+     * Saves the region file
+     */
     save() {
         fs.writeFile(this.path, this.stream.buffer, (err) => {
             if (err) {
@@ -54,7 +64,7 @@ class Region {
     }
 
     /**
-     * 
+     * Reads the index location of the chunk
      * @param {Number} x
      * @param {Number} z
      * @returns {RegionIndex}
@@ -68,7 +78,7 @@ class Region {
     }
 
     /**
-     * 
+     * Writes an index to the index table 
      * @param {Number} x 
      * @param {Number} z 
      * @param {Number} offset 
@@ -82,7 +92,7 @@ class Region {
     }
 
     /**
-     * Reads a buffer of xz chunk data
+     * Reads the chunk data from the region
      * @param {Number} x 
      * @param {Number} z 
      */
@@ -109,7 +119,7 @@ class Region {
     }
 
     /**
-     * 
+     * Writes the chunk data to the region
      * @param {Number} x 
      * @param {Number} z 
      * @param {Buffer} data 
