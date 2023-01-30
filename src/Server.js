@@ -98,6 +98,11 @@ class Server {
 			this.shutdown();
 		});
 	}
+	/**
+	 * Shutdown Server
+	 * @constructor
+	 * @param {string} closeMessage - The server will display this message when a player is kicked out. 
+	 **/
 
 	shutdown(closeMessage = undefined, exitProcess = true) {
 		this.rakNetInterface.close(closeMessage, exitProcess);
@@ -175,6 +180,11 @@ class Server {
 	getAllPlugins() {
 		return Object.entries(this.#workingPlugins);
 	}
+	/**
+	 * get Player
+	 * @constructor
+	 * @param {string} name - obtain a player by username.
+	 **/
 
 	getOnlinePlayer(name) {
 		let foundPlayer;
@@ -185,6 +195,11 @@ class Server {
 		});
 		return foundPlayer;
 	}
+	/**
+	 * get Player by ID
+	 * @constructor
+	 * @param {string} name - obtain a player by ID.
+	 **/
 
 	getOnlinePlayerByID(id) {
 		let foundPlayer;
@@ -196,6 +211,12 @@ class Server {
 		return foundPlayer;
 	}
 
+	/**
+	 * get Player by RID
+	 * @constructor
+	 * @param {string} name - obtain a player by RID.
+	 **/
+
 	getOnlinePlayerByRID(id) {
 		let foundPlayer;
 		this.getOnlinePlayers().forEach((player) => {
@@ -206,6 +227,12 @@ class Server {
 		});
 		return foundPlayer;
 	}
+
+	/**
+	 * get OnlinePlayers
+	 * @constructor
+	 * @param {string} name - obtain a list of online players on the server.
+	 **/
 
 	getOnlinePlayers() {
 		let players = [];
