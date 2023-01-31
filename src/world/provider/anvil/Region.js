@@ -161,7 +161,7 @@ class Region {
                 this.writeIndex(this.stream.buffer.length << 12, sectorCount);
                 this.stream.write(temp);
             }
-            this.freeIndexes.append({...index})
+            this.freeIndexes.push({...index})
         } else {
             temp.copy(this.stream.buffer, index.offset << 12, 0, sectorCount << 12);
             if (sectorCount < index.length) {
