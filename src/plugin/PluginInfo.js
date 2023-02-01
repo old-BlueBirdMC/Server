@@ -12,11 +12,11 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class PluginDescription {
+class PluginInfo {
 	pluginName;
 	author;
 	version;
 	description;
 }
 
-module.exports = PluginDescription;
+module.exports = PluginInfo;
