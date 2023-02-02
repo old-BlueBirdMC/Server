@@ -45,14 +45,10 @@ class Region {
             AllowDebugging: true,
             WithColors: true,
         });
+        this.path = path;
+        this.freeIndexes = [];
         fs.readFile(path, "binary", (err, buffer) => {
-            if (err) {
-                this.log.error(`Failed to read region file ${path}`);
-            } else {
-                this.path = path;
-                this.stream = new BinaryStream(buffer);
-                this.freeIndexes = [];
-            }
+            this.stream = err ? new BinaryStream(Buffer.alloc(8192, 0, "binary")) : new BinaryStream(buffer);
         });
     }
 

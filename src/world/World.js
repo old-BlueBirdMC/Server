@@ -12,6 +12,8 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
+const CoordinateUtils = require("./CoordinateUtils");
+
 class World {
     generatorManager;
     chunks;
@@ -21,17 +23,9 @@ class World {
         this.chunks = new Map();
     }
 
-    hashXZ(x, z) {
-        return (BigInt(x & 0xffffffff) << 16n) | BigInt(z & 0xffffffff);
-    }
-
-    unhashXZ(xz) {
-        return [BigInt.asIntN(32, xz << 16n), BigInt.asIntN(32, xz & 0xffffffff)];
-    }
-
     loadChunk(x, z) {
         return new Promise((resolve) => {
-            let xz = this.hashXZ(x, z);
+            let xz = CoordinateUtils.hashXZ(x, z);
             let loadChunkTask = setInterval(() => {
                 if (!this.chunks.has(xz)) {
                     if (false === false) {
@@ -57,7 +51,7 @@ class World {
     }
 
     async unloadChunk(x, z) {
-        let xz = this.hashXZ(x, z);
+        let xz = CoordinateUtils.hashXZ(x, z);
         await this.saveChunk();
         if (this.chunks.has(xz)) {
             this.chunks.delete(xz);
@@ -71,12 +65,12 @@ class World {
     }
 
     getBlockRuntimeID(x, y, z, layer) {
-        let xz = this.hashXZ(x >> 4, z >> 4);
+        let xz = CoordinateUtils.hashXZ(x >> 4, z >> 4);
         return this.chunks.get(xz).getBlockRuntimeID(x & 0x0f, y, z & 0x0f, layer);
     }
 
     setBlockRuntimeID(x, y, z, layer, runtimeID) {
-        let xz = this.hashXZ(x >> 4, z >> 4);
+        let xz = CoordinateUtils.hashXZ(x >> 4, z >> 4);
         this.chunks.get(xz).setBlockRuntimeID(x & 0x0f, y, z & 0x0f, layer, runtimeID);
     }
 }
