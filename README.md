@@ -6,7 +6,7 @@
 ---
 
 <p align="center">
-	<a href="https://discord.gg/rZ6DBFzDYe"><img src="https://img.shields.io/discord/947005464292524083?label=discord&color=7289DA&logo=discord" alt="Discord" /></a>
+	<a href="https://discord.gg/h5MRDDVb"><img src="https://img.shields.io/discord/947005464292524083?label=discord&color=7289DA&logo=discord" alt="Discord" /></a>
 	<a href="https://github.com/BlueBirdMC/Server/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="Discord" /></a>
 </p>
 
