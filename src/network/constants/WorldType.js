@@ -13,11 +13,11 @@
 \******************************************/
 
 class WorldType {
-	static old = 0;
-	static infinite = 1;
-	static flat = 2;
-	static nether = 3;
-	static end = 4;
+    static old = 0;
+    static infinite = 1;
+    static flat = 2;
+    static nether = 3;
+    static end = 4;
 }
 
 module.exports = WorldType;

@@ -18,67 +18,67 @@ const Identifiers = require("./Identifiers");
 const zlib = require("zlib");
 
 class GamePacket extends PacketsBase {
-	static id = Identifiers.game;
+    static id = Identifiers.game;
 
-	compression = true;
-	streams = [];
+    compression = true;
+    streams = [];
 
-	async decompress(buffer) {
-		return new Promise(resolve => {
-			resolve(this.compression ? zlib.inflateRawSync(buffer) : buffer);
-		});
-	}
+    async decompress(buffer) {
+        return new Promise((resolve) => {
+            resolve(this.compression ? zlib.inflateRawSync(buffer) : buffer);
+        });
+    }
 
-	async compress(buffer) {
-		return new Promise(resolve => {
-			resolve(this.compression ? zlib.deflateRawSync(buffer) : buffer);
-		});
-	}
+    async compress(buffer) {
+        return new Promise((resolve) => {
+            resolve(this.compression ? zlib.deflateRawSync(buffer) : buffer);
+        });
+    }
 
-	async deserialize() {
-		let remaining = this.readRemaining();
-		let data;
+    async deserialize() {
+        let remaining = this.readRemaining();
+        let data;
 
-		try {
-			data = new BinaryStream(await this.decompress(remaining));
-		} catch (e) {
-			if (this.compression) {
-				this.compression = false;
+        try {
+            data = new BinaryStream(await this.decompress(remaining));
+        } catch (e) {
+            if (this.compression) {
+                this.compression = false;
 
-				data = new BinaryStream(remaining);
-			} else {
-				console.log(e);
-				throw new Error("Error while decompressing zlib");
-			}
-		} finally {
-			this.compression = true;
-		}
+                data = new BinaryStream(remaining);
+            } else {
+                console.log(e);
+                throw new Error("Error while decompressing zlib");
+            }
+        } finally {
+            this.compression = true;
+        }
 
-		while (data.feos() === false) {
-			this.streams.push(new BinaryStream(data.read(data.readVarInt())));
-		}
-	}
+        while (data.feos() === false) {
+            this.streams.push(new BinaryStream(data.read(data.readVarInt())));
+        }
+    }
 
-	async deserializeA() {
-		this.offset = 1;
-		await this.deserialize();
-	}
+    async deserializeA() {
+        this.offset = 1;
+        await this.deserialize();
+    }
 
-	async serialize() {
-		let stream = new BinaryStream();
-		for (let i = 0; i < this.streams.length; ++i) {
-			stream.writeVarInt(this.streams[i].buffer.length);
-			stream.write(this.streams[i].buffer);
-		}
-		this.write(await this.compress(stream.buffer));
-	}
+    async serialize() {
+        let stream = new BinaryStream();
+        for (let i = 0; i < this.streams.length; ++i) {
+            stream.writeVarInt(this.streams[i].buffer.length);
+            stream.write(this.streams[i].buffer);
+        }
+        this.write(await this.compress(stream.buffer));
+    }
 
-	async serializeA() {
-		this.reset();
-		this.writeUnsignedByte(this.getID());
-		await this.serialize();
-		this.serialized = true;
-	}
+    async serializeA() {
+        this.reset();
+        this.writeUnsignedByte(this.getID());
+        await this.serialize();
+        this.serialized = true;
+    }
 }
 
 module.exports = GamePacket;

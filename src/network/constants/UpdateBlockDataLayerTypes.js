@@ -13,8 +13,8 @@
 \******************************************/
 
 class UpdateBlockDataLayerTypes {
-	static normal = 0;
-	static liquid = 1;
+    static normal = 0;
+    static liquid = 1;
 }
 
 module.exports = UpdateBlockDataLayerTypes;

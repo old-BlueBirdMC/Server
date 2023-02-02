@@ -13,27 +13,27 @@
 \******************************************/
 
 class Block {
-	blockName;
-	metadata;
-	maxStack;
-	tool;
-	blastResistance;
-	hardness;
-	isLuminant;
-	isTransparrent;
-	isFlammable;
-	catchesFireFromLava;
+    blockName;
+    metadata;
+    maxStack;
+    tool;
+    blastResistance;
+    hardness;
+    isLuminant;
+    isTransparrent;
+    isFlammable;
+    catchesFireFromLava;
 
-	constructor(blockName, metadata = 0) {
-		this.blockName = blockName;
-		this.metadata = metadata;
-	}
+    constructor(blockName, metadata = 0) {
+        this.blockName = blockName;
+        this.metadata = metadata;
+    }
 
-	interact(source, position, blockFace) {}
+    interact(source, position, blockFace) {}
 
-	toRuntimeID(resourceManager) {
-		return resourceManager.blockStatesMap.legacyToRuntime(this.blockName, this.metadata);
-	}
+    toRuntimeID(resourceManager) {
+        return resourceManager.blockStatesMap.legacyToRuntime(this.blockName, this.metadata);
+    }
 }
 
 module.exports = Block;

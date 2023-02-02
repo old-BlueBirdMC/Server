@@ -16,17 +16,17 @@ const Command = require("../Command");
 const ServerInfo = require("../../ServerInfo");
 
 class VersionCMD extends Command {
-	constructor() {
-		super("version", "Shows the version of BBMC is running or plugin version.", ["about", "ver", "versions"]);
-	}
+    constructor() {
+        super("version", "Shows the version of BBMC is running or plugin version.", ["about", "ver", "versions"]);
+    }
 
-	async run(sender, writtenCommand, args) {
-		if (typeof args[0] !== "undefined") {
-			sender.message('Plugins Versions not supported yet!');
-		} else {
-			sender.message(`This server is running: ${ServerInfo.engine} and Minecraft version: ${ServerInfo.minecraftVersion}, ProtocolVersion: (${ServerInfo.minecraftProtocolVersion})`);
-		}
-	}
+    async run(sender, writtenCommand, args) {
+        if (typeof args[0] !== "undefined") {
+            sender.message("Plugins Versions not supported yet!");
+        } else {
+            sender.message(`This server is running: ${ServerInfo.engine} and Minecraft version: ${ServerInfo.minecraftVersion}, ProtocolVersion: (${ServerInfo.minecraftProtocolVersion})`);
+        }
+    }
 }
 
 module.exports = VersionCMD;

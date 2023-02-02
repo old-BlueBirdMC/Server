@@ -13,9 +13,9 @@
 \******************************************/
 
 class GameRuleTypes {
-	static bool = 0;
-	static int = 1;
-	static float = 2;
+    static bool = 0;
+    static int = 1;
+    static float = 2;
 }
 
 module.exports = GameRuleTypes;

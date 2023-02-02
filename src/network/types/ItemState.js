@@ -13,9 +13,9 @@
 \******************************************/
 
 class ItemState {
-	itemName;
-	runtimeID;
-	componentBased;
+    itemName;
+    runtimeID;
+    componentBased;
 }
 
 module.exports = ItemState;

@@ -22,7 +22,7 @@ class World {
     }
 
     hashXZ(x, z) {
-        return (BigInt(x & 0xffffffff) << 16n) | (BigInt(z & 0xffffffff));
+        return (BigInt(x & 0xffffffff) << 16n) | BigInt(z & 0xffffffff);
     }
 
     unhashXZ(xz) {
@@ -36,11 +36,13 @@ class World {
                 if (!this.chunks.has(xz)) {
                     if (false === false) {
                         this.chunks.set(xz, null);
-                        this.getGenerator().generate(x, z).then((value) => {
-                            this.chunks.set(xz, value);
-                            clearInterval(loadChunkTask);
-                            resolve(this.chunks.get(xz));
-                        });
+                        this.getGenerator()
+                            .generate(x, z)
+                            .then((value) => {
+                                this.chunks.set(xz, value);
+                                clearInterval(loadChunkTask);
+                                resolve(this.chunks.get(xz));
+                            });
                     } else {
                     }
                 } else {
@@ -62,8 +64,7 @@ class World {
         }
     }
 
-    async saveChunk(x, z) {
-    }
+    async saveChunk(x, z) {}
 
     getGenerator() {
         return this.generatorManager.getGenerator("overworld");

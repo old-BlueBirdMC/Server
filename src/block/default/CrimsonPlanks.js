@@ -16,18 +16,18 @@ const Block = require("../Block");
 const Tool = require("../Tool");
 
 class CrimsonPlanks extends Block {
-	maxStack = 64;
-	tool = Tool.axe;
-	blastResistance = 3;
-	hardness = 2;
-	isLuminant = false;
-	isTransparrent = false;
-	isFlammable = false;
-	catchesFireFromLava = false;
+    maxStack = 64;
+    tool = Tool.axe;
+    blastResistance = 3;
+    hardness = 2;
+    isLuminant = false;
+    isTransparrent = false;
+    isFlammable = false;
+    catchesFireFromLava = false;
 
-	constructor() {
-		super("minecraft:crimson_planks", 0);
-	}
+    constructor() {
+        super("minecraft:crimson_planks", 0);
+    }
 }
 
 module.exports = CrimsonPlanks;

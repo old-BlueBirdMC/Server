@@ -13,16 +13,16 @@
 \******************************************/
 
 class PlayStatus {
-	static loginSuccess = 0;
-	static loginFailedClient = 1;
-	static loginFailedServer = 2;
-	static playerSpawn = 3;
-	static loginFailedInvalidTenant = 4;
-	static loginFailedVanillaEdu = 5;
-	static loginFailedEduVanilla = 6;
-	static loginFailedServerFull = 7;
-	static loginFailedEditorVanilla = 8;
-	static loginFailedVanillaEditor = 9;
+    static loginSuccess = 0;
+    static loginFailedClient = 1;
+    static loginFailedServer = 2;
+    static playerSpawn = 3;
+    static loginFailedInvalidTenant = 4;
+    static loginFailedVanillaEdu = 5;
+    static loginFailedEduVanilla = 6;
+    static loginFailedServerFull = 7;
+    static loginFailedEditorVanilla = 8;
+    static loginFailedVanillaEditor = 9;
 }
 
 module.exports = PlayStatus;

@@ -16,23 +16,23 @@ const Identifiers = require("./Identifiers");
 const PacketsBase = require("./PacketsBase");
 
 class LevelEventPacket extends PacketsBase {
-	static id = Identifiers.levelEvent;
+    static id = Identifiers.levelEvent;
 
-	event;
+    event;
     position;
     data;
 
-	deserialize() {
-		this.event = this.readSignedVarInt();
-		this.position = this.readVector3F();
-		this.data = this.readSignedVarInt();
-	}
+    deserialize() {
+        this.event = this.readSignedVarInt();
+        this.position = this.readVector3F();
+        this.data = this.readSignedVarInt();
+    }
 
-	serialize() {
-		this.writeSignedVarInt(this.event);
+    serialize() {
+        this.writeSignedVarInt(this.event);
         this.writeVector3F(this.position);
-		this.writeSignedVarInt(this.data);
-	}
+        this.writeSignedVarInt(this.data);
+    }
 }
 
 module.exports = LevelEventPacket;

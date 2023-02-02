@@ -13,13 +13,13 @@
 \******************************************/
 
 class GameMode {
-	static survival = 0;
-	static creative = 1;
-	static adventure = 2;
-	static spectatorSurvival = 3;
-	static spectatorCreative = 4;
-	static fallback = 5;
-	static spectator = 6;
+    static survival = 0;
+    static creative = 1;
+    static adventure = 2;
+    static spectatorSurvival = 3;
+    static spectatorCreative = 4;
+    static fallback = 5;
+    static spectator = 6;
 }
 
 module.exports = GameMode;

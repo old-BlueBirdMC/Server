@@ -16,18 +16,18 @@ const Block = require("../Block");
 const Tool = require("../Tool");
 
 class AcaciaPlanks extends Block {
-	maxStack = 64;
-	tool = Tool.axe;
-	blastResistance = 3;
-	hardness = 2;
-	isLuminant = false;
-	isTransparrent = false;
-	isFlammable = true;
-	catchesFireFromLava = true;
+    maxStack = 64;
+    tool = Tool.axe;
+    blastResistance = 3;
+    hardness = 2;
+    isLuminant = false;
+    isTransparrent = false;
+    isFlammable = true;
+    catchesFireFromLava = true;
 
-	constructor() {
-		super("minecraft:planks", 4);
-	}
+    constructor() {
+        super("minecraft:planks", 4);
+    }
 }
 
 module.exports = AcaciaPlanks;

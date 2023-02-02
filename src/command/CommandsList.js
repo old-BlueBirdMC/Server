@@ -21,82 +21,82 @@ const Command = require("./Command");
 const CommandSender = require("./sender/CommandSender");
 
 class CommandsList {
-	#commands = {};
-	#alias = {};
+    #commands = {};
+    #alias = {};
 
-	refresh() {
-		fs.readdirSync(__dirname + '/default').forEach((file) => {
-			const command = require(__dirname + '/default/' + file);
-			this.add(new command());
-		});
-	}
-	
-	add(command) {
-		if (!(command.name in this.#commands)) {
-			if (command instanceof Command){
-				this.#commands[command.name] = command;
-				command.getAliases().forEach(alias => {
-					if(alias.length < 0) return;
-					this.#alias[alias + "CcmdAlias"] = command;
-				});
-			}
-		}
-	}
-	
-	remove(commandName) {
-		if (commandName in this.#commands) {
-			delete this.#commands[commandName];
-		} else if (commandName in this.#alias) {
-			delete this.#alias[commandName + "CcmdAlias"];
-		}
-	}
+    refresh() {
+        fs.readdirSync(__dirname + "/default").forEach((file) => {
+            const command = require(__dirname + "/default/" + file);
+            this.add(new command());
+        });
+    }
 
-	has(commandName) {
-		if (commandName in this.#commands) {
-			return true;
-		} else if (commandName + "CcmdAlias" in this.#alias) {
-			return true;
-		}
-		return false;
-	}
+    add(command) {
+        if (!(command.name in this.#commands)) {
+            if (command instanceof Command) {
+                this.#commands[command.name] = command;
+                command.getAliases().forEach((alias) => {
+                    if (alias.length < 0) return;
+                    this.#alias[alias + "CcmdAlias"] = command;
+                });
+            }
+        }
+    }
 
-	get(commandName) {
-		if (commandName in this.#commands) {
-			return this.#commands[commandName];
-		} else if (commandName + "CcmdAlias" in this.#alias) {
-			return this.#alias[commandName + "CcmdAlias"];
-		}
-	}
+    remove(commandName) {
+        if (commandName in this.#commands) {
+            delete this.#commands[commandName];
+        } else if (commandName in this.#alias) {
+            delete this.#alias[commandName + "CcmdAlias"];
+        }
+    }
 
-	dispatch(sender, commandName) {
-		if (commandName === "") return;
-		let args = commandName.split(" ");
-		commandName = args.shift();
+    has(commandName) {
+        if (commandName in this.#commands) {
+            return true;
+        } else if (commandName + "CcmdAlias" in this.#alias) {
+            return true;
+        }
+        return false;
+    }
 
-		if (this.has(commandName)) {
-			let command = this.get(commandName);
-			if (sender instanceof Player || sender instanceof CommandSender) {
-				command.run(sender, commandName, args);
-			}
-		} else {
-			if (sender instanceof ConsoleCommandSender && commandName.trim() === "") {
-				return;
-			}
-			if (sender instanceof ConsoleCommandSender) {
-				sender.message(ConsoleColors.red + "type help to get the commands list");
-			} else if (sender instanceof Player) {
-				sender.message(MinecraftTextColors.red + "type /help to get the commands list");
-			}
-		}
-	}
+    get(commandName) {
+        if (commandName in this.#commands) {
+            return this.#commands[commandName];
+        } else if (commandName + "CcmdAlias" in this.#alias) {
+            return this.#alias[commandName + "CcmdAlias"];
+        }
+    }
 
-	getAllCommands() {
-		return this.#commands;
-	}
+    dispatch(sender, commandName) {
+        if (commandName === "") return;
+        let args = commandName.split(" ");
+        commandName = args.shift();
 
-	getAllAliases() {
-		return this.#alias;
-	}
+        if (this.has(commandName)) {
+            let command = this.get(commandName);
+            if (sender instanceof Player || sender instanceof CommandSender) {
+                command.run(sender, commandName, args);
+            }
+        } else {
+            if (sender instanceof ConsoleCommandSender && commandName.trim() === "") {
+                return;
+            }
+            if (sender instanceof ConsoleCommandSender) {
+                sender.message(ConsoleColors.red + "type help to get the commands list");
+            } else if (sender instanceof Player) {
+                sender.message(MinecraftTextColors.red + "type /help to get the commands list");
+            }
+        }
+    }
+
+    getAllCommands() {
+        return this.#commands;
+    }
+
+    getAllAliases() {
+        return this.#alias;
+    }
 }
 
 module.exports = CommandsList;

@@ -13,10 +13,10 @@
 \******************************************/
 
 class CommandArgumentFlags {
-	static valid = 0x100000;
-	static enum = 0x200000;
-	static suffix = 0x1000000;
-	static softEnum = 0x4000000;
+    static valid = 0x100000;
+    static enum = 0x200000;
+    static suffix = 0x1000000;
+    static softEnum = 0x4000000;
 }
 
 module.exports = CommandArgumentFlags;

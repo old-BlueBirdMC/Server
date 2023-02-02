@@ -16,32 +16,32 @@ const Identifiers = require("./Identifiers");
 const PacketsBase = require("./PacketsBase");
 
 class NetworkChunkPublisherUpdatePacket extends PacketsBase {
-	static id = Identifiers.networkChunkPublisherUpdate;
+    static id = Identifiers.networkChunkPublisherUpdate;
 
-	position;
-	radius;
-	savedChunks;
+    position;
+    radius;
+    savedChunks;
 
-	deserialize() {
-		this.position = this.readBlockCoordinates();
-		this.radius = this.readVarInt();
-		this.savedChunks = [];
-		let count = this.readIntLE();
-		for (let i = 0; i < count; i++) {
-			this.savedChunks.push(this.readVarInt());
-			this.savedChunks.push(this.readVarInt());
-		}
-	}
+    deserialize() {
+        this.position = this.readBlockCoordinates();
+        this.radius = this.readVarInt();
+        this.savedChunks = [];
+        let count = this.readIntLE();
+        for (let i = 0; i < count; i++) {
+            this.savedChunks.push(this.readVarInt());
+            this.savedChunks.push(this.readVarInt());
+        }
+    }
 
-	serialize() {
-		this.writeBlockCoordinates(this.position);
-		this.writeVarInt(this.radius);
-		this.writeIntLE(this.savedChunks.length);
-		for (let i = 0; i < this.savedChunks.length; ++i) {
-			this.writeVarInt(this.savedChunks[i]);
-			this.writeVarInt(this.savedChunks[i]);
-		}
-	}
+    serialize() {
+        this.writeBlockCoordinates(this.position);
+        this.writeVarInt(this.radius);
+        this.writeIntLE(this.savedChunks.length);
+        for (let i = 0; i < this.savedChunks.length; ++i) {
+            this.writeVarInt(this.savedChunks[i]);
+            this.writeVarInt(this.savedChunks[i]);
+        }
+    }
 }
 
 module.exports = NetworkChunkPublisherUpdatePacket;

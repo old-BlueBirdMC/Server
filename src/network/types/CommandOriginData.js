@@ -13,10 +13,10 @@
 \******************************************/
 
 class CommandOriginData {
-	typeID;
-	uuid;
-	requestID;
-	entityID;
+    typeID;
+    uuid;
+    requestID;
+    entityID;
 }
 
 module.exports = CommandOriginData;

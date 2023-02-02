@@ -13,44 +13,44 @@
 \******************************************/
 
 class Enum {
-	constructor(list, values = []) {
-		if (values.length !== 0) {
-			let i = 0;
-			if (this.#hasDuplicatedMember(list)) {
-				list = new Set(list);
-				list.forEach(element => {
-					this[element] = values[i];
-					i++;
-				});
-			} else {
-				list.forEach(element => {
-					this[element] = values[i];
-					i++;
-				});
-			}
-		} else {
-			let i = 0;
-			if (this.#hasDuplicatedMember(list)) {
-				list = new Set(list);
-				list.forEach(element => {
-					this[element] = i;
-					i++;
-				});
-			} else {
-				list.forEach(element => {
-					this[element] = i;
-					i++;
-				});
-			}
-		}
-	}
+    constructor(list, values = []) {
+        if (values.length !== 0) {
+            let i = 0;
+            if (this.#hasDuplicatedMember(list)) {
+                list = new Set(list);
+                list.forEach((element) => {
+                    this[element] = values[i];
+                    i++;
+                });
+            } else {
+                list.forEach((element) => {
+                    this[element] = values[i];
+                    i++;
+                });
+            }
+        } else {
+            let i = 0;
+            if (this.#hasDuplicatedMember(list)) {
+                list = new Set(list);
+                list.forEach((element) => {
+                    this[element] = i;
+                    i++;
+                });
+            } else {
+                list.forEach((element) => {
+                    this[element] = i;
+                    i++;
+                });
+            }
+        }
+    }
 
-	#hasDuplicatedMember(list) {
-		if (list.length !== new Set(list).size) {
-			return true;
-		}
-		return false;
-	}
+    #hasDuplicatedMember(list) {
+        if (list.length !== new Set(list).size) {
+            return true;
+        }
+        return false;
+    }
 }
 
 module.exports = Enum;

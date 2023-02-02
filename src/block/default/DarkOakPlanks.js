@@ -16,18 +16,18 @@ const Block = require("../Block");
 const Tool = require("../Tool");
 
 class DarkOakPlanks extends Block {
-	maxStack = 64;
-	tool = Tool.axe;
-	blastResistance = 3;
-	hardness = 2;
-	isLuminant = false;
-	isTransparrent = false;
-	isFlammable = true;
-	catchesFireFromLava = true;
+    maxStack = 64;
+    tool = Tool.axe;
+    blastResistance = 3;
+    hardness = 2;
+    isLuminant = false;
+    isTransparrent = false;
+    isFlammable = true;
+    catchesFireFromLava = true;
 
-	constructor() {
-		super("minecraft:planks", 5);
-	}
+    constructor() {
+        super("minecraft:planks", 5);
+    }
 }
 
 module.exports = DarkOakPlanks;

@@ -37,10 +37,14 @@ class Region {
 
     /**
      * Loads a region file
-     * @param {String} path 
+     * @param {String} path
      */
     constructor(path) {
-        this.log = new Logger({Name: "Region", AllowDebugging: true, WithColors: true});
+        this.log = new Logger({
+            Name: "Region",
+            AllowDebugging: true,
+            WithColors: true,
+        });
         fs.readFile(path, "binary", (err, buffer) => {
             if (err) {
                 this.log.error(`Failed to read region file ${path}`);
@@ -78,11 +82,11 @@ class Region {
     }
 
     /**
-     * Writes an index to the index table 
-     * @param {Number} x 
-     * @param {Number} z 
-     * @param {Number} offset 
-     * @param {Number} length 
+     * Writes an index to the index table
+     * @param {Number} x
+     * @param {Number} z
+     * @param {Number} offset
+     * @param {Number} length
      */
     writeIndex(x, z, offset, length) {
         let stream = new BinaryStream();
@@ -93,7 +97,7 @@ class Region {
 
     /**
      * Reads the chunk data from the region
-     * @param {Number} x 
+     * @param {Number} x
      * @param {Number} z
      * @returns {Buffer}
      */
@@ -102,7 +106,7 @@ class Region {
         this.stream.offset = index.offset << 12;
         if (index.length) {
             let length = this.stream.readIntBE();
-            if ((length + 4) <= (index.length << 12) && length) {
+            if (length + 4 <= index.length << 12 && length) {
                 let compressionType = this.stream.readByte();
                 let data = this.stream.read(length - 1);
                 if (compressionType == 1) {
@@ -121,9 +125,9 @@ class Region {
 
     /**
      * Writes the chunk data to the region
-     * @param {Number} x 
-     * @param {Number} z 
-     * @param {Buffer} data 
+     * @param {Number} x
+     * @param {Number} z
+     * @param {Buffer} data
      * @param {Number} compressionType
      */
     writeChunkData(x, z, data, compressionType) {
@@ -161,7 +165,7 @@ class Region {
                 this.writeIndex(this.stream.buffer.length << 12, sectorCount);
                 this.stream.write(temp);
             }
-            this.freeIndexes.push({...index});
+            this.freeIndexes.push({ ...index });
         } else {
             temp.buffer.copy(this.stream.buffer, index.offset << 12, 0, sectorCount << 12);
             if (sectorCount < index.length) {

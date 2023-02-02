@@ -16,23 +16,23 @@ const Identifiers = require("./Identifiers");
 const PacketsBase = require("./PacketsBase");
 
 class CommandRequestPacket extends PacketsBase {
-	static id = Identifiers.commandRequest;
+    static id = Identifiers.commandRequest;
 
-	command;
-	data;
-	internal;
+    command;
+    data;
+    internal;
 
-	deserialize() {
-		this.command = this.readStringVarInt();
-		this.data = this.readCommandOrigin();
-		this.internal = this.readBool();
-	}
+    deserialize() {
+        this.command = this.readStringVarInt();
+        this.data = this.readCommandOrigin();
+        this.internal = this.readBool();
+    }
 
-	serialize() {
-		this.writeStringVarInt(this.command);
-		this.writeCommandOrigin(this.data);
-		this.writeBool(this.internal);
-	}
+    serialize() {
+        this.writeStringVarInt(this.command);
+        this.writeCommandOrigin(this.data);
+        this.writeBool(this.internal);
+    }
 }
 
 module.exports = CommandRequestPacket;

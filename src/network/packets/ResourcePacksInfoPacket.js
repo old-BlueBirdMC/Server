@@ -16,29 +16,29 @@ const Identifiers = require("./Identifiers");
 const PacketsBase = require("./PacketsBase");
 
 class ResourcePacksInfoPacket extends PacketsBase {
-	static id = Identifiers.resourcePacksInfo;
+    static id = Identifiers.resourcePacksInfo;
 
-	mustAccept;
-	hasScripts;
-	forceServerPacks;
-	behaviorPacks;
-	texturePacks;
+    mustAccept;
+    hasScripts;
+    forceServerPacks;
+    behaviorPacks;
+    texturePacks;
 
-	deserialize() {
-		this.mustAccept = this.readBool();
-		this.hasScripts = this.readBool();
-		this.forceServerPacks = this.readBool();
-		this.behaviorPacks = this.readBehaviorPacksInfo();
-		this.texturePacks = this.readTexturePacksInfo();
-	}
+    deserialize() {
+        this.mustAccept = this.readBool();
+        this.hasScripts = this.readBool();
+        this.forceServerPacks = this.readBool();
+        this.behaviorPacks = this.readBehaviorPacksInfo();
+        this.texturePacks = this.readTexturePacksInfo();
+    }
 
-	serialize() {
-		this.writeBool(this.mustAccept);
-		this.writeBool(this.hasScripts);
-		this.writeBool(this.forceServerPacks);
-		this.writeBehaviorPacksInfo(this.behaviorPacks);
-		this.writeTexturePacksInfo(this.texturePacks);
-	}
+    serialize() {
+        this.writeBool(this.mustAccept);
+        this.writeBool(this.hasScripts);
+        this.writeBool(this.forceServerPacks);
+        this.writeBehaviorPacksInfo(this.behaviorPacks);
+        this.writeTexturePacksInfo(this.texturePacks);
+    }
 }
 
 module.exports = ResourcePacksInfoPacket;

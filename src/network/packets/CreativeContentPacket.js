@@ -16,26 +16,26 @@ const Identifiers = require("./Identifiers");
 const PacketsBase = require("./PacketsBase");
 
 class CreativeContentPacket extends PacketsBase {
-	static id = Identifiers.creativeContent;
+    static id = Identifiers.creativeContent;
 
-	entries;
+    entries;
 
-	deserialize() {
-		this.entries = {};
-		let length = this.readVarInt();
-		for (let i = 0; i < length; ++i) {
-			this.entries[this.readVarInt()] = this.readItem(false);
-		}
-	}
+    deserialize() {
+        this.entries = {};
+        let length = this.readVarInt();
+        for (let i = 0; i < length; ++i) {
+            this.entries[this.readVarInt()] = this.readItem(false);
+        }
+    }
 
-	serialize() {
-		let length = Object.keys(this.entries).length;
-		this.writeVarInt(length);
-		for (let i = 0; i < length; ++i) {
-			this.writeVarInt(Object.keys(this.entries)[i]);
-			this.writeItem(Object.values(this.entries)[i], false);
-		}
-	}
+    serialize() {
+        let length = Object.keys(this.entries).length;
+        this.writeVarInt(length);
+        for (let i = 0; i < length; ++i) {
+            this.writeVarInt(Object.keys(this.entries)[i]);
+            this.writeItem(Object.values(this.entries)[i], false);
+        }
+    }
 }
 
 module.exports = CreativeContentPacket;

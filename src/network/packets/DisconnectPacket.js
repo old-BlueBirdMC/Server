@@ -16,20 +16,20 @@ const Identifiers = require("./Identifiers");
 const PacketsBase = require("./PacketsBase");
 
 class DisconnectPacket extends PacketsBase {
-	static id = Identifiers.disconnect;
+    static id = Identifiers.disconnect;
 
-	hideNotification;
-	message;
+    hideNotification;
+    message;
 
-	deserialize() {
-		this.hideNotification = this.readBool();
-		this.message = this.readStringVarInt();
-	}
+    deserialize() {
+        this.hideNotification = this.readBool();
+        this.message = this.readStringVarInt();
+    }
 
-	serialize() {
-		this.writeBool(this.hideNotification);
-		this.writeStringVarInt(this.message);
-	}
+    serialize() {
+        this.writeBool(this.hideNotification);
+        this.writeStringVarInt(this.message);
+    }
 }
 
 module.exports = DisconnectPacket;

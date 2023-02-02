@@ -16,17 +16,17 @@ const Identifiers = require("./Identifiers");
 const PacketsBase = require("./PacketsBase");
 
 class SetLocalPlayerAsInitalizedPacket extends PacketsBase {
-	static id = Identifiers.setLocalPlayerAsInitalized;
+    static id = Identifiers.setLocalPlayerAsInitalized;
 
-	runtimeEntityID;
+    runtimeEntityID;
 
-	deserialize() {
-		this.runtimeEntityID = this.readRuntimeEntityID();
-	}
+    deserialize() {
+        this.runtimeEntityID = this.readRuntimeEntityID();
+    }
 
-	serialize() {
-		this.writeRuntimeEntityID(this.runtimeEntityID);
-	}
+    serialize() {
+        this.writeRuntimeEntityID(this.runtimeEntityID);
+    }
 }
 
 module.exports = SetLocalPlayerAsInitalizedPacket;

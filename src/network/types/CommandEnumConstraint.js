@@ -13,9 +13,9 @@
 \******************************************/
 
 class CommandEnumConstraint {
-	value;
-	enumIndex;
-	constraints;
+    value;
+    enumIndex;
+    constraints;
 }
 
 module.exports = CommandEnumConstraint;

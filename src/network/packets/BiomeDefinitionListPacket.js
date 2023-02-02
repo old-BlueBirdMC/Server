@@ -16,17 +16,17 @@ const Identifiers = require("./Identifiers");
 const PacketsBase = require("./PacketsBase");
 
 class BiomeDefinitionListPacket extends PacketsBase {
-	static id = Identifiers.biomeDefinitionList;
+    static id = Identifiers.biomeDefinitionList;
 
-	nbt;
+    nbt;
 
-	deserialize() {
-		this.nbt = this.readNBT();
-	}
+    deserialize() {
+        this.nbt = this.readNBT();
+    }
 
-	serialize() {
-		this.writeNBT(this.nbt);
-	}
+    serialize() {
+        this.writeNBT(this.nbt);
+    }
 }
 
 module.exports = BiomeDefinitionListPacket;

@@ -13,9 +13,9 @@
 \******************************************/
 
 class CommandEnum {
-	name;
-	values;
-	isDynamic;
+    name;
+    values;
+    isDynamic;
 }
 
 module.exports = CommandEnum;

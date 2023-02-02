@@ -16,18 +16,18 @@ const Block = require("../Block");
 const Tool = require("../Tool");
 
 class Bedrock extends Block {
-	maxStack = 64;
-	tool = Tool.none;
-	blastResistance = 18000000;
-	hardness = -1;
-	isLuminant = false;
-	isTransparrent = false;
-	isFlammable = false;
-	catchesFireFromLava = false;
+    maxStack = 64;
+    tool = Tool.none;
+    blastResistance = 18000000;
+    hardness = -1;
+    isLuminant = false;
+    isTransparrent = false;
+    isFlammable = false;
+    catchesFireFromLava = false;
 
-	constructor() {
-		super("minecraft:bedrock", 0);
-	}
+    constructor() {
+        super("minecraft:bedrock", 0);
+    }
 }
 
 module.exports = Bedrock;

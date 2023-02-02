@@ -21,31 +21,31 @@ const ContainerOpenPacket = require("../ContainerOpenPacket");
 const HandlersBase = require("./HandlersBase");
 
 class InteractPacketHandler extends HandlersBase {
-	async startHandling(packet) {
-		await super.startHandling(packet);
-		if (packet.actionID === InteractActions.openInventory) {
-			const containerOpen = new ContainerOpenPacket();
-			switch (this.player.gamemode) {
-				case GameMode.survival:
-				case GameMode.adventure:
-				case GameMode.spectatorSurvival:
-				case GameMode.fallback:
-					containerOpen.windowID = WindowIDS.inventory;
-					break;
-				case GameMode.creative:
-				case GameMode.spectatorCreative:
-					containerOpen.windowID = WindowIDS.creative;
-					break;
-			}
-			containerOpen.type = WindowTypes.inventory;
-			containerOpen.coordinates = new BlockCoordinates();
-			containerOpen.coordinates.x = Math.floor(this.player.position.x);
-			containerOpen.coordinates.y = Math.floor(this.player.position.y);
-			containerOpen.coordinates.z = Math.floor(this.player.position.z);
-			containerOpen.runtimeEntityID = this.player.id;
-			containerOpen.sendTo(this.player);
-		}
-	}
+    async startHandling(packet) {
+        await super.startHandling(packet);
+        if (packet.actionID === InteractActions.openInventory) {
+            const containerOpen = new ContainerOpenPacket();
+            switch (this.player.gamemode) {
+                case GameMode.survival:
+                case GameMode.adventure:
+                case GameMode.spectatorSurvival:
+                case GameMode.fallback:
+                    containerOpen.windowID = WindowIDS.inventory;
+                    break;
+                case GameMode.creative:
+                case GameMode.spectatorCreative:
+                    containerOpen.windowID = WindowIDS.creative;
+                    break;
+            }
+            containerOpen.type = WindowTypes.inventory;
+            containerOpen.coordinates = new BlockCoordinates();
+            containerOpen.coordinates.x = Math.floor(this.player.position.x);
+            containerOpen.coordinates.y = Math.floor(this.player.position.y);
+            containerOpen.coordinates.z = Math.floor(this.player.position.z);
+            containerOpen.runtimeEntityID = this.player.id;
+            containerOpen.sendTo(this.player);
+        }
+    }
 }
 
 module.exports = InteractPacketHandler;

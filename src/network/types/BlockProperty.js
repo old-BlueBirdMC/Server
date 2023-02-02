@@ -13,8 +13,8 @@
 \******************************************/
 
 class BlockProperty {
-	name;
-	nbt;
+    name;
+    nbt;
 }
 
 module.exports = BlockProperty;

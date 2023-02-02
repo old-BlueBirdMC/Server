@@ -16,13 +16,13 @@ const ContainerClosePacket = require("../ContainerClosePacket");
 const HandlersBase = require("./HandlersBase");
 
 class ContainerClosePacketHandler extends HandlersBase {
-	async startHandling(packet) {
-		await super.startHandling(packet);
-		const containerClose = new ContainerClosePacket();
-		containerClose.windowID = packet.windowID;
-		containerClose.server = false;
-		containerClose.sendTo(this.player);
-	}
+    async startHandling(packet) {
+        await super.startHandling(packet);
+        const containerClose = new ContainerClosePacket();
+        containerClose.windowID = packet.windowID;
+        containerClose.server = false;
+        containerClose.sendTo(this.player);
+    }
 }
 
 module.exports = ContainerClosePacketHandler;

@@ -13,10 +13,10 @@
 \******************************************/
 
 class UpdateBlockFlags {
-	static neighbors = 1;
-	static network = 2;
-	static noGraphic = 3;
-	static priority = 16;
+    static neighbors = 1;
+    static network = 2;
+    static noGraphic = 3;
+    static priority = 16;
 }
 
 module.exports = UpdateBlockFlags;

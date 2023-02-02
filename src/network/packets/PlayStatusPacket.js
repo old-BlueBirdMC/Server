@@ -16,17 +16,17 @@ const Identifiers = require("./Identifiers");
 const PacketsBase = require("./PacketsBase");
 
 class PlayStatusPacket extends PacketsBase {
-	static id = Identifiers.playStatus;
+    static id = Identifiers.playStatus;
 
-	status;
+    status;
 
-	deserialize() {
-		this.status = this.readIntBE();
-	}
+    deserialize() {
+        this.status = this.readIntBE();
+    }
 
-	serialize() {
-		this.writeIntBE(this.status);
-	}
+    serialize() {
+        this.writeIntBE(this.status);
+    }
 }
 
 module.exports = PlayStatusPacket;

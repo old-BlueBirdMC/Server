@@ -15,31 +15,31 @@
 const fs = require("fs");
 
 class PacketsList {
-	static #packets = {};
+    static #packets = {};
 
-	static refresh() {
-		fs.readdirSync(__dirname).forEach(async (packetsName) => { 
-			let blackList = ["handlers", "GamePacket.js", "Identifiers.js", "PacketsBase.js", "PacketsList.js"];
-			if (!(blackList.includes(packetsName))) {
-				this.add(require("./" + packetsName.replace(".js", "")));
-			}
-		});
-	}
+    static refresh() {
+        fs.readdirSync(__dirname).forEach(async (packetsName) => {
+            let blackList = ["handlers", "GamePacket.js", "Identifiers.js", "PacketsBase.js", "PacketsList.js"];
+            if (!blackList.includes(packetsName)) {
+                this.add(require("./" + packetsName.replace(".js", "")));
+            }
+        });
+    }
 
-	static add(packet) {
-		if (!(packet.id in this.#packets)) {
-			this.#packets[packet.id] = new packet();
-		}
-	}
+    static add(packet) {
+        if (!(packet.id in this.#packets)) {
+            this.#packets[packet.id] = new packet();
+        }
+    }
 
-	static get(packetID) {
-		if (!(packetID in this.#packets)) return;
-		return this.#packets[packetID];
-	}
+    static get(packetID) {
+        if (!(packetID in this.#packets)) return;
+        return this.#packets[packetID];
+    }
 
-	static getAll() {
-		return Object.entries(this.#packets);
-	}
+    static getAll() {
+        return Object.entries(this.#packets);
+    }
 }
 
 module.exports = PacketsList;

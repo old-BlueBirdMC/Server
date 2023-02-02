@@ -17,21 +17,21 @@ const RakNetPlayerManager = require("../../../managers/RakNetPlayerManager");
 const HandlersBase = require("./HandlersBase");
 
 class SetLocalPlayerAsInitalizedPacketHandler extends HandlersBase {
-	async startHandling(packet) {
-		super.startHandling(packet);
-		let ev = {
-			player: this.player,
-			message: "",
-			canceller: new canceller()
-		};
-		this.server.addEvent(ev, "join");
-		if (ev.canceller.isCancelled()) {
-			RakNetPlayerManager.unregisterPlayer(this.player.connection.address.toString());
-			this.player.disconnect("Join cancelled", false);
-			return;
-		}
-		this.server.log.info(ev.message ? ev.message : `Player ${this.player.getRealName()} joined the game`);
-	}
+    async startHandling(packet) {
+        super.startHandling(packet);
+        let ev = {
+            player: this.player,
+            message: "",
+            canceller: new canceller(),
+        };
+        this.server.addEvent(ev, "join");
+        if (ev.canceller.isCancelled()) {
+            RakNetPlayerManager.unregisterPlayer(this.player.connection.address.toString());
+            this.player.disconnect("Join cancelled", false);
+            return;
+        }
+        this.server.log.info(ev.message ? ev.message : `Player ${this.player.getRealName()} joined the game`);
+    }
 }
 
 module.exports = SetLocalPlayerAsInitalizedPacketHandler;

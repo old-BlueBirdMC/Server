@@ -13,12 +13,12 @@
 \******************************************/
 
 class InteractActions {
-	static rightClick = 1;
-	static leftClick = 2;
-	static leaveVehicle = 3;
-	static mouseOverEntity = 4;
-	static openNpc = 5;
-	static openInventory = 6;
+    static rightClick = 1;
+    static leftClick = 2;
+    static leaveVehicle = 3;
+    static mouseOverEntity = 4;
+    static openNpc = 5;
+    static openInventory = 6;
 }
 
 module.exports = InteractActions;

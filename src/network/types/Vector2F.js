@@ -13,8 +13,8 @@
 \******************************************/
 
 class Vector2F {
-	x;
-	z;
+    x;
+    z;
 }
 
 module.exports = Vector2F;

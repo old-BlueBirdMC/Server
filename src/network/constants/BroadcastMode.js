@@ -13,11 +13,11 @@
 \******************************************/
 
 class BroadcastMode {
-	static none = 0;
-	static invite = 1;
-	static friends = 2;
-	static friendsOfFriends = 3;
-	static public = 4;
+    static none = 0;
+    static invite = 1;
+    static friends = 2;
+    static friendsOfFriends = 3;
+    static public = 4;
 }
 
 module.exports = BroadcastMode;

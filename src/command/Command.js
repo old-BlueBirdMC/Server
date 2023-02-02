@@ -13,27 +13,27 @@
 \******************************************/
 
 class Command {
-	name;
-	description;
-	aliases;
-	overloads;
-	enums;
+    name;
+    description;
+    aliases;
+    overloads;
+    enums;
 
-	constructor(name, description, aliases = [], overloads = [], enums = []) {
-		this.name = name;
-		this.description = description;
-		this.aliases = aliases;
-		this.overloads = overloads;
-		this.enums = enums;
-	}
+    constructor(name, description, aliases = [], overloads = [], enums = []) {
+        this.name = name;
+        this.description = description;
+        this.aliases = aliases;
+        this.overloads = overloads;
+        this.enums = enums;
+    }
 
-	async run(sender, writtenCommand, args) {}
+    async run(sender, writtenCommand, args) {}
 
-	setPerm(value) {}
+    setPerm(value) {}
 
-	getPerm() {}
+    getPerm() {}
 
-	getAliases(){
+    getAliases() {
         return this.aliases;
     }
 }

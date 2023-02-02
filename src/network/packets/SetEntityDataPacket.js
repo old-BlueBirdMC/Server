@@ -16,26 +16,26 @@ const Identifiers = require("./Identifiers");
 const PacketsBase = require("./PacketsBase");
 
 class SetEntityDataPacket extends PacketsBase {
-	static id = Identifiers.setEntityData;
+    static id = Identifiers.setEntityData;
 
-	runtimeEntityID;
-	metadata;
-	properties;
-	tick;
+    runtimeEntityID;
+    metadata;
+    properties;
+    tick;
 
-	deserialize() {
-		this.runtimeEntityID = this.readRuntimeEntityID();
-		this.metadata = this.readMetadataList();
-		this.properties = this.readEntityProperties();
-		this.tick = this.readVarInt();
-	}
+    deserialize() {
+        this.runtimeEntityID = this.readRuntimeEntityID();
+        this.metadata = this.readMetadataList();
+        this.properties = this.readEntityProperties();
+        this.tick = this.readVarInt();
+    }
 
-	serialize() {
-		this.writeRuntimeEntityID(this.runtimeEntityID);
-		this.writeMetadataList(this.metadata);
-		this.writeEntityProperties(this.properties);
-		this.writeVarInt(this.tick);
-	}
+    serialize() {
+        this.writeRuntimeEntityID(this.runtimeEntityID);
+        this.writeMetadataList(this.metadata);
+        this.writeEntityProperties(this.properties);
+        this.writeVarInt(this.tick);
+    }
 }
 
 module.exports = SetEntityDataPacket;

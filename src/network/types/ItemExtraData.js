@@ -13,12 +13,12 @@
 \******************************************/
 
 class ItemExtraData {
-	hasNBT;
-	nbtVersion;
-	nbt;
-	canPlaceOn;
-	canDestroy;
-	blockingTick;
+    hasNBT;
+    nbtVersion;
+    nbt;
+    canPlaceOn;
+    canDestroy;
+    blockingTick;
 }
 
 module.exports = ItemExtraData;

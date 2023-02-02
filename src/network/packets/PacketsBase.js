@@ -15,49 +15,49 @@
 const MinecraftBinaryStream = require("../../misc/MinecraftBinaryStream");
 
 class PacketsBase extends MinecraftBinaryStream {
-	static id = -1;
+    static id = -1;
 
-	serialized = false;
+    serialized = false;
 
-	/**
-	 * @returns {Number}
-	 */
-	getID() {
-		return this.constructor.id;
-	}
+    /**
+     * @returns {Number}
+     */
+    getID() {
+        return this.constructor.id;
+    }
 
-	/**
-	 * @returns {String}
-	 */
-	static getName() {
-		return this.name;
-	}
+    /**
+     * @returns {String}
+     */
+    static getName() {
+        return this.name;
+    }
 
-	deserializeA() {
-		this.rewind();
-		let packetId = this.readVarInt();
-		if (packetId !== this.getID()) {
-			throw new Error("Wrong packetId, result=" + packetId);
-		}
-		this.deserialize();
-	}
+    deserializeA() {
+        this.rewind();
+        let packetId = this.readVarInt();
+        if (packetId !== this.getID()) {
+            throw new Error("Wrong packetId, result=" + packetId);
+        }
+        this.deserialize();
+    }
 
-	serializeA() {
-		this.reset();
-		this.writeVarInt(this.getID());
-		this.serialize();
-		this.serialized = true;
-	}
+    serializeA() {
+        this.reset();
+        this.writeVarInt(this.getID());
+        this.serialize();
+        this.serialized = true;
+    }
 
-	serialize() {}
+    serialize() {}
 
-	deserialize() {}
+    deserialize() {}
 
-	async sendTo(player) {
-		if (player.connection === null) return;
+    async sendTo(player) {
+        if (player.connection === null) return;
 
-		await player.server.sendUnserializedMinecraftPacket(this, player);
-	}
+        await player.server.sendUnserializedMinecraftPacket(this, player);
+    }
 }
 
 module.exports = PacketsBase;

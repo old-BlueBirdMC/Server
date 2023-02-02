@@ -16,29 +16,29 @@ const Identifiers = require("./Identifiers");
 const PacketsBase = require("./PacketsBase");
 
 class NetworkSettingsPacket extends PacketsBase {
-	static id = Identifiers.networkSettings;
+    static id = Identifiers.networkSettings;
 
-	threshold;
-	algorithm;
-	clientThrottling;
-	throttleThreshold;
-	throttleScalar;
+    threshold;
+    algorithm;
+    clientThrottling;
+    throttleThreshold;
+    throttleScalar;
 
-	deserialize() {
-		this.threshold = this.readUnsignedShortLE();
-		this.algorithm = this.readUnsignedShortLE();
-		this.clientThrottling = this.readBool();
-		this.throttleThreshold = this.readUnsignedByte();
-		this.throttleScalar = this.readFloatLE();
-	}
+    deserialize() {
+        this.threshold = this.readUnsignedShortLE();
+        this.algorithm = this.readUnsignedShortLE();
+        this.clientThrottling = this.readBool();
+        this.throttleThreshold = this.readUnsignedByte();
+        this.throttleScalar = this.readFloatLE();
+    }
 
-	serialize() {
-		this.writeUnsignedShortLE(this.threshold);
-		this.writeUnsignedShortLE(this.algorithm);
-		this.writeBool(this.clientThrottling);
-		this.writeUnsignedByte(this.throttleThreshold);
-		this.writeFloatLE(this.throttleScalar);
-	}
+    serialize() {
+        this.writeUnsignedShortLE(this.threshold);
+        this.writeUnsignedShortLE(this.algorithm);
+        this.writeBool(this.clientThrottling);
+        this.writeUnsignedByte(this.throttleThreshold);
+        this.writeFloatLE(this.throttleScalar);
+    }
 }
 
 module.exports = NetworkSettingsPacket;

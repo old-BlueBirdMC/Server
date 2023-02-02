@@ -15,10 +15,10 @@
 const HandlersBase = require("./HandlersBase");
 
 class TextPacketHandler extends HandlersBase {
-	async startHandling(packet) {
-		await super.startHandling(packet);
-		this.player.sendChatMessage(packet.message);
-	}
+    async startHandling(packet) {
+        await super.startHandling(packet);
+        this.player.sendChatMessage(packet.message);
+    }
 }
 
 module.exports = TextPacketHandler;

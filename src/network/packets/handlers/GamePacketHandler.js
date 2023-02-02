@@ -19,19 +19,19 @@ const HandlersBase = require("./HandlersBase");
 const HandlersList = require("./HandlersList");
 
 class GamePacketHandler extends HandlersBase {
-	async startHandling(game) {
-		if (!(game instanceof GamePacket)) return;
-		game.streams.forEach((stream) => {
-			let packet = PacketsList.get(stream.readVarInt());
-			if (packet instanceof PacketsBase) {
-				packet.buffer = stream.buffer;
-				let handled = HandlersList.get(packet.getID(), this.player.connection.address.toString());
-				if (handled !== null) {
-					handled.startHandling(packet);
-				}
-			}
-		});
-	}
+    async startHandling(game) {
+        if (!(game instanceof GamePacket)) return;
+        game.streams.forEach((stream) => {
+            let packet = PacketsList.get(stream.readVarInt());
+            if (packet instanceof PacketsBase) {
+                packet.buffer = stream.buffer;
+                let handled = HandlersList.get(packet.getID(), this.player.connection.address.toString());
+                if (handled !== null) {
+                    handled.startHandling(packet);
+                }
+            }
+        });
+    }
 }
 
 module.exports = GamePacketHandler;

@@ -16,16 +16,16 @@ const CommandOriginDataTypes = require("../../constants/CommandOriginDataTypes")
 const HandlersBase = require("./HandlersBase");
 
 class CommandRequestPacketHandler extends HandlersBase {
-	async startHandling(packet) {
-		super.startHandling(packet);
-		if (packet.data.typeID === CommandOriginDataTypes.player) {
-			let cmd = packet.command;
-			if (!(cmd.startsWith("/"))) {
-				return;
-			}
-			this.server.commandsList.dispatch(this.player, cmd.substring(1));
-		}
-	}
+    async startHandling(packet) {
+        super.startHandling(packet);
+        if (packet.data.typeID === CommandOriginDataTypes.player) {
+            let cmd = packet.command;
+            if (!cmd.startsWith("/")) {
+                return;
+            }
+            this.server.commandsList.dispatch(this.player, cmd.substring(1));
+        }
+    }
 }
 
 module.exports = CommandRequestPacketHandler;

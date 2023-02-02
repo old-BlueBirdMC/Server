@@ -13,13 +13,13 @@
 \******************************************/
 
 class BehaviorPackInfo {
-	uuid;
-	version;
-	size;
-	contentKey;
-	subPackName;
-	contentIdentity;
-	hadScripts;
+    uuid;
+    version;
+    size;
+    contentKey;
+    subPackName;
+    contentIdentity;
+    hadScripts;
 }
 
 module.exports = BehaviorPackInfo;

@@ -13,10 +13,10 @@
 \******************************************/
 
 class PluginInfo {
-	pluginName;
-	author;
-	version;
-	description;
+    pluginName;
+    author;
+    version;
+    description;
 }
 
 module.exports = PluginInfo;

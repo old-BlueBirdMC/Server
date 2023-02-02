@@ -16,17 +16,17 @@ const Identifiers = require("./Identifiers");
 const PacketsBase = require("./PacketsBase");
 
 class RequestNetworkSettingsPacket extends PacketsBase {
-	static id = Identifiers.requestNetworkSettings;
+    static id = Identifiers.requestNetworkSettings;
 
-	protocolVersion;
+    protocolVersion;
 
-	deserialize() {
-		this.protocolVersion = this.readIntBE();
-	}
+    deserialize() {
+        this.protocolVersion = this.readIntBE();
+    }
 
-	serialize() {
-		this.writeIntBE(this.protocolVersion);
-	}
+    serialize() {
+        this.writeIntBE(this.protocolVersion);
+    }
 }
 
 module.exports = RequestNetworkSettingsPacket;

@@ -16,18 +16,18 @@ const Block = require("../Block");
 const Tool = require("../Tool");
 
 class PolishedGranite extends Block {
-	maxStack = 64;
-	tool = Tool.pickaxe;
-	blastResistance = 6;
-	hardness = 1.5;
-	isLuminant = false;
-	isTransparrent = false;
-	isFlammable = false;
-	catchesFireFromLava = false;
+    maxStack = 64;
+    tool = Tool.pickaxe;
+    blastResistance = 6;
+    hardness = 1.5;
+    isLuminant = false;
+    isTransparrent = false;
+    isFlammable = false;
+    catchesFireFromLava = false;
 
-	constructor() {
-		super("minecraft:stone", 2);
-	}
+    constructor() {
+        super("minecraft:stone", 2);
+    }
 }
 
 module.exports = PolishedGranite;

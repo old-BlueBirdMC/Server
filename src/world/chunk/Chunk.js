@@ -18,38 +18,54 @@ const SubChunk = require("./SubChunk");
 const MAXSUBCHUNKS = 24;
 
 class Chunk {
-	x;
-	z;
-	subChunks;
-	biomes;
+    x;
+    z;
+    subChunks;
+    biomes;
     runtimeID;
 
-	constructor(x, z, runtimeID) {
-		this.x = x;
-		this.z = z;
-        this.runtimeID = runtimeID
-		this.subChunks = new Map();
-		this.biomes = [
-			new BlockStorage(1), new BlockStorage(1), new BlockStorage(1),
-			new BlockStorage(1), new BlockStorage(1), new BlockStorage(1),
-			new BlockStorage(1), new BlockStorage(1), new BlockStorage(1),
-			new BlockStorage(1), new BlockStorage(1), new BlockStorage(1),
-			new BlockStorage(1), new BlockStorage(1), new BlockStorage(1),
-			new BlockStorage(1), new BlockStorage(1), new BlockStorage(1),
-			new BlockStorage(1), new BlockStorage(1), new BlockStorage(1),
-			new BlockStorage(1), new BlockStorage(1), new BlockStorage(1)
-		];
-	}
+    constructor(x, z, runtimeID) {
+        this.x = x;
+        this.z = z;
+        this.runtimeID = runtimeID;
+        this.subChunks = new Map();
+        this.biomes = [
+            new BlockStorage(1),
+            new BlockStorage(1),
+            new BlockStorage(1),
+            new BlockStorage(1),
+            new BlockStorage(1),
+            new BlockStorage(1),
+            new BlockStorage(1),
+            new BlockStorage(1),
+            new BlockStorage(1),
+            new BlockStorage(1),
+            new BlockStorage(1),
+            new BlockStorage(1),
+            new BlockStorage(1),
+            new BlockStorage(1),
+            new BlockStorage(1),
+            new BlockStorage(1),
+            new BlockStorage(1),
+            new BlockStorage(1),
+            new BlockStorage(1),
+            new BlockStorage(1),
+            new BlockStorage(1),
+            new BlockStorage(1),
+            new BlockStorage(1),
+            new BlockStorage(1),
+        ];
+    }
 
-	getBlockRuntimeID(x, y, z, layer) {
+    getBlockRuntimeID(x, y, z, layer) {
         let index = y >> 4;
         if (this.subChunks.has(index)) {
             return this.subChunks.get(index).getBlockRuntimeID(x & 0x0f, y & 0x0f, z & 0x0f, layer);
         }
         return this.runtimeID;
-	}
+    }
 
-	setBlockRuntimeID(x, y, z, layer, runtimeID) {
+    setBlockRuntimeID(x, y, z, layer, runtimeID) {
         let index = y >> 4;
         if (index < MAXSUBCHUNKS && index >= 0) {
             if (!this.subChunks.has(index)) {
@@ -57,35 +73,35 @@ class Chunk {
             }
             return this.subChunks.get(index).setBlockRuntimeID(x & 0x0f, y & 0x0f, z & 0x0f, layer, runtimeID);
         }
-	}
+    }
 
-	getHighestBlockAt(x, z, layer) {
-		for (let i = MAXSUBCHUNKS - 1; i >= 0; --i) {
+    getHighestBlockAt(x, z, layer) {
+        for (let i = MAXSUBCHUNKS - 1; i >= 0; --i) {
             if (this.subChunks.has(i)) {
-			    let y = this.subChunks.get(i).getHighestBlockAt(x, z, layer);
-			    if (y != -1) {
-				    return (i << 4) + y;
-			    }
+                let y = this.subChunks.get(i).getHighestBlockAt(x, z, layer);
+                if (y != -1) {
+                    return (i << 4) + y;
+                }
             }
-		}
-		return -1;
-	}
+        }
+        return -1;
+    }
 
-	isEmpty() {
+    isEmpty() {
         if (this.subChunks.size() == 0) {
             return true;
         }
-		for (let i = 0; i < MAXSUBCHUNKS; ++i) {
+        for (let i = 0; i < MAXSUBCHUNKS; ++i) {
             if (this.subChunks.has(i)) {
-			    if (this.subChunks.get(i).isEmpty() === false) {
-				    return false;
-			    }
+                if (this.subChunks.get(i).isEmpty() === false) {
+                    return false;
+                }
             }
-		}
-		return true;
-	}
+        }
+        return true;
+    }
 
-	getSubChunksSendCount() {
+    getSubChunksSendCount() {
         for (let i = MAXSUBCHUNKS - 1; i >= 0; --i) {
             if (this.subChunks.has(i)) {
                 if (this.subChunks.get(i).isEmpty() === false) {
@@ -94,7 +110,7 @@ class Chunk {
             }
         }
         return 0;
-	}
+    }
 }
 
 module.exports = Chunk;

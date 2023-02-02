@@ -14,7 +14,7 @@
 
 class MetadataEntry {
     value;
-	type;
+    type;
 }
 
 module.exports = MetadataEntry;

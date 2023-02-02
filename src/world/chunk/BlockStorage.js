@@ -13,46 +13,46 @@
 \******************************************/
 
 class BlockStorage {
-	blocks;
-	palette;
+    blocks;
+    palette;
 
-	constructor(runtimeID) {
-		this.blocks = new Array(4096);
-		this.blocks.fill(0);
-		this.palette = [runtimeID]; 
-	}
+    constructor(runtimeID) {
+        this.blocks = new Array(4096);
+        this.blocks.fill(0);
+        this.palette = [runtimeID];
+    }
 
-	getBlockRuntimeID(x, y, z) {
-		return this.palette[this.blocks[(x << 8) | (z << 4) | y]];
-	}
+    getBlockRuntimeID(x, y, z) {
+        return this.palette[this.blocks[(x << 8) | (z << 4) | y]];
+    }
 
-	setBlockRuntimeID(x, y, z, runtimeID) {
-		if (this.palette.includes(runtimeID) === false) {
-			this.palette.push(runtimeID);
-		}
-		this.blocks[(x << 8) | (z << 4) | y] = this.palette.indexOf(runtimeID);
-	}
-	
-	getHighestBlockAt(x, z) {
-		for (let y = 15; y >= 0; --y) {
-			if (this.blocks[(x << 8) | (z << 4) | y] != 0) {
-				return y;
-			}
-		}
-		return -1;
-	}
+    setBlockRuntimeID(x, y, z, runtimeID) {
+        if (this.palette.includes(runtimeID) === false) {
+            this.palette.push(runtimeID);
+        }
+        this.blocks[(x << 8) | (z << 4) | y] = this.palette.indexOf(runtimeID);
+    }
 
-	isEmpty() {
-		if (this.palette.length <= 1) {
-			return true;
-		}
-		for (let i = 0; i < 4096; ++i) {
-			if (this.blocks[i] != 0) {
-				return false;
-			}
-		}
-		return true;
-	}
+    getHighestBlockAt(x, z) {
+        for (let y = 15; y >= 0; --y) {
+            if (this.blocks[(x << 8) | (z << 4) | y] != 0) {
+                return y;
+            }
+        }
+        return -1;
+    }
+
+    isEmpty() {
+        if (this.palette.length <= 1) {
+            return true;
+        }
+        for (let i = 0; i < 4096; ++i) {
+            if (this.blocks[i] != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
 
 module.exports = BlockStorage;

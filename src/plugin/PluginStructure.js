@@ -15,22 +15,26 @@
 const Logger = require("../console/Logger");
 
 class PluginStructure {
-	server;
-	dataPath;
-	log;
-	description = {};
+    server;
+    dataPath;
+    log;
+    description = {};
 
-	constructor(server, dataPath, pluginName) {
-		this.server = server;
-		this.dataPath = dataPath;
-		this.log = new Logger({Name: pluginName, WithColors: true, AllowDebugging: false});
-	}
+    constructor(server, dataPath, pluginName) {
+        this.server = server;
+        this.dataPath = dataPath;
+        this.log = new Logger({
+            Name: pluginName,
+            WithColors: true,
+            AllowDebugging: false,
+        });
+    }
 
-	successfullyEnabled() {}
+    successfullyEnabled() {}
 
-	handleEvents() {}
+    handleEvents() {}
 
-	successfullyDisabled() {}
+    successfullyDisabled() {}
 }
 
 module.exports = PluginStructure;

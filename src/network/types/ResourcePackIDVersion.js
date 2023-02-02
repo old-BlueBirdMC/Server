@@ -13,9 +13,9 @@
 \******************************************/
 
 class ResourcePackIDVersion {
-	uuid;
-	version;
-	name;
+    uuid;
+    version;
+    name;
 }
 
 module.exports = ResourcePackIDVersion;

@@ -18,7 +18,7 @@ class Tool {
     static shovel = 2;
     static pickaxe = 4;
     static axe = 8;
-    static shears = 16
+    static shears = 16;
 }
 
 module.exports = Tool;

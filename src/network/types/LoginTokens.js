@@ -13,8 +13,8 @@
 \******************************************/
 
 class LoginTokens {
-	identity;
-	client;
+    identity;
+    client;
 }
 
 module.exports = LoginTokens;

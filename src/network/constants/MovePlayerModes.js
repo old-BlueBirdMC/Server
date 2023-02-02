@@ -13,10 +13,10 @@
 \******************************************/
 
 class MovePlayerModes {
-	static normal = 0;
-	static reset = 1;
-	static teleport = 2;
-	static pitch = 3;
+    static normal = 0;
+    static reset = 1;
+    static teleport = 2;
+    static pitch = 3;
 }
 
 module.exports = MovePlayerModes;

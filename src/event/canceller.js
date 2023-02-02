@@ -13,22 +13,22 @@
 \******************************************/
 
 class canceller {
-	#cancel = false;
+    #cancel = false;
 
-	cancel() {
-		this.#cancel = true;
-	}
+    cancel() {
+        this.#cancel = true;
+    }
 
-	uncancel() {
-		this.#cancel = false;
-	}
+    uncancel() {
+        this.#cancel = false;
+    }
 
-	isCancelled() {
-		if (this.#cancel === true) {
-			return true;
-		}
-		return false;
-	}
+    isCancelled() {
+        if (this.#cancel === true) {
+            return true;
+        }
+        return false;
+    }
 }
 
 module.exports = canceller;

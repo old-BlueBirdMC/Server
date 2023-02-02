@@ -13,7 +13,7 @@
 \******************************************/
 
 class PlayerAttributeModifier {
-	id;
+    id;
     name;
     amount;
     operation;

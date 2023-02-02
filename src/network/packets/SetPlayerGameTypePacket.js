@@ -16,17 +16,17 @@ const Identifiers = require("./Identifiers");
 const PacketsBase = require("./PacketsBase");
 
 class SetPlayerGameTypePacket extends PacketsBase {
-	static id = Identifiers.setPlayerGameType;
+    static id = Identifiers.setPlayerGameType;
 
-	mode;
+    mode;
 
-	deserialize() {
-		this.mode = this.readSignedVarInt();
-	}
+    deserialize() {
+        this.mode = this.readSignedVarInt();
+    }
 
-	serialize() {
-		this.writeSignedVarInt(this.mode);
-	}
+    serialize() {
+        this.writeSignedVarInt(this.mode);
+    }
 }
 
 module.exports = SetPlayerGameTypePacket;

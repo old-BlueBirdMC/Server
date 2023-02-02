@@ -17,27 +17,27 @@ const Identifiers = require("./Identifiers");
 const PacketsBase = require("./PacketsBase");
 
 class InteractPacket extends PacketsBase {
-	static id = Identifiers.interact;
+    static id = Identifiers.interact;
 
-	actionID;
-	targetRuntimeEntityID;
-	position;
+    actionID;
+    targetRuntimeEntityID;
+    position;
 
-	deserialize() {
-		this.actionID = this.readUnsignedByte();
-		this.targetRuntimeEntityID = this.readRuntimeEntityID();
-		if (this.actionID === InteractActions.mouseOverEntity || this.actionID === InteractActions.leaveVehicle) {
-			this.position = this.readVector3F();
-		}
-	}
+    deserialize() {
+        this.actionID = this.readUnsignedByte();
+        this.targetRuntimeEntityID = this.readRuntimeEntityID();
+        if (this.actionID === InteractActions.mouseOverEntity || this.actionID === InteractActions.leaveVehicle) {
+            this.position = this.readVector3F();
+        }
+    }
 
-	serialize() {
-		this.writeUnsignedByte(this.actionID);
-		this.writeRuntimeEntityID(this.targetRuntimeEntityID);
-		if (this.actionID === InteractActions.mouseOverEntity || this.actionID === InteractActions.leaveVehicle) {
-			this.writeVector3F(this.position);
-		}
-	}
+    serialize() {
+        this.writeUnsignedByte(this.actionID);
+        this.writeRuntimeEntityID(this.targetRuntimeEntityID);
+        if (this.actionID === InteractActions.mouseOverEntity || this.actionID === InteractActions.leaveVehicle) {
+            this.writeVector3F(this.position);
+        }
+    }
 }
 
 module.exports = InteractPacket;

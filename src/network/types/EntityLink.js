@@ -13,11 +13,11 @@
 \******************************************/
 
 class EntityLink {
-	riddenRuntimeEntityID;
-	riderRuntimeEntityID;
-	type;
-	immediate;
-	byRider;
+    riddenRuntimeEntityID;
+    riderRuntimeEntityID;
+    type;
+    immediate;
+    byRider;
 }
 
 module.exports = EntityLink;

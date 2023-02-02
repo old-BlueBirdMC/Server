@@ -16,22 +16,22 @@ const NetworkSettingsPacket = require("../NetworkSettingsPacket");
 const HandlersBase = require("./HandlersBase");
 
 class RequestNetworkSettingsPacketHandler extends HandlersBase {
-	async startHandling(packet) {
-		await super.startHandling(packet);
-		let player = this.player;
+    async startHandling(packet) {
+        await super.startHandling(packet);
+        let player = this.player;
 
-		player.checkProtocol(packet.protocolVersion);
+        player.checkProtocol(packet.protocolVersion);
 
-		let networkSettings = new NetworkSettingsPacket();
-		networkSettings.threshold = 1; //all = 1, none = 0
-		networkSettings.algorithm = 0; //snappy = 1, zlib = 0
-		networkSettings.clientThrottling = false;
-		networkSettings.throttleThreshold = 0;
-		networkSettings.throttleScalar = 0.0;
-		await networkSettings.sendTo(player);
+        let networkSettings = new NetworkSettingsPacket();
+        networkSettings.threshold = 1; //all = 1, none = 0
+        networkSettings.algorithm = 0; //snappy = 1, zlib = 0
+        networkSettings.clientThrottling = false;
+        networkSettings.throttleThreshold = 0;
+        networkSettings.throttleScalar = 0.0;
+        await networkSettings.sendTo(player);
 
-		player.readyToLogin = true;
-	}
+        player.readyToLogin = true;
+    }
 }
 
 module.exports = RequestNetworkSettingsPacketHandler;

@@ -16,32 +16,32 @@ const Identifiers = require("./Identifiers");
 const PacketsBase = require("./PacketsBase");
 
 class LevelSoundEventPacket extends PacketsBase {
-	static id = Identifiers.levelSoundEvent;
+    static id = Identifiers.levelSoundEvent;
 
-	soundID;
+    soundID;
     position;
     extraData;
     entityType;
     isBabyMob;
     isGlobal;
 
-	deserialize() {
-		this.soundID = this.readVarInt();
-		this.position = this.readVector3F();
-		this.extraData = this.readSignedVarInt();
+    deserialize() {
+        this.soundID = this.readVarInt();
+        this.position = this.readVector3F();
+        this.extraData = this.readSignedVarInt();
         this.entityType = this.readStringVarInt();
         this.isBabyMob = this.readBool();
         this.isGlobal = this.readBool();
-	}
+    }
 
-	serialize() {
-		this.writeVarInt(this.soundID);
-		this.writeVector3F(this.position);
-		this.writeSignedVarInt(this.extraData);
+    serialize() {
+        this.writeVarInt(this.soundID);
+        this.writeVector3F(this.position);
+        this.writeSignedVarInt(this.extraData);
         this.writeStringVarInt(this.entityType);
         this.writeBool(this.isBabyMob);
         this.writeBool(this.isGlobal);
-	}
+    }
 }
 
 module.exports = LevelSoundEventPacket;

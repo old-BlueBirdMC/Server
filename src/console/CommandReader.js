@@ -16,21 +16,21 @@ const readline = require("readline");
 const ConsoleCommandSender = require("./ConsoleCommandSender");
 
 class CommandReader {
-	server;
-	rl;
-	consoleCommandSender;
+    server;
+    rl;
+    consoleCommandSender;
 
-	constructor(server) {
-		this.server = server;
-		this.rl = readline.createInterface({ input: process.stdin });
-		this.consoleCommandSender = new ConsoleCommandSender(this.server);
-	}
+    constructor(server) {
+        this.server = server;
+        this.rl = readline.createInterface({ input: process.stdin });
+        this.consoleCommandSender = new ConsoleCommandSender(this.server);
+    }
 
-	readConsole() {
-		this.rl.on("line", async (input) => {
-			this.server.commandsList.dispatch(this.consoleCommandSender, input);
-		});
-	}
+    readConsole() {
+        this.rl.on("line", async (input) => {
+            this.server.commandsList.dispatch(this.consoleCommandSender, input);
+        });
+    }
 }
 
 module.exports = CommandReader;

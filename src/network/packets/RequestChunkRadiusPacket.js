@@ -16,17 +16,17 @@ const Identifiers = require("./Identifiers");
 const PacketsBase = require("./PacketsBase");
 
 class RequestChunkRadiusPacket extends PacketsBase {
-	static id = Identifiers.requestChunkRadius;
+    static id = Identifiers.requestChunkRadius;
 
-	chunkRadius;
+    chunkRadius;
 
-	deserialize() {
-		this.chunkRadius = this.readSignedVarInt();
-	}
+    deserialize() {
+        this.chunkRadius = this.readSignedVarInt();
+    }
 
-	serialize() {
-		this.writeSignedVarInt(this.chunkRadius);
-	}
+    serialize() {
+        this.writeSignedVarInt(this.chunkRadius);
+    }
 }
 
 module.exports = RequestChunkRadiusPacket;

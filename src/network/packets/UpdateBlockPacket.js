@@ -16,26 +16,26 @@ const Identifiers = require("./Identifiers");
 const PacketsBase = require("./PacketsBase");
 
 class UpdateBlockPacket extends PacketsBase {
-	static id = Identifiers.updateBlock;
+    static id = Identifiers.updateBlock;
 
-	coordinates;
-	runtimeID;
-	flags;
-	layer;
+    coordinates;
+    runtimeID;
+    flags;
+    layer;
 
-	deserialize() {
-		this.coordinates = this.readBlockCoordinates();
-		this.runtimeID = this.readVarInt();
-		this.flags = this.readVarInt();
-		this.layer = this.readVarInt();
-	}
+    deserialize() {
+        this.coordinates = this.readBlockCoordinates();
+        this.runtimeID = this.readVarInt();
+        this.flags = this.readVarInt();
+        this.layer = this.readVarInt();
+    }
 
-	deserialize() {
-		this.writeBlockCoordinates(this.coordinates);
-		this.writeVarInt(this.runtimeID);
-		this.writeVarInt(this.flags);
-		this.writeVarInt(this.layer);
-	}
+    deserialize() {
+        this.writeBlockCoordinates(this.coordinates);
+        this.writeVarInt(this.runtimeID);
+        this.writeVarInt(this.flags);
+        this.writeVarInt(this.layer);
+    }
 }
 
 module.exports = UpdateBlockPacket;

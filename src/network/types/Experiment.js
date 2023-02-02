@@ -13,8 +13,8 @@
 \******************************************/
 
 class Experiment {
-	name;
-	enabled;
+    name;
+    enabled;
 }
 
 module.exports = Experiment;

@@ -16,26 +16,26 @@ const Identifiers = require("./Identifiers");
 const PacketsBase = require("./PacketsBase");
 
 class ContainerOpenPacket extends PacketsBase {
-	static id = Identifiers.containerOpen;
+    static id = Identifiers.containerOpen;
 
-	windowID;
-	type;
-	coordinates;
-	runtimeEntityID;
+    windowID;
+    type;
+    coordinates;
+    runtimeEntityID;
 
-	deserialize() {
-		this.windowID = this.readByte();
-		this.type = this.readByte();
-		this.coordinates = this.readBlockCoordinates();
-		this.runtimeEntityID = this.readRuntimeEntityID();
-	}
+    deserialize() {
+        this.windowID = this.readByte();
+        this.type = this.readByte();
+        this.coordinates = this.readBlockCoordinates();
+        this.runtimeEntityID = this.readRuntimeEntityID();
+    }
 
-	serialize() {
-		this.writeByte(this.windowID);
-		this.writeByte(this.type);
-		this.writeBlockCoordinates(this.coordinates);
-		this.writeRuntimeEntityID(this.runtimeEntityID);
-	}
+    serialize() {
+        this.writeByte(this.windowID);
+        this.writeByte(this.type);
+        this.writeBlockCoordinates(this.coordinates);
+        this.writeRuntimeEntityID(this.runtimeEntityID);
+    }
 }
 
 module.exports = ContainerOpenPacket;

@@ -15,36 +15,36 @@
 const fs = require("fs");
 
 class BlocksList {
-	static #list = {};
+    static #list = {};
 
-	static refresh() {
-		fs.readdirSync(__dirname + '/default').forEach((file) => {
-			const block = require(__dirname + '/default/' + file);
-			this.add(new block());
-		});
-	}
+    static refresh() {
+        fs.readdirSync(__dirname + "/default").forEach((file) => {
+            const block = require(__dirname + "/default/" + file);
+            this.add(new block());
+        });
+    }
 
-	static add(block) {
-		let blockAndMetadata = `${block.blockName} ${block.metadata}`;
-		if (!(blockAndMetadata in this.#list)) {
-			this.#list[blockAndMetadata] = block;
-		}
-	}
+    static add(block) {
+        let blockAndMetadata = `${block.blockName} ${block.metadata}`;
+        if (!(blockAndMetadata in this.#list)) {
+            this.#list[blockAndMetadata] = block;
+        }
+    }
 
-	static remove(block) {
-		let blockAndMetadata = `${block.blockName} ${block.metadata}`;
-		if (blockAndMetadata in this.#list) {
-			delete this.#list[blockAndMetadata];
-		}
-	}
+    static remove(block) {
+        let blockAndMetadata = `${block.blockName} ${block.metadata}`;
+        if (blockAndMetadata in this.#list) {
+            delete this.#list[blockAndMetadata];
+        }
+    }
 
-	static get(blockName, metadata = 0) {
-		let blockAndMetadata = `${blockName} ${metadata}`;
-		if (!(blockAndMetadata in this.#list)) {
-			throw new Error("Trying to get unregistered block");
-		}
-		return this.#list[blockAndMetadata]
-	}
+    static get(blockName, metadata = 0) {
+        let blockAndMetadata = `${blockName} ${metadata}`;
+        if (!(blockAndMetadata in this.#list)) {
+            throw new Error("Trying to get unregistered block");
+        }
+        return this.#list[blockAndMetadata];
+    }
 }
 
 module.exports = BlocksList;

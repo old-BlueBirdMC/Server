@@ -20,7 +20,7 @@ class Overworld extends Generator {
     static generatorName = "overworld";
 
     generate(chunkX, chunkZ) {
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
             let seed = 3;
             let air = this.blockStatesMap.legacyToRuntime("minecraft:air", 0);
             let bedrock = this.blockStatesMap.legacyToRuntime("minecraft:bedrock", 0);
@@ -33,7 +33,7 @@ class Overworld extends Generator {
             let perlin = new Perlin();
             for (let x = 0; x < 16; ++x) {
                 for (let z = 0; z < 16; ++z) {
-                    let y = perlin.perlin(((chunkX << 4) + x), ((chunkZ << 4) + z), 10.0 * seed, 1, 8, 4, 0.4, 2) + 62;
+                    let y = perlin.perlin((chunkX << 4) + x, (chunkZ << 4) + z, 10.0 * seed, 1, 8, 4, 0.4, 2) + 62;
                     let startPoint = y;
                     while (y >= 0) {
                         if (y < 1 && y >= 0) {
@@ -53,7 +53,7 @@ class Overworld extends Generator {
                         } else {
                             chunk.setBlockRuntimeID(x, y, z, 0, stone);
                         }
-                        --y
+                        --y;
                     }
                     for (let i = 0; i < 62; ++i) {
                         if (chunk.getBlockRuntimeID(x, i, z, 0) == air) {

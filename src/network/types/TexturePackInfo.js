@@ -13,14 +13,14 @@
 \******************************************/
 
 class TexturePackInfo {
-	uuid;
-	version;
-	size;
-	contentKey;
-	subPackName;
-	contentIdentity;
-	hadScripts;
-	rtxEnabled;
+    uuid;
+    version;
+    size;
+    contentKey;
+    subPackName;
+    contentIdentity;
+    hadScripts;
+    rtxEnabled;
 }
 
 module.exports = TexturePackInfo;

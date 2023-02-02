@@ -15,19 +15,19 @@
 const PacketsBase = require("../PacketsBase");
 
 class HandlersBase {
-	player;
-	server;
+    player;
+    server;
 
-	constructor(player, server) {
-		this.player = player;
-		this.server = server;
-	}
+    constructor(player, server) {
+        this.player = player;
+        this.server = server;
+    }
 
-	startHandling(packet) {
-		if (!packet instanceof PacketsBase) return;
-		if (this.player.connection === null)  return;
-		packet.deserializeA();
-	}
+    startHandling(packet) {
+        if (!packet instanceof PacketsBase) return;
+        if (this.player.connection === null) return;
+        packet.deserializeA();
+    }
 }
 
 module.exports = HandlersBase;

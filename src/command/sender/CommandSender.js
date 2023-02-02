@@ -13,12 +13,12 @@
 \******************************************/
 
 class CommandSender {
-	name = "";
-	server;
+    name = "";
+    server;
 
-	constructor(server) {
-		this.server = server;
-	}
+    constructor(server) {
+        this.server = server;
+    }
 }
 
 module.exports = CommandSender;

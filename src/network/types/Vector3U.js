@@ -13,9 +13,9 @@
 \******************************************/
 
 class Vector3U {
-	x;
-	y;
-	z;
+    x;
+    y;
+    z;
 }
 
 module.exports = Vector3U;

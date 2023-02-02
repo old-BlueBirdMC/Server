@@ -16,29 +16,29 @@ const Identifiers = require("./Identifiers");
 const PacketsBase = require("./PacketsBase");
 
 class PlayerActionPacket extends PacketsBase {
-	static id = Identifiers.playerAction;
+    static id = Identifiers.playerAction;
 
-	runtimeEntityID;
-	actionType;
-	blockCoordinates;
-	resultBlockCoordinates;
-	blockFace;
+    runtimeEntityID;
+    actionType;
+    blockCoordinates;
+    resultBlockCoordinates;
+    blockFace;
 
-	deserialize() {
-		this.runtimeEntityID = this.readRuntimeEntityID();
-		this.actionType = this.readSignedVarInt();
-		this.blockCoordinates = this.readBlockCoordinates();
-		this.resultBlockCoordinates = this.readBlockCoordinates();
-		this.blockFace = this.readUnsignedByte();
-	}
+    deserialize() {
+        this.runtimeEntityID = this.readRuntimeEntityID();
+        this.actionType = this.readSignedVarInt();
+        this.blockCoordinates = this.readBlockCoordinates();
+        this.resultBlockCoordinates = this.readBlockCoordinates();
+        this.blockFace = this.readUnsignedByte();
+    }
 
-	serialize() {
-		this.writeRuntimeEntityID(this.runtimeEntityID);
-		this.writeSignedVarInt(this.actionType);
-		this.writeBlockCoordinates(this.blockCoordinates);
-		this.writeBlockCoordinates(this.resultBlockCoordinates);
-		this.writeUnsignedByte(this.blockFace);
-	}
+    serialize() {
+        this.writeRuntimeEntityID(this.runtimeEntityID);
+        this.writeSignedVarInt(this.actionType);
+        this.writeBlockCoordinates(this.blockCoordinates);
+        this.writeBlockCoordinates(this.resultBlockCoordinates);
+        this.writeUnsignedByte(this.blockFace);
+    }
 }
 
 module.exports = PlayerActionPacket;

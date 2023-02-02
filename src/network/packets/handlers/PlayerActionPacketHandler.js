@@ -19,23 +19,23 @@ const UpdateBlockFlags = require("../../constants/UpdateBlockFlags");
 const HandlersBase = require("./HandlersBase");
 
 class PlayerActionPacketHandler extends HandlersBase {
-	async startHandling(packet) {
-		await super.startHandling(packet);
-		if (packet.actionType === PlayerActionTypes.startSprint) {
-			this.playerSprint(true);
-		} else if (packet.actionType === PlayerActionTypes.stopSprint) {
-			this.playerSprint(false);
-		} else if (packet.actionType === PlayerActionTypes.interactBlock) {
-			// let blockName = "minecraft:chest";
-			// let blockMetadata = 0;
-			// BlocksList.get(blockName, blockMetadata).interact(this.server.getOnlinePlayerByRID(packet.runtimeEntityID), packet.blockCoordinates, packet.blockFace);
-		}
-	}
+    async startHandling(packet) {
+        await super.startHandling(packet);
+        if (packet.actionType === PlayerActionTypes.startSprint) {
+            this.playerSprint(true);
+        } else if (packet.actionType === PlayerActionTypes.stopSprint) {
+            this.playerSprint(false);
+        } else if (packet.actionType === PlayerActionTypes.interactBlock) {
+            // let blockName = "minecraft:chest";
+            // let blockMetadata = 0;
+            // BlocksList.get(blockName, blockMetadata).interact(this.server.getOnlinePlayerByRID(packet.runtimeEntityID), packet.blockCoordinates, packet.blockFace);
+        }
+    }
 
-	playerSprint(value) {
-		this.player.sprint = value;
-		this.player.updateData(this.player.server.getOnlinePlayers(), true);
-	}
+    playerSprint(value) {
+        this.player.sprint = value;
+        this.player.updateData(this.player.server.getOnlinePlayers(), true);
+    }
 }
 
 module.exports = PlayerActionPacketHandler;

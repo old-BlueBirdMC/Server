@@ -13,12 +13,12 @@
 \******************************************/
 
 class CommandData {
-	name;
-	description;
-	flags;
-	permissionLevel;
-	aliases;
-	overloads;	
+    name;
+    description;
+    flags;
+    permissionLevel;
+    aliases;
+    overloads;
 }
 
 module.exports = CommandData;

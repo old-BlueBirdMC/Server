@@ -37,145 +37,146 @@ const MinecraftBinaryStream = require("../../../misc/MinecraftBinaryStream");
 const UpdateAttributesPacket = require("../UpdateAttributesPacket");
 
 class ResourcePackClientResponsePacketHandler extends HandlersBase {
-	randomUUID() {
-		let stream = new MinecraftBinaryStream(crypto.randomBytes(16));
-		return stream.readUUID();
-	}
+    randomUUID() {
+        let stream = new MinecraftBinaryStream(crypto.randomBytes(16));
+        return stream.readUUID();
+    }
 
-	async startHandling(packet) {
-		await super.startHandling(packet);
-		switch(packet.responseStatus) {
-			case ResourcePackClientResponseStatus.refused:
-				this.player.disconnect("You need to accept the resource pack");
-				break;
-			case ResourcePackClientResponseStatus.sendPacks:
-				break;
-			case ResourcePackClientResponseStatus.none:
-			case ResourcePackClientResponseStatus.haveAllPacks:
-				const resourcePackStack = new ResourcePackStackPacket();
-				resourcePackStack.mustAccept = false;
-				resourcePackStack.behaviorPacks = [];
-				resourcePackStack.texturePacks = [];
-				resourcePackStack.gameVersion = ServerInfo.minecraftVersion;
-				resourcePackStack.experiments = [];
-				resourcePackStack.experimentsPreviouslyUsed = false;
-				resourcePackStack.sendTo(this.player);
-				break;
-			case ResourcePackClientResponseStatus.completed:
-				let worldPos = new Vector3F(); // temp
-				worldPos.x = 0.0;
-				worldPos.y = 6.0;
-				worldPos.z = 0.0;
-				const startGame = new StartGamePacket();
-				startGame.entityID = BigInt(this.player.id);
-				startGame.runtimeEntityID = this.player.id;
-				startGame.playerGamemode = this.player.gamemode;
-				startGame.playerPosition = this.player.position;
-				startGame.rotation = this.player.rotation;
-				startGame.seed = 0n;
-				startGame.biomeType = 0;
-				startGame.biomeName = "plains";
-				startGame.dimension = 0;
-				startGame.worldType = WorldType.infinite;
-				startGame.worldGamemode = GameMode.survival;
-				startGame.difficulty = 0;
-				startGame.spawnPosition = worldPos;
-				startGame.achievementsDisabled = false;
-				startGame.editorWorld = false;
-				startGame.dayCycleStopTime = 0;
-				startGame.eduOffer = 0;
-				startGame.eduFeaturesEnabled = false;
-				startGame.eduProductUUID = this.randomUUID();
-				startGame.rainLevel = 0.0;
-				startGame.lightningLevel = 0.0;
-				startGame.hasConfirmedPlatformLockedContent = false;
-				startGame.isMultiplayer = true;
-				startGame.broadcastToLAN = true;
-				startGame.xboxLiveBroadcatMode = BroadcastMode.public;
-				startGame.platformBroadcastMode = BroadcastMode.public;
-				startGame.enableCommands = true;
-				startGame.requireResourcePacks = false;
-				startGame.gameRules = [];
-				startGame.experiments = [];
-				startGame.experimentsPreviouslyUsed = false;
-				startGame.bonusChest = false;
-				startGame.mapEnabled = false;
-				startGame.permissionLevel = PermissionLevel.member;
-				startGame.serverChunkTickRange = 0;
-				startGame.hasLockedBehaviorPack = false;
-				startGame.hasLockedTexturepack = false;
-				startGame.isFromLockedWorldTemplate = false;
-				startGame.msaGamertagsOnly = false;
-				startGame.isFromWorldTemplate = false;
-				startGame.isWorldTemplateOptionLocked = false;
-				startGame.onlySpawnV1Villagers = false;
-				startGame.personaDisabled = false;
-				startGame.customSkinsDisabled = false;
-				startGame.gameVersion = ServerInfo.minecraftVersion;
-				startGame.limitedWorldWidth = 0;
-				startGame.limitedWorldLength = 0;
-				startGame.isNewNether = true;
-				startGame.eduResourceURI = new EducationSharedResourceURI();
-				startGame.eduResourceURI.buttonName = "";
-				startGame.eduResourceURI.linkURI = "";
-				startGame.experimentalGameplayOverride = false;
-				startGame.levelID = this.randomUUID();
-				startGame.chatRestrictionLevel = ChatRestrictionLevel.none;
-				startGame.playerInteractionsDisabled = false;
-				startGame.worldName = "test";
-				startGame.premiumWorldTemplateID = this.randomUUID();
-				startGame.isTrial = false;
-				startGame.movementAuthority = 0;
-				startGame.rewindHistorySize = 0;
-				startGame.serverAuthoritativeBlockBreaking = false;
-				startGame.currentTick = 0n;
-				startGame.enchantmentSeed = 0;
-				startGame.blockProperties = [];
-				startGame.itemStates = this.server.resourceManager.itemStatesMap.states;
-				startGame.multiplayerCorrelationID = "";
-				startGame.serverAuthoritativeInventory = false;
-				startGame.engine = ServerInfo.engine;
-				startGame.propertyData = new Compound();
-				startGame.blockPaletteChecksum = 0n;
-				startGame.worldTemplateID = this.randomUUID();
-				startGame.clientSideGeneration = false;
-				startGame.sendTo(this.player);
+    async startHandling(packet) {
+        await super.startHandling(packet);
+        switch (packet.responseStatus) {
+            case ResourcePackClientResponseStatus.refused:
+                this.player.disconnect("You need to accept the resource pack");
+                break;
+            case ResourcePackClientResponseStatus.sendPacks:
+                break;
+            case ResourcePackClientResponseStatus.none:
+            case ResourcePackClientResponseStatus.haveAllPacks:
+                const resourcePackStack = new ResourcePackStackPacket();
+                resourcePackStack.mustAccept = false;
+                resourcePackStack.behaviorPacks = [];
+                resourcePackStack.texturePacks = [];
+                resourcePackStack.gameVersion = ServerInfo.minecraftVersion;
+                resourcePackStack.experiments = [];
+                resourcePackStack.experimentsPreviouslyUsed = false;
+                resourcePackStack.sendTo(this.player);
+                break;
+            case ResourcePackClientResponseStatus.completed:
+                let worldPos = new Vector3F(); // temp
+                worldPos.x = 0.0;
+                worldPos.y = 6.0;
+                worldPos.z = 0.0;
+                const startGame = new StartGamePacket();
+                startGame.entityID = BigInt(this.player.id);
+                startGame.runtimeEntityID = this.player.id;
+                startGame.playerGamemode = this.player.gamemode;
+                startGame.playerPosition = this.player.position;
+                startGame.rotation = this.player.rotation;
+                startGame.seed = 0n;
+                startGame.biomeType = 0;
+                startGame.biomeName = "plains";
+                startGame.dimension = 0;
+                startGame.worldType = WorldType.infinite;
+                startGame.worldGamemode = GameMode.survival;
+                startGame.difficulty = 0;
+                startGame.spawnPosition = worldPos;
+                startGame.achievementsDisabled = false;
+                startGame.editorWorld = false;
+                startGame.dayCycleStopTime = 0;
+                startGame.eduOffer = 0;
+                startGame.eduFeaturesEnabled = false;
+                startGame.eduProductUUID = this.randomUUID();
+                startGame.rainLevel = 0.0;
+                startGame.lightningLevel = 0.0;
+                startGame.hasConfirmedPlatformLockedContent = false;
+                startGame.isMultiplayer = true;
+                startGame.broadcastToLAN = true;
+                startGame.xboxLiveBroadcatMode = BroadcastMode.public;
+                startGame.platformBroadcastMode = BroadcastMode.public;
+                startGame.enableCommands = true;
+                startGame.requireResourcePacks = false;
+                startGame.gameRules = [];
+                startGame.experiments = [];
+                startGame.experimentsPreviouslyUsed = false;
+                startGame.bonusChest = false;
+                startGame.mapEnabled = false;
+                startGame.permissionLevel = PermissionLevel.member;
+                startGame.serverChunkTickRange = 0;
+                startGame.hasLockedBehaviorPack = false;
+                startGame.hasLockedTexturepack = false;
+                startGame.isFromLockedWorldTemplate = false;
+                startGame.msaGamertagsOnly = false;
+                startGame.isFromWorldTemplate = false;
+                startGame.isWorldTemplateOptionLocked = false;
+                startGame.onlySpawnV1Villagers = false;
+                startGame.personaDisabled = false;
+                startGame.customSkinsDisabled = false;
+                startGame.gameVersion = ServerInfo.minecraftVersion;
+                startGame.limitedWorldWidth = 0;
+                startGame.limitedWorldLength = 0;
+                startGame.isNewNether = true;
+                startGame.eduResourceURI = new EducationSharedResourceURI();
+                startGame.eduResourceURI.buttonName = "";
+                startGame.eduResourceURI.linkURI = "";
+                startGame.experimentalGameplayOverride = false;
+                startGame.levelID = this.randomUUID();
+                startGame.chatRestrictionLevel = ChatRestrictionLevel.none;
+                startGame.playerInteractionsDisabled = false;
+                startGame.worldName = "test";
+                startGame.premiumWorldTemplateID = this.randomUUID();
+                startGame.isTrial = false;
+                startGame.movementAuthority = 0;
+                startGame.rewindHistorySize = 0;
+                startGame.serverAuthoritativeBlockBreaking = false;
+                startGame.currentTick = 0n;
+                startGame.enchantmentSeed = 0;
+                startGame.blockProperties = [];
+                startGame.itemStates = this.server.resourceManager.itemStatesMap.states;
+                startGame.multiplayerCorrelationID = "";
+                startGame.serverAuthoritativeInventory = false;
+                startGame.engine = ServerInfo.engine;
+                startGame.propertyData = new Compound();
+                startGame.blockPaletteChecksum = 0n;
+                startGame.worldTemplateID = this.randomUUID();
+                startGame.clientSideGeneration = false;
+                startGame.sendTo(this.player);
 
-				const biomeDefinitionList = new BiomeDefinitionListPacket();
-				biomeDefinitionList.nbt = this.server.resourceManager.biomeDefinitionList;
-				biomeDefinitionList.sendTo(this.player);
+                const biomeDefinitionList = new BiomeDefinitionListPacket();
+                biomeDefinitionList.nbt = this.server.resourceManager.biomeDefinitionList;
+                biomeDefinitionList.sendTo(this.player);
 
-				const setEntityData = new SetEntityDataPacket();
-				setEntityData.runtimeEntityID = this.player.id;
-				setEntityData.metadata = this.player.metadataStorage.metadata;
-				setEntityData.properties = new EntityProperty();
-				setEntityData.properties.intProperties = [];
-				setEntityData.properties.floatProperties = [];
-				setEntityData.tick = 0;
-				setEntityData.sendTo(this.player);
+                const setEntityData = new SetEntityDataPacket();
+                setEntityData.runtimeEntityID = this.player.id;
+                setEntityData.metadata = this.player.metadataStorage.metadata;
+                setEntityData.properties = new EntityProperty();
+                setEntityData.properties.intProperties = [];
+                setEntityData.properties.floatProperties = [];
+                setEntityData.tick = 0;
+                setEntityData.sendTo(this.player);
 
-				const updateAttributes = new UpdateAttributesPacket();
-				updateAttributes.runtimeEntityID = this.player.id;
-				updateAttributes.attributes = this.player.attributes;
-				updateAttributes.tick = 0;
-				updateAttributes.sendTo(this.player);
+                const updateAttributes = new UpdateAttributesPacket();
+                updateAttributes.runtimeEntityID = this.player.id;
+                updateAttributes.attributes = this.player.attributes;
+                updateAttributes.tick = 0;
+                updateAttributes.sendTo(this.player);
 
-				const availableEntityIdentifiers = new AvailableEntityIdentifiersPacket();
-				availableEntityIdentifiers.nbt = this.server.resourceManager.availableEntityIdentifiers;
-				availableEntityIdentifiers.sendTo(this.player);
+                const availableEntityIdentifiers = new AvailableEntityIdentifiersPacket();
+                availableEntityIdentifiers.nbt = this.server.resourceManager.availableEntityIdentifiers;
+                availableEntityIdentifiers.sendTo(this.player);
 
-				const creativeContent = new CreativeContentPacket();
-				creativeContent.entries = this.server.resourceManager.creativeItems;
-				creativeContent.sendTo(this.player);
+                const creativeContent = new CreativeContentPacket();
+                creativeContent.entries = this.server.resourceManager.creativeItems;
+                creativeContent.sendTo(this.player);
 
-				if (!this.player.resourcePackClientResponseSent) {//todo: remove after an packet impl
-					this.player.sendAvailableCommands();
-					this.player.resourcePackClientResponseSent = true;
-				}
-				this.player.sendPlayStatus(PlayStatus.playerSpawn);
-				break;
-		}
-	}
+                if (!this.player.resourcePackClientResponseSent) {
+                    //todo: remove after an packet impl
+                    this.player.sendAvailableCommands();
+                    this.player.resourcePackClientResponseSent = true;
+                }
+                this.player.sendPlayStatus(PlayStatus.playerSpawn);
+                break;
+        }
+    }
 }
 
 module.exports = ResourcePackClientResponsePacketHandler;

@@ -16,20 +16,20 @@ const Identifiers = require("./Identifiers");
 const PacketsBase = require("./PacketsBase");
 
 class ResourcePackClientResponsePacket extends PacketsBase {
-	static id = Identifiers.resourcePackClientResponse;
+    static id = Identifiers.resourcePackClientResponse;
 
-	responseStatus;
-	resourcePacks;
+    responseStatus;
+    resourcePacks;
 
-	deserialize() {
-		this.responseStatus = this.readUnsignedByte();
-		this.resourcePacks = this.readResourcePacksID();
-	}
+    deserialize() {
+        this.responseStatus = this.readUnsignedByte();
+        this.resourcePacks = this.readResourcePacksID();
+    }
 
-	serialize() {
-		this.writeUnsignedByte(this.responseStatus);
-		this.writeResourcePacksID(this.resourcePacks);
-	}
+    serialize() {
+        this.writeUnsignedByte(this.responseStatus);
+        this.writeResourcePacksID(this.resourcePacks);
+    }
 }
 
 module.exports = ResourcePackClientResponsePacket;

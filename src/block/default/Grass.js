@@ -16,18 +16,18 @@ const Block = require("../Block");
 const Tool = require("../Tool");
 
 class Grass extends Block {
-	maxStack = 64;
-	tool = Tool.shovel;
-	blastResistance = 0.6;
-	hardness = 0.6;
-	isLuminant = false;
-	isTransparrent = false;
-	isFlammable = false;
-	catchesFireFromLava = false;
+    maxStack = 64;
+    tool = Tool.shovel;
+    blastResistance = 0.6;
+    hardness = 0.6;
+    isLuminant = false;
+    isTransparrent = false;
+    isFlammable = false;
+    catchesFireFromLava = false;
 
-	constructor() {
-		super("minecraft:grass", 0);
-	}
+    constructor() {
+        super("minecraft:grass", 0);
+    }
 }
 
 module.exports = Grass;

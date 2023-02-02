@@ -16,20 +16,20 @@ const Identifiers = require("./Identifiers");
 const PacketsBase = require("./PacketsBase");
 
 class ContainerClosePacket extends PacketsBase {
-	static id = Identifiers.containerClose;
+    static id = Identifiers.containerClose;
 
-	windowID;
-	server;
+    windowID;
+    server;
 
-	deserialize() {
-		this.windowID = this.readByte();
-		this.server = this.readBool();
-	}
+    deserialize() {
+        this.windowID = this.readByte();
+        this.server = this.readBool();
+    }
 
-	serialize() {
-		this.writeByte(this.windowID);
-		this.writeBool(this.server);
-	}
+    serialize() {
+        this.writeByte(this.windowID);
+        this.writeBool(this.server);
+    }
 }
 
 module.exports = ContainerClosePacket;

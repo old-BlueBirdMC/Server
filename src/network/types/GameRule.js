@@ -13,10 +13,10 @@
 \******************************************/
 
 class GameRule {
-	name;
-	editable;
-	type;
-	value;
+    name;
+    editable;
+    type;
+    value;
 }
 
 module.exports = GameRule;

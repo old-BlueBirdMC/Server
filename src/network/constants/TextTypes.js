@@ -13,18 +13,18 @@
 \******************************************/
 
 class TextTypes {
-	static raw = 0;
-	static chat = 1;
-	static translation = 2;
-	static popup = 3;
-	static jukeboxPopup = 4;
-	static tip = 5;
-	static system = 6;
-	static whisper = 7;
-	static announcement = 8;
-	static jsonWhisper = 9;
-	static json = 10;
-	static jsonAnnouncement = 11;
+    static raw = 0;
+    static chat = 1;
+    static translation = 2;
+    static popup = 3;
+    static jukeboxPopup = 4;
+    static tip = 5;
+    static system = 6;
+    static whisper = 7;
+    static announcement = 8;
+    static jsonWhisper = 9;
+    static json = 10;
+    static jsonAnnouncement = 11;
 }
 
 module.exports = TextTypes;

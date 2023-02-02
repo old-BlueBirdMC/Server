@@ -20,50 +20,50 @@ const Block = require("../Block");
 const Tool = require("../Tool");
 
 class Chest extends Block {
-	maxStack = 64;
-	tool = Tool.axe;
-	blastResistance = 2.5;
-	hardness = 2.5;
-	isLuminant = false;
-	isTransparrent = false;
-	isFlammable = true;
-	catchesFireFromLava = true;
-	openers = {};
+    maxStack = 64;
+    tool = Tool.axe;
+    blastResistance = 2.5;
+    hardness = 2.5;
+    isLuminant = false;
+    isTransparrent = false;
+    isFlammable = true;
+    catchesFireFromLava = true;
+    openers = {};
 
-	constructor() {
-		super("minecraft:chest", 0);
-	}
+    constructor() {
+        super("minecraft:chest", 0);
+    }
 
-	interact(source, position, blockFace) {
-		if (!(this.isOpened(source.id))) {
-			this.open(position, source);
-		} else {
-			this.close(source);
-		}
-	}
+    interact(source, position, blockFace) {
+        if (!this.isOpened(source.id)) {
+            this.open(position, source);
+        } else {
+            this.close(source);
+        }
+    }
 
-	isOpened(sourceRuntimeID) {
-		if (sourceRuntimeID in this.openers) {
-			return true;
-		}
-		return false;
-	}
+    isOpened(sourceRuntimeID) {
+        if (sourceRuntimeID in this.openers) {
+            return true;
+        }
+        return false;
+    }
 
-	open(position, source) {
-		const containerOpen = new ContainerOpenPacket();
-		containerOpen.windowID = WindowIDS.inventory;//chest... same as inventory
-		containerOpen.type = WindowTypes.container;
-		containerOpen.coordinates = position;
-		containerOpen.runtimeEntityID = source.id;
-		containerOpen.sendTo(source);
-	}
+    open(position, source) {
+        const containerOpen = new ContainerOpenPacket();
+        containerOpen.windowID = WindowIDS.inventory; //chest... same as inventory
+        containerOpen.type = WindowTypes.container;
+        containerOpen.coordinates = position;
+        containerOpen.runtimeEntityID = source.id;
+        containerOpen.sendTo(source);
+    }
 
-	close(source) {
-		const containerClose = new ContainerClosePacket();
-		containerClose.windowID = WindowIDS.inventory;
-		containerClose.server = false;
-		containerClose.sendTo(source);
-	}
+    close(source) {
+        const containerClose = new ContainerClosePacket();
+        containerClose.windowID = WindowIDS.inventory;
+        containerClose.server = false;
+        containerClose.sendTo(source);
+    }
 }
 
 module.exports = Chest;

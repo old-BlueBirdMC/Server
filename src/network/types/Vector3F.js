@@ -13,9 +13,9 @@
 \******************************************/
 
 class Vector3F {
-	x;
-	y;
-	z;
+    x;
+    y;
+    z;
 }
 
 module.exports = Vector3F;

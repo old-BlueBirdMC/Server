@@ -13,9 +13,9 @@
 \******************************************/
 
 class ChatRestrictionLevel {
-	static none = 0;
-	static dropped = 1;
-	static disabled = 2;
+    static none = 0;
+    static dropped = 1;
+    static disabled = 2;
 }
 
 module.exports = ChatRestrictionLevel;

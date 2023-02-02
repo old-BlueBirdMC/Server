@@ -16,18 +16,18 @@ const Block = require("../Block");
 const Tool = require("../Tool");
 
 class Andesite extends Block {
-	maxStack = 64;
-	tool = Tool.pickaxe;
-	blastResistance = 6;
-	hardness = 1.5;
-	isLuminant = false;
-	isTransparrent = false;
-	isFlammable = false;
-	catchesFireFromLava = false;
+    maxStack = 64;
+    tool = Tool.pickaxe;
+    blastResistance = 6;
+    hardness = 1.5;
+    isLuminant = false;
+    isTransparrent = false;
+    isFlammable = false;
+    catchesFireFromLava = false;
 
-	constructor() {
-		super("minecraft:stone", 5);
-	}
+    constructor() {
+        super("minecraft:stone", 5);
+    }
 }
 
 module.exports = Andesite;

@@ -1,18 +1,23 @@
 {
-  "name": "bbmc",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "node .",
-    "start": "node index.js"
-  },
-  "keywords": [],
-  "author": "bbmc",
-  "license": "MIT",
-  "dependencies": {
-    "bbmc-binarystream": "^1.0.0",
-    "bbmc-nbt": "https://github.com/BlueBirdMC/NBT.git",
-    "bbmc-raknet": "^1.0.3"
+    "name": "bbmc",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "test": "node .",
+      "start": "node index.js",
+      "prettier-format": "prettier --print-width 250 --prose-wrap always --tab-width 4 --write src/**/*.js"
+    },
+    "keywords": [],
+    "author": "bbmc",
+    "license": "MIT",
+    "dependencies": {
+      "bbmc-binarystream": "^1.0.0",
+      "bbmc-nbt": "https://github.com/BlueBirdMC/NBT.git",
+      "bbmc-raknet": "^1.0.3"
+    },
+    "devDependencies": {
+      "prettier": "2.8.3"
+    }
   }
-}
+  

@@ -31,227 +31,234 @@ const RakNetInterface = require("./network/RakNetInterface");
 const PacketsList = require("./network/packets/PacketsList");
 const ConfigIniManager = require("./managers/ConfgIniManager");
 const PluginInfo = require("./plugin/PluginInfo");
-const RakNetPlayerManager = require('./managers/RakNetPlayerManager');
+const RakNetPlayerManager = require("./managers/RakNetPlayerManager");
 const Player = require("./player/Player");
 
 class Server {
-	rakNetServer;
-	rakNetMessage;
-	log;
-	#workingEvents = [];
-	#workingPlugins = {};
-	#eventsHandler;
-	commandsList;
-	resourceManager;
-	configManager;
-	generatorManager;
-	testWorld;
+    rakNetServer;
+    rakNetMessage;
+    log;
+    #workingEvents = [];
+    #workingPlugins = {};
+    #eventsHandler;
+    commandsList;
+    resourceManager;
+    configManager;
+    generatorManager;
+    testWorld;
 
-	constructor() {
-		let startTime = Date.now();
-		this.resourceManager = new ResourceManager();
-		this.configManager = new ConfigIniManager();
-		this.generatorManager = new GeneratorManager(this.resourceManager.blockStatesMap);
-		this.registerDefaultGenerators();
-		this.testWorld = new World(this.generatorManager);
-		this.#eventsHandler = new EventEmitter();
-		let rakNetMsgFH = {
-			motd: this.configManager.getMotd(), protocolVersion: ServerInfo.minecraftProtocolVersion,
-			minecraftVersion: ServerInfo.minecraftVersion, maxPlayerCount: this.configManager.getMaxPlayerCount(),
-			subMotd: this.configManager.getSubMotd(), gameMode: this.configManager.getGamemode()
-		};
-		this.rakNetInterface = new RakNetInterface(this, new InternetAddress("0.0.0.0", this.configManager.getServerPort(), this.configManager.getAddressVersion()), rakNetMsgFH);
-		this.log = new Logger({ Name: "Server", AllowDebugging: false, WithColors: true });
-		this.log.info("Loading Server");
-		this.commandsList = new CommandsList();
-		this.commandsList.refresh();
-		this.consoleCommandReader = new CommandReader(this);
-		this.consoleCommandReader.readConsole();
-		PacketsList.refresh();
-		BlocksList.refresh();
-		this.rakNetInterface.handlePong();
-		this.rakNetInterface.handle();
-		this.log.info("Loading worlds");
-		if (!(fs.existsSync("worlds"))) {
-			fs.mkdirSync("worlds");
-		}
-		this.log.info("Worlds Loaded");
-		this.log.info("Loading PlayersData");
-		if (!(fs.existsSync("players_data"))) {
-			fs.mkdirSync("players_data");
-		}
-		this.log.info("PlayersData Loaded");
-		this.log.info("Loading Plugins");
-		if (!(fs.existsSync("plugins"))) {
-			fs.mkdirSync("plugins");
-		}
-		this.enablePlugins();
-		this.log.info("Plugins Loaded");
-		this.log.info("Server Loaded");
-		this.log.info("Done in (" + (Date.now() - startTime) / 1000 + ")s!");
-		this.handleProcess();
-	}
+    constructor() {
+        let startTime = Date.now();
+        this.resourceManager = new ResourceManager();
+        this.configManager = new ConfigIniManager();
+        this.generatorManager = new GeneratorManager(this.resourceManager.blockStatesMap);
+        this.registerDefaultGenerators();
+        this.testWorld = new World(this.generatorManager);
+        this.#eventsHandler = new EventEmitter();
+        let rakNetMsgFH = {
+            motd: this.configManager.getMotd(),
+            protocolVersion: ServerInfo.minecraftProtocolVersion,
+            minecraftVersion: ServerInfo.minecraftVersion,
+            maxPlayerCount: this.configManager.getMaxPlayerCount(),
+            subMotd: this.configManager.getSubMotd(),
+            gameMode: this.configManager.getGamemode(),
+        };
+        this.rakNetInterface = new RakNetInterface(this, new InternetAddress("0.0.0.0", this.configManager.getServerPort(), this.configManager.getAddressVersion()), rakNetMsgFH);
+        this.log = new Logger({
+            Name: "Server",
+            AllowDebugging: false,
+            WithColors: true,
+        });
+        this.log.info("Loading Server");
+        this.commandsList = new CommandsList();
+        this.commandsList.refresh();
+        this.consoleCommandReader = new CommandReader(this);
+        this.consoleCommandReader.readConsole();
+        PacketsList.refresh();
+        BlocksList.refresh();
+        this.rakNetInterface.handlePong();
+        this.rakNetInterface.handle();
+        this.log.info("Loading worlds");
+        if (!fs.existsSync("worlds")) {
+            fs.mkdirSync("worlds");
+        }
+        this.log.info("Worlds Loaded");
+        this.log.info("Loading PlayersData");
+        if (!fs.existsSync("players_data")) {
+            fs.mkdirSync("players_data");
+        }
+        this.log.info("PlayersData Loaded");
+        this.log.info("Loading Plugins");
+        if (!fs.existsSync("plugins")) {
+            fs.mkdirSync("plugins");
+        }
+        this.enablePlugins();
+        this.log.info("Plugins Loaded");
+        this.log.info("Server Loaded");
+        this.log.info("Done in (" + (Date.now() - startTime) / 1000 + ")s!");
+        this.handleProcess();
+    }
 
-	handleProcess() {
-		process.on("SIGHUP", () => {
-			this.shutdown();
-		});
-		process.on("SIGINT", () => {
-			this.shutdown();
-		});
-	}
-	/**
-	 * Shutdown Server
-	 * @constructor
-	 * @param {string} closeMessage - The server will display this message when a player is kicked out. 
-	 **/
+    handleProcess() {
+        process.on("SIGHUP", () => {
+            this.shutdown();
+        });
+        process.on("SIGINT", () => {
+            this.shutdown();
+        });
+    }
+    /**
+     * Shutdown Server
+     * @constructor
+     * @param {string} closeMessage - The server will display this message when a player is kicked out.
+     **/
 
-	shutdown(closeMessage = undefined, exitProcess = true) {
-		this.rakNetInterface.close(closeMessage, exitProcess);
-	}
+    shutdown(closeMessage = undefined, exitProcess = true) {
+        this.rakNetInterface.close(closeMessage, exitProcess);
+    }
 
-	sendUnserializedMinecraftPacket(packet, player) {
-		this.rakNetInterface.queuePacket(packet, player);
-	}
+    sendUnserializedMinecraftPacket(packet, player) {
+        this.rakNetInterface.queuePacket(packet, player);
+    }
 
-	addEvent(event, eventName) {
-		if (!(this.#workingEvents.includes(eventName))) {
-			this.#workingEvents.push(eventName);
-			this.#eventsHandler.emit(eventName, event);
-		}
-	}
+    addEvent(event, eventName) {
+        if (!this.#workingEvents.includes(eventName)) {
+            this.#workingEvents.push(eventName);
+            this.#eventsHandler.emit(eventName, event);
+        }
+    }
 
-	getEventsHandler() {
-		return this.#eventsHandler;
-	}
+    getEventsHandler() {
+        return this.#eventsHandler;
+    }
 
-	enablePlugins() {
-		fs.readdirSync("plugins").forEach(async (pluginsDir) => {
-			if (fs.lstatSync(`plugins/${pluginsDir}`).isDirectory()) {
-				let pluginPackage = `plugins/${pluginsDir}/package.json`;
-				if (fs.existsSync(pluginPackage)) {
-					let data = JSON.parse(fs.readFileSync(pluginPackage).toString("utf-8"));
-					let pluginName = typeof data["name"] !== "undefined" ? data["name"] : "";
-					let main = typeof data["main"] !== "undefined" ? data["main"] : "";
-					let author = typeof data["author"] !== "undefined" ? data["author"] : "";
-					let description = typeof data["description"] !== "undefined" ? data["description"] : "";
-					let version = typeof data["version"] !== "undefined" ? data["version"] : "";
-					let apiVersion = typeof data["api"] !== "undefined" ? data["api"] : "";
-					if (apiVersion !== ServerInfo.apiVersion) {
-						throw `Cant load plugin ${pluginName}, due to incompatible api version (${apiVersion})`;
-					}
-					if (!(pluginName in this.#workingPlugins)) {
-						let dataPath = `plugins/${pluginsDir}/data`;
-						let req = require(path.join(`../plugins/${pluginsDir}`, main.replace(".js", "")));
-						let mainClass = new req(this, dataPath, pluginName);
-						if (!(mainClass instanceof PluginStructure)) {
-							throw `Cant load plugin ${pluginName}, due to the plugin is not an instance of PluginStructure`;
-						}
-						mainClass.info = new PluginInfo();
-						mainClass.info.pluginName = pluginName;
-						mainClass.info.verison = version;
-						mainClass.info.description = description;
-						mainClass.info.author = author;
-						this.#workingPlugins[pluginName] = mainClass;
-						if (!(fs.existsSync(dataPath))) {
-							fs.mkdirSync(dataPath);
-						} else {
-							if (!(fs.lstatSync(dataPath).isDirectory())) {
-								fs.mkdirSync(dataPath);
-							}
-						}
-						this.#workingPlugins[pluginName].successfullyEnabled();
-						this.#workingPlugins[pluginName].handleEvents();
-					}
-				}
-			}
-		});
-	}
+    enablePlugins() {
+        fs.readdirSync("plugins").forEach(async (pluginsDir) => {
+            if (fs.lstatSync(`plugins/${pluginsDir}`).isDirectory()) {
+                let pluginPackage = `plugins/${pluginsDir}/package.json`;
+                if (fs.existsSync(pluginPackage)) {
+                    let data = JSON.parse(fs.readFileSync(pluginPackage).toString("utf-8"));
+                    let pluginName = typeof data["name"] !== "undefined" ? data["name"] : "";
+                    let main = typeof data["main"] !== "undefined" ? data["main"] : "";
+                    let author = typeof data["author"] !== "undefined" ? data["author"] : "";
+                    let description = typeof data["description"] !== "undefined" ? data["description"] : "";
+                    let version = typeof data["version"] !== "undefined" ? data["version"] : "";
+                    let apiVersion = typeof data["api"] !== "undefined" ? data["api"] : "";
+                    if (apiVersion !== ServerInfo.apiVersion) {
+                        throw `Cant load plugin ${pluginName}, due to incompatible api version (${apiVersion})`;
+                    }
+                    if (!(pluginName in this.#workingPlugins)) {
+                        let dataPath = `plugins/${pluginsDir}/data`;
+                        let req = require(path.join(`../plugins/${pluginsDir}`, main.replace(".js", "")));
+                        let mainClass = new req(this, dataPath, pluginName);
+                        if (!(mainClass instanceof PluginStructure)) {
+                            throw `Cant load plugin ${pluginName}, due to the plugin is not an instance of PluginStructure`;
+                        }
+                        mainClass.info = new PluginInfo();
+                        mainClass.info.pluginName = pluginName;
+                        mainClass.info.verison = version;
+                        mainClass.info.description = description;
+                        mainClass.info.author = author;
+                        this.#workingPlugins[pluginName] = mainClass;
+                        if (!fs.existsSync(dataPath)) {
+                            fs.mkdirSync(dataPath);
+                        } else {
+                            if (!fs.lstatSync(dataPath).isDirectory()) {
+                                fs.mkdirSync(dataPath);
+                            }
+                        }
+                        this.#workingPlugins[pluginName].successfullyEnabled();
+                        this.#workingPlugins[pluginName].handleEvents();
+                    }
+                }
+            }
+        });
+    }
 
-	/**
-	 * disable all plugins
-	 * @returns {void}
-	 */
-	disableAllPlugins() {
-		let pluginEntries = Object.entries(this.#workingPlugins);
-		if (pluginEntries.length > 0) {
-			pluginEntries.forEach(plugin => {
-				plugin[1].successfullyDisabled();
-			});
-		}
-	}
+    /**
+     * disable all plugins
+     * @returns {void}
+     */
+    disableAllPlugins() {
+        let pluginEntries = Object.entries(this.#workingPlugins);
+        if (pluginEntries.length > 0) {
+            pluginEntries.forEach((plugin) => {
+                plugin[1].successfullyDisabled();
+            });
+        }
+    }
 
-	/**
-	 * get all working plugins
-	 * @returns {Object}
-	 */
-	getAllPlugins() {
-		return Object.entries(this.#workingPlugins);
-	}
+    /**
+     * get all working plugins
+     * @returns {Object}
+     */
+    getAllPlugins() {
+        return Object.entries(this.#workingPlugins);
+    }
 
-	/**
-	 * get a player by name
-	 * @param {string} name
-	 * @returns {Player}
-	 **/
-	getOnlinePlayer(name) {
-		let foundPlayer;
-		this.getOnlinePlayers().forEach((player) => {
-			if (player.getRealName() === name) {
-				foundPlayer = player;
-			}
-		});
-		return foundPlayer;
-	}
+    /**
+     * get a player by name
+     * @param {string} name
+     * @returns {Player}
+     **/
+    getOnlinePlayer(name) {
+        let foundPlayer;
+        this.getOnlinePlayers().forEach((player) => {
+            if (player.getRealName() === name) {
+                foundPlayer = player;
+            }
+        });
+        return foundPlayer;
+    }
 
-	/**
-	 * get a player by entity id
-	 * @param {string} name
-	 * @returns {Player}
-	 **/
-	getOnlinePlayerByID(id) {
-		let foundPlayer;
-		this.getOnlinePlayers().forEach((player) => {
-			if (player.id === id) {
-				foundPlayer = player;
-			}
-		});
-		return foundPlayer;
-	}
+    /**
+     * get a player by entity id
+     * @param {string} name
+     * @returns {Player}
+     **/
+    getOnlinePlayerByID(id) {
+        let foundPlayer;
+        this.getOnlinePlayers().forEach((player) => {
+            if (player.id === id) {
+                foundPlayer = player;
+            }
+        });
+        return foundPlayer;
+    }
 
-	/**
-	 * get a player by runtime entity id
-	 * @param {string} name
-	 * @returns {Player}
-	 **/
-	getOnlinePlayerByRID(id) {
-		let foundPlayer;
-		this.getOnlinePlayers().forEach((player) => {
-			if (BigInt(player.id) === id) {
-				foundPlayer = player;
-			}
-		});
-		return foundPlayer;
-	}
+    /**
+     * get a player by runtime entity id
+     * @param {string} name
+     * @returns {Player}
+     **/
+    getOnlinePlayerByRID(id) {
+        let foundPlayer;
+        this.getOnlinePlayers().forEach((player) => {
+            if (BigInt(player.id) === id) {
+                foundPlayer = player;
+            }
+        });
+        return foundPlayer;
+    }
 
-	/**
-	 * get all online players but fixed for server
-	 * @returns {void}
-	 **/
-	getOnlinePlayers() {
-		let players = [];
-		RakNetPlayerManager.getAllObjectValues().forEach((player) => {
-			if (player instanceof Player) {
-				players.push(player);
-			}
-		});
-		return players;
-	}
+    /**
+     * get all online players but fixed for server
+     * @returns {void}
+     **/
+    getOnlinePlayers() {
+        let players = [];
+        RakNetPlayerManager.getAllObjectValues().forEach((player) => {
+            if (player instanceof Player) {
+                players.push(player);
+            }
+        });
+        return players;
+    }
 
-	registerDefaultGenerators() {
-		this.generatorManager.registerGenerator(Flat);
-		this.generatorManager.registerGenerator(Overworld);
-	}
+    registerDefaultGenerators() {
+        this.generatorManager.registerGenerator(Flat);
+        this.generatorManager.registerGenerator(Overworld);
+    }
 }
 
 module.exports = Server;

@@ -18,7 +18,7 @@ class Generator {
     blockStatesMap;
 
     constructor(blockStatesMap) {
-        this.blockStatesMap = blockStatesMap
+        this.blockStatesMap = blockStatesMap;
     }
 
     generate(x, z) {}

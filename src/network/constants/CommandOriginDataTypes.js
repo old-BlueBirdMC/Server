@@ -13,18 +13,18 @@
 \******************************************/
 
 class CommandOriginDataTypes {
-	static player = 0;
-	static block = 1;
-	static minecartBlock = 2;
-	static devConsole = 3;
-	static test = 4;
-	static automationPlayer = 5;
-	static clientAutomation = 6;
-	static dedicatedServer = 7;
-	static entity = 8;
-	static virtual = 9;
-	static gameArgument = 10;
-	static entityServer = 11;
+    static player = 0;
+    static block = 1;
+    static minecartBlock = 2;
+    static devConsole = 3;
+    static test = 4;
+    static automationPlayer = 5;
+    static clientAutomation = 6;
+    static dedicatedServer = 7;
+    static entity = 8;
+    static virtual = 9;
+    static gameArgument = 10;
+    static entityServer = 11;
 }
 
 module.exports = CommandOriginDataTypes;

@@ -18,24 +18,24 @@ const CommandParam = require("../../network/types/CommandParam");
 const Command = require("../Command");
 
 class StopCMD extends Command {
-	constructor() {
-		let cmdParam = new CommandParam();
-		cmdParam.name = "reason";
-		cmdParam.optional = true;
-		cmdParam.typeID = CommandArgumentFlags.valid | CommandArgumentTypes.rawText;
-		cmdParam.options = 0;
-		cmdParam.suffixes = [];
-		super("stop", "stop command", [], [cmdParam]);
-	}
+    constructor() {
+        let cmdParam = new CommandParam();
+        cmdParam.name = "reason";
+        cmdParam.optional = true;
+        cmdParam.typeID = CommandArgumentFlags.valid | CommandArgumentTypes.rawText;
+        cmdParam.options = 0;
+        cmdParam.suffixes = [];
+        super("stop", "stop command", [], [cmdParam]);
+    }
 
-	async run(sender, writtenCommand, args) {
-		sender.message("Stopping server...");
-		if (typeof args[0] !== "undefined") {
-			sender.server.shutdown(args[0]);
-		} else {
-			sender.server.shutdown();
-		}
-	}
+    async run(sender, writtenCommand, args) {
+        sender.message("Stopping server...");
+        if (typeof args[0] !== "undefined") {
+            sender.server.shutdown(args[0]);
+        } else {
+            sender.server.shutdown();
+        }
+    }
 }
 
 module.exports = StopCMD;

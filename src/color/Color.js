@@ -13,17 +13,17 @@
 \******************************************/
 
 class Color {
-	r;
-	g;
-	b;
-	a;
+    r;
+    g;
+    b;
+    a;
 
-	constructor(r = 255, g = 255, b = 255, a = 255) {
-		this.r = r & 255;
-		this.g = g & 255;
-		this.b = b & 255;
-		this.a = a & 255;
-	}
+    constructor(r = 255, g = 255, b = 255, a = 255) {
+        this.r = r & 255;
+        this.g = g & 255;
+        this.b = b & 255;
+        this.a = a & 255;
+    }
 }
 
 module.exports = Color;

@@ -16,11 +16,11 @@ const ConsoleColors = require("../color/ConsoleColors");
 const CommandSender = require("../command/sender/CommandSender");
 
 class ConsoleCommandSender extends CommandSender {
-	name = "Console";
+    name = "Console";
 
-	message(message) {
-		this.server.log.info(ConsoleColors.McClrToConsole(message));
-	}
+    message(message) {
+        this.server.log.info(ConsoleColors.McClrToConsole(message));
+    }
 }
 
 module.exports = ConsoleCommandSender;

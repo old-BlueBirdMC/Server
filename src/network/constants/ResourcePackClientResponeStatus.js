@@ -13,11 +13,11 @@
 \******************************************/
 
 class ResourcePackClientResponseStatus {
-	static none = 0;
-	static refused = 1;
-	static sendPacks = 2;
-	static haveAllPacks = 3;
-	static completed = 4;
+    static none = 0;
+    static refused = 1;
+    static sendPacks = 2;
+    static haveAllPacks = 3;
+    static completed = 4;
 }
 
 module.exports = ResourcePackClientResponseStatus;

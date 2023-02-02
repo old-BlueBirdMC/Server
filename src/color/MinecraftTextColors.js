@@ -13,29 +13,29 @@
 \******************************************/
 
 class MinecraftTextColors {
-	static black = "§0";
-	static darkBlue = "§1";
-	static darkGreen = "§2";
-	static darkAqua = "§3";
-	static darkRed = "§4";
-	static darkPurple = "§5";
-	static gold = "§6";
-	static gray = "§7";
-	static darkGray = "§8";
-	static blue = "§9";
-	static green = "§a";
-	static aqua = "§b";
-	static red = "§c";
-	static purple = "§d";
-	static yellow = "§e";
-	static white = "§f";
-	static minecoinGold = "§g";
-	static bold = "§l";
-	static underline = "§u";
-	static itallic = "§o";
-	static magic = "§k";
-	static strike = "§m";
-	static reset = "§r";
+    static black = "§0";
+    static darkBlue = "§1";
+    static darkGreen = "§2";
+    static darkAqua = "§3";
+    static darkRed = "§4";
+    static darkPurple = "§5";
+    static gold = "§6";
+    static gray = "§7";
+    static darkGray = "§8";
+    static blue = "§9";
+    static green = "§a";
+    static aqua = "§b";
+    static red = "§c";
+    static purple = "§d";
+    static yellow = "§e";
+    static white = "§f";
+    static minecoinGold = "§g";
+    static bold = "§l";
+    static underline = "§u";
+    static itallic = "§o";
+    static magic = "§k";
+    static strike = "§m";
+    static reset = "§r";
 }
 
 module.exports = MinecraftTextColors;

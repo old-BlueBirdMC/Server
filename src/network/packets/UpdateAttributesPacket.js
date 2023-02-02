@@ -16,23 +16,23 @@ const Identifiers = require("./Identifiers");
 const PacketsBase = require("./PacketsBase");
 
 class UpdateAttributesPacket extends PacketsBase {
-	static id = Identifiers.updateAttributes;
+    static id = Identifiers.updateAttributes;
 
     runtimeEntityID;
     attributes;
     tick;
 
-	deserialize() {
+    deserialize() {
         this.runtimeEntityID = this.readRuntimeEntityID();
         this.attributes = this.readPlayerAttributes();
         this.tick = this.readVarLong();
-	}
+    }
 
-	serialize() {
+    serialize() {
         this.writeRuntimeEntityID(this.runtimeEntityID);
         this.writePlayerAttributes(this.attributes);
         this.writeVarLong(this.tick);
-	}
+    }
 }
 
 module.exports = UpdateAttributesPacket;

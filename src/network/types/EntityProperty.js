@@ -13,8 +13,8 @@
 \******************************************/
 
 class EntityProperty {
-	intProperties;
-	floatProperties;
+    intProperties;
+    floatProperties;
 }
 
 module.exports = EntityProperty;

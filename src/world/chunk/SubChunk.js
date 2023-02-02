@@ -15,35 +15,32 @@
 const BlockStorage = require("./BlockStorage");
 
 class SubChunk {
-	blockStorages;
+    blockStorages;
 
-	constructor(runtimeID) {
-		this.blockStorages = [
-			new BlockStorage(runtimeID),
-			new BlockStorage(runtimeID)
-		];
-	}
+    constructor(runtimeID) {
+        this.blockStorages = [new BlockStorage(runtimeID), new BlockStorage(runtimeID)];
+    }
 
-	getBlockRuntimeID(x, y, z, layer) {
-		return this.blockStorages[layer].getBlockRuntimeID(x, y, z);
-	}
+    getBlockRuntimeID(x, y, z, layer) {
+        return this.blockStorages[layer].getBlockRuntimeID(x, y, z);
+    }
 
-	setBlockRuntimeID(x, y, z, layer, runtimeID) {
-		this.blockStorages[layer].setBlockRuntimeID(x, y, z, runtimeID);
-	}
+    setBlockRuntimeID(x, y, z, layer, runtimeID) {
+        this.blockStorages[layer].setBlockRuntimeID(x, y, z, runtimeID);
+    }
 
-	getHighestBlockAt(x, z, layer) {
-		return this.blockStorages[layer].getHighestBlockAt(x, z);
-	}
+    getHighestBlockAt(x, z, layer) {
+        return this.blockStorages[layer].getHighestBlockAt(x, z);
+    }
 
-	isEmpty() {
-		for (let i = 0; i < this.blockStorages.length; ++i) {
-			if (this.blockStorages[i].isEmpty() === false) {
-				return false;
-			}
-		}
-		return true;
-	}
+    isEmpty() {
+        for (let i = 0; i < this.blockStorages.length; ++i) {
+            if (this.blockStorages[i].isEmpty() === false) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
 
 module.exports = SubChunk;

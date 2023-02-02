@@ -13,11 +13,11 @@
 \******************************************/
 
 class CommandParam {
-	name;
-	optional;
-	typeID;
-	options;
-	suffixes;
+    name;
+    optional;
+    typeID;
+    options;
+    suffixes;
 }
 
 module.exports = CommandParam;

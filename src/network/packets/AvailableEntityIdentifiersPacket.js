@@ -16,17 +16,17 @@ const Identifiers = require("./Identifiers");
 const PacketsBase = require("./PacketsBase");
 
 class AvailableEntityIdentifiersPacket extends PacketsBase {
-	static id = Identifiers.availableEntityIdentifiers;
+    static id = Identifiers.availableEntityIdentifiers;
 
-	nbt;
+    nbt;
 
-	deserialize() {
-		this.nbt = this.readNBT();
-	}
+    deserialize() {
+        this.nbt = this.readNBT();
+    }
 
-	serialize() {
-		this.writeNBT(this.nbt);
-	}
+    serialize() {
+        this.writeNBT(this.nbt);
+    }
 }
 
 module.exports = AvailableEntityIdentifiersPacket;

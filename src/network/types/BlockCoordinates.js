@@ -13,9 +13,9 @@
 \******************************************/
 
 class BlockCoordinates {
-	x;
-	y;
-	z;
+    x;
+    y;
+    z;
 }
 
 module.exports = BlockCoordinates;

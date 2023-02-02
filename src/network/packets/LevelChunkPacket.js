@@ -16,52 +16,52 @@ const Identifiers = require("./Identifiers");
 const PacketsBase = require("./PacketsBase");
 
 class LevelChunkPacket extends PacketsBase {
-	static id = Identifiers.levelChunk;
+    static id = Identifiers.levelChunk;
 
-	x;
-	z;
-	subChunkCount;
-	highestSubChunkCount;
-	cacheEnabled;
-	hashes;
-	payload;
+    x;
+    z;
+    subChunkCount;
+    highestSubChunkCount;
+    cacheEnabled;
+    hashes;
+    payload;
 
-	deserialize() {
-		this.x = this.readSignedVarInt();
-		this.z = this.readSignedVarInt();
-		this.subChunkCount = this.readVarInt();
-		if (this.subChunkCount == 0xfffffffe) {
-			this.highestSubChunkCount = this.readUnsignedShortLE();
-		}
-		this.cacheEnabled = this.readBool();
-		if (this.cacheEnabled === true) {
-			this.hashes = [];
-			let hashesCount = this.readVarInt();
-			for (let i = 0; i < hashesCount; ++i) {
-				this.hashes.push(this.readUnsignedLongLE());
-			}
-		}
-		this.payload = this.readByteArrayVarInt();
-	}
+    deserialize() {
+        this.x = this.readSignedVarInt();
+        this.z = this.readSignedVarInt();
+        this.subChunkCount = this.readVarInt();
+        if (this.subChunkCount == 0xfffffffe) {
+            this.highestSubChunkCount = this.readUnsignedShortLE();
+        }
+        this.cacheEnabled = this.readBool();
+        if (this.cacheEnabled === true) {
+            this.hashes = [];
+            let hashesCount = this.readVarInt();
+            for (let i = 0; i < hashesCount; ++i) {
+                this.hashes.push(this.readUnsignedLongLE());
+            }
+        }
+        this.payload = this.readByteArrayVarInt();
+    }
 
-	serialize() {
-		this.writeSignedVarInt(this.x);
-		this.writeSignedVarInt(this.z);
-		this.writeVarInt(this.subChunkCount);
-		if (this.subChunkCount == 0xfffffffe) {
-			this.writeUnsignedShortLE(this.highestSubChunkCount);
-		}
-		this.writeBool(this.cacheEnabled);
-		if (this.cacheEnabled === true) {
-			this.writeVarInt(this.hashes.length);
-			for (let i = 0; i < this.hashes.length; ++i) {
-				this.writeUnsignedLongLE(this.hashes[i]);
-			}
-			this.writeVarInt(0);
-		} else {
-			this.writeByteArrayVarInt(this.payload);
-		}
-	}
+    serialize() {
+        this.writeSignedVarInt(this.x);
+        this.writeSignedVarInt(this.z);
+        this.writeVarInt(this.subChunkCount);
+        if (this.subChunkCount == 0xfffffffe) {
+            this.writeUnsignedShortLE(this.highestSubChunkCount);
+        }
+        this.writeBool(this.cacheEnabled);
+        if (this.cacheEnabled === true) {
+            this.writeVarInt(this.hashes.length);
+            for (let i = 0; i < this.hashes.length; ++i) {
+                this.writeUnsignedLongLE(this.hashes[i]);
+            }
+            this.writeVarInt(0);
+        } else {
+            this.writeByteArrayVarInt(this.payload);
+        }
+    }
 }
 
 module.exports = LevelChunkPacket;

@@ -15,7 +15,7 @@
 const Entity = require("./Entity");
 
 class Human extends Entity {
-	spawned = false;
+    spawned = false;
 }
 
 module.exports = Human;

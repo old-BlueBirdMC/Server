@@ -13,10 +13,10 @@
 \******************************************/
 
 class PermissionLevel {
-	static visitor = 0;
-	static member = 1;
-	static operator = 2;
-	static custom = 3;
+    static visitor = 0;
+    static member = 1;
+    static operator = 2;
+    static custom = 3;
 }
 
 module.exports = PermissionLevel;

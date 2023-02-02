@@ -13,8 +13,8 @@
 \******************************************/
 
 class EducationSharedResourceURI {
-	buttonName;
-	linkURI;
+    buttonName;
+    linkURI;
 }
 
 module.exports = EducationSharedResourceURI;

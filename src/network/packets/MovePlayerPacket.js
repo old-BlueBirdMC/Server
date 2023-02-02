@@ -17,45 +17,45 @@ const Identifiers = require("./Identifiers");
 const PacketsBase = require("./PacketsBase");
 
 class MovePlayerPacket extends PacketsBase {
-	static id = Identifiers.movePlayer;
+    static id = Identifiers.movePlayer;
 
-	runtimeEntityID;
-	position;
-	rotation;
-	mode;
-	onGround;
-	riddenRuntimeEntityID;
-	teleportCause;
-	teleportItem;
-	tick;
+    runtimeEntityID;
+    position;
+    rotation;
+    mode;
+    onGround;
+    riddenRuntimeEntityID;
+    teleportCause;
+    teleportItem;
+    tick;
 
-	deserialize() {
-		this.runtimeEntityID = this.readRuntimeEntityID();
-		this.position = this.readVector3F();
-		this.rotation = this.readVector3F();
-		this.mode = this.readUnsignedByte();
-		this.onGround = this.readBool();
-		this.riddenRuntimeEntityID = this.readRuntimeEntityID();
-		if (this.mode === MovePlayerModes.teleport) {
-			this.teleportCause = this.readIntLE();
-			this.teleportItem = this.readIntLE();
-		}
-		this.tick = this.readVarInt();
-	}
+    deserialize() {
+        this.runtimeEntityID = this.readRuntimeEntityID();
+        this.position = this.readVector3F();
+        this.rotation = this.readVector3F();
+        this.mode = this.readUnsignedByte();
+        this.onGround = this.readBool();
+        this.riddenRuntimeEntityID = this.readRuntimeEntityID();
+        if (this.mode === MovePlayerModes.teleport) {
+            this.teleportCause = this.readIntLE();
+            this.teleportItem = this.readIntLE();
+        }
+        this.tick = this.readVarInt();
+    }
 
-	serialize() {
-		this.writeRuntimeEntityID(this.runtimeEntityID);
-		this.writeVector3F(this.position);
-		this.writeVector3F(this.rotation);
-		this.writeUnsignedByte(this.mode);
-		this.writeBool(this.onGround);
-		this.writeRuntimeEntityID(this.riddenRuntimeEntityID);
-		if (this.mode === MovePlayerModes.teleport) {
-			this.writeIntLE(this.teleportCause);
-			this.writeIntLE(this.teleportItem);
-		}
-		this.writeVarInt(this.tick);
-	}
+    serialize() {
+        this.writeRuntimeEntityID(this.runtimeEntityID);
+        this.writeVector3F(this.position);
+        this.writeVector3F(this.rotation);
+        this.writeUnsignedByte(this.mode);
+        this.writeBool(this.onGround);
+        this.writeRuntimeEntityID(this.riddenRuntimeEntityID);
+        if (this.mode === MovePlayerModes.teleport) {
+            this.writeIntLE(this.teleportCause);
+            this.writeIntLE(this.teleportItem);
+        }
+        this.writeVarInt(this.tick);
+    }
 }
 
 module.exports = MovePlayerPacket;
