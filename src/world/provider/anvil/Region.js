@@ -144,7 +144,7 @@ class Region {
             while (i < this.freeIndexes.length) {
                 let freeIndex = this.freeIndexes[i];
                 if (sectorCount <= freeIndex.length) {
-                    temp.copy(this.stream.buffer, freeIndex.offset << 12, 0, sectorCount << 12);
+                    temp.buffer.copy(this.stream.buffer, freeIndex.offset << 12, 0, sectorCount << 12);
                     if (sectorCount < freeIndex.length) {
                         let newFreeIndex = new RegionIndex();
                         newFreeIndex.offset = freeIndex.offset + sectorCount;
@@ -161,9 +161,9 @@ class Region {
                 this.writeIndex(this.stream.buffer.length << 12, sectorCount);
                 this.stream.write(temp);
             }
-            this.freeIndexes.push({...index})
+            this.freeIndexes.push({...index});
         } else {
-            temp.copy(this.stream.buffer, index.offset << 12, 0, sectorCount << 12);
+            temp.buffer.copy(this.stream.buffer, index.offset << 12, 0, sectorCount << 12);
             if (sectorCount < index.length) {
                 let freeIndex = new RegionIndex();
                 freeIndex.offset = index.offset + sectorCount;
