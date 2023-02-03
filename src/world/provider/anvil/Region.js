@@ -47,20 +47,22 @@ class Region {
         });
         this.path = path;
         this.freeIndexes = [];
-        fs.readFile(path, "binary", (err, buffer) => {
-            this.stream = err ? new BinaryStream(Buffer.alloc(8192, 0, "binary")) : new BinaryStream(buffer);
-        });
+        try {
+            this.stream = new BinaryStream(fs.readFileSync(path, "binary"));
+        } catch(err) {
+            this.stream = new BinaryStream(Buffer.alloc(8192, 0, "binary"));
+        }
     }
 
     /**
      * Saves the region file
      */
     save() {
-        fs.writeFile(this.path, this.stream.buffer, (err) => {
-            if (err) {
-                this.log.error(`Failed to write region file ${this.path}`);
-            }
-        });
+        try {
+            fs.writeFileSync(this.path, this.stream.buffer);
+        } catch(err) {
+            this.log.error(`Failed to write region file ${this.path}`);
+        }
     }
 
     /**

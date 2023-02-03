@@ -79,3 +79,5 @@ class Anvil {
         return this.chunks.get(xz);
     }
 }
+
+module.exports = Anvil;

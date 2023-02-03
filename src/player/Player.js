@@ -61,8 +61,8 @@ class Player extends Human {
         this.server = server;
         this.position = new Vector3F(); // TEMP UP UNLTI WORLDS ARE MADE
         this.position.x = 0.0;
-        this.position.y = 8.0;
-        this.position.z = 0.0;
+        this.position.y = 63.0;//8.0;
+        this.position.z = 1.0; //0.0;
         this.rotation = new Vector2F(); // TEMP UP UNLTI WORLDS ARE MADE
         this.rotation.x = 0.0;
         this.rotation.z = 0.0;
@@ -127,7 +127,7 @@ class Player extends Human {
 
     sendChunk(chunk) {
         let levelChunk = new LevelChunkPacket();
-        levelChunk.subChunkCount = chunk.getSubChunksSendCount();
+        levelChunk.subChunkCount = 4;//chunk.getSubChunksSendCount();
         levelChunk.highestSubChunkCount = 0;
         levelChunk.cacheEnabled = false;
         levelChunk.x = chunk.x;
