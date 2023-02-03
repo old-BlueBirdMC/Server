@@ -32,7 +32,7 @@ const RakNetPlayerManager = require("../managers/RakNetPlayerManager");
 const EntityMetaDataFlags = require("../network/constants/EntityMetaDataFlags");
 const MetadataListProperties = require("../network/constants/MetadataListProperties");
 const SetEntityDataPacket = require("../network/packets/SetEntityDataPacket");
-const EntityProperty = require("../network/types/EntityProperty");
+const EntityProperties = require("../network/types/EntityProperties");
 const SetPlayerGameTypePacket = require("../network/packets/SetPlayerGameTypePacket");
 const PlayerAttribute = require("../network/types/PlayerAttribute");
 
@@ -61,8 +61,8 @@ class Player extends Human {
         this.server = server;
         this.position = new Vector3F(); // TEMP UP UNLTI WORLDS ARE MADE
         this.position.x = 0.0;
-        this.position.y = 63.0;//8.0;
-        this.position.z = 1.0; //0.0;
+        this.position.y = 8.0;
+        this.position.z = 0.0;
         this.rotation = new Vector2F(); // TEMP UP UNLTI WORLDS ARE MADE
         this.rotation.x = 0.0;
         this.rotation.z = 0.0;
@@ -127,7 +127,7 @@ class Player extends Human {
 
     sendChunk(chunk) {
         let levelChunk = new LevelChunkPacket();
-        levelChunk.subChunkCount = 4;//chunk.getSubChunksSendCount();
+        levelChunk.subChunkCount = chunk.getSubChunksSendCount();
         levelChunk.highestSubChunkCount = 0;
         levelChunk.cacheEnabled = false;
         levelChunk.x = chunk.x;
@@ -300,7 +300,7 @@ class Player extends Human {
         const setEntityData = new SetEntityDataPacket();
         setEntityData.runtimeEntityID = this.id;
         setEntityData.metadata = this.metadataStorage.metadata;
-        setEntityData.properties = new EntityProperty();
+        setEntityData.properties = new EntityProperties();
         setEntityData.properties.intProperties = [];
         setEntityData.properties.floatProperties = [];
         setEntityData.tick = 0;

@@ -28,13 +28,12 @@ const GameMode = require("../../constants/GameMode");
 const PlayStatus = require("../../constants/PlayStatus");
 const AvailableEntityIdentifiersPacket = require("../AvailableEntityIdentifiersPacket");
 const ChatRestrictionLevel = require("../../constants/ChatRestrictionLevel");
-const canceller = require("../../../event/canceller");
 const ServerInfo = require("../../../ServerInfo");
 const crypto = require("crypto");
 const SetEntityDataPacket = require("../SetEntityDataPacket");
-const EntityProperty = require("../../types/EntityProperty");
 const MinecraftBinaryStream = require("../../../misc/MinecraftBinaryStream");
 const UpdateAttributesPacket = require("../UpdateAttributesPacket");
+const EntityProperties = require("../../types/EntityProperties");
 
 class ResourcePackClientResponsePacketHandler extends HandlersBase {
     randomUUID() {
@@ -148,7 +147,7 @@ class ResourcePackClientResponsePacketHandler extends HandlersBase {
                 const setEntityData = new SetEntityDataPacket();
                 setEntityData.runtimeEntityID = this.player.id;
                 setEntityData.metadata = this.player.metadataStorage.metadata;
-                setEntityData.properties = new EntityProperty();
+                setEntityData.properties = new EntityProperties();
                 setEntityData.properties.intProperties = [];
                 setEntityData.properties.floatProperties = [];
                 setEntityData.tick = 0;

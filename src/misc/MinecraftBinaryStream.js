@@ -45,7 +45,8 @@ const CommandArgumentFlags = require("../network/constants/CommandArgumentFlags"
 const CommandParam = require("../network/types/CommandParam");
 const CommandData = require("../network/types/CommandData");
 const CommandEnumConstraint = require("../network/types/CommandEnumConstraint");
-const EntityProperty = require("../network/types/EntityProperty");
+const EntityProperty = require("../network/types/EntityProperties");
+const TypeEntityProperty = require("../network/types/TypeEntityProperty");
 const PlayerAttribute = require("../network/types/PlayerAttribute");
 const PlayerAttributeModifier = require("../network/types/PlayerAttributeModifier");
 
@@ -927,6 +928,60 @@ class MinecraftBinaryStream extends BinaryStream {
         }
     }
 
+    readIntEntityProperty() {
+        let value = new TypeEntityProperty();
+        value.property = this.readVarInt();
+        value.value = this.readSignedVarInt();
+        return value;
+    }
+
+    writeIntEntityProperty(value) {
+        this.writeVarInt(value.property);
+        this.writeSignedVarInt(value.value);
+    }
+
+    readFloatEntityProperty() {
+        let value = new TypeEntityProperty();
+        value.property = this.readVarInt();
+        value.value = this.readSignedVarInt();
+        return value;
+    }
+
+    writeFloatEntityProperty(value) {
+        this.writeVarInt(value.property);
+        this.writeFloatLE(value.value);
+    }
+
+    readIntEntityProperties() {
+        let value = [];
+        for (let i = 0; i < this.readVarInt(); ++i) {
+            value.push(this.readIntEntityProperty());
+        }
+        return value;
+    }
+
+    writeIntEntityProperties(value) {
+        this.writeVarInt(value.length);
+        for (let i = 0; i < value.length; ++i) {
+            this.writeIntEntityProperty(value[i]);
+        }
+    }
+
+    readFloatEntityProperties() {
+        let value = [];
+        for (let i = 0; i < this.readVarInt(); ++i) {
+            value.push(this.readIntEntityProperty());
+        }
+        return value;
+    }
+
+    writeFloatEntityProperties(value) {
+        this.writeVarInt(value.length);
+        for (let i = 0; i < value.length; ++i) {
+            this.writeFloatEntityProperty(value[i]);
+        }
+    }
+
     readEntityProperties() {
         let value = new EntityProperty();
         value.intProperties = this.readIntEntityProperties();
@@ -937,40 +992,6 @@ class MinecraftBinaryStream extends BinaryStream {
     writeEntityProperties(value) {
         this.writeIntEntityProperties(value.intProperties);
         this.writeFloatEntityProperties(value.floatProperties);
-    }
-
-    readIntEntityProperties() {
-        let value = {};
-        for (let i = 0; i < this.readVarInt(); ++i) {
-            value[this.readVarInt()] = this.readSignedVarInt();
-        }
-        return value;
-    }
-
-    writeIntEntityProperties(value) {
-        this.writeVarInt(value.length);
-        Object.entries(value).forEach((index, val) => {
-            this.writeVarInt(value[index]);
-            this.writeSignedVarInt(value[val]);
-        });
-        return value;
-    }
-
-    readFloatEntityProperties() {
-        let value = {};
-        for (let i = 0; i < this.readVarInt(); ++i) {
-            value[this.readVarInt()] = this.readFloatLE();
-        }
-        return value;
-    }
-
-    writeFloatEntityProperties(value) {
-        this.writeVarInt(value.length);
-        Object.entries(value).forEach((index, val) => {
-            this.writeVarInt(value[index]);
-            this.writeFloatLE(value[val]);
-        });
-        return value;
     }
 
     readPlayerAttributeModifier() {

@@ -12,9 +12,9 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class EntityProperty {
+class EntityProperties {
     intProperties;
     floatProperties;
 }
 
-module.exports = EntityProperty;
+module.exports = EntityProperties;
