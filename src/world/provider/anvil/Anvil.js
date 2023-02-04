@@ -69,8 +69,8 @@ class Anvil {
     loadChunk(x, z) {
         let xz = CoordinateUtils.hashXZ(x, z);
         if (!this.chunks.has(xz)) {
-            let region = this.loadRegion(x >> 4, z >> 4);
-            let data = region.readChunkData(x & 0x0f, z & 0x0f);
+            let region = this.loadRegion(x >> 5, z >> 5);
+            let data = region.readChunkData(x & 31, z & 31);
             let chunk = new Chunk(x, z);
             chunk.loadChunkData(data);
             this.chunks.set(xz, chunk);

@@ -72,7 +72,7 @@ class Region {
      * @returns {RegionIndex}
      */
     readIndex(x, z) {
-        this.stream.offset = (x + z * 32) << 2;
+        this.stream.offset = ((x & 31) + ((z & 31) << 5)) << 2;
         let index = new RegionIndex();
         index.offset = this.stream.readUnsignedTriadBE();
         index.length = this.stream.readUnsignedByte();
@@ -90,7 +90,7 @@ class Region {
         let stream = new BinaryStream();
         stream.writeUnsignedTriadBE(offset);
         stream.writeUnsignedByte(length);
-        stream.buffer.copy(this.stream.buffer, (x + z * 32) << 2, 0, 4);
+        stream.buffer.copy(this.stream.buffer, ((x & 31) + ((z & 31) << 5)) << 2, 0, 4);
     }
 
     /**
