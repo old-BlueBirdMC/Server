@@ -89,6 +89,7 @@ class RakNetInterface {
                 const player = RakNetPlayerManager.getPlayer(connection.address.toString());
                 if (player !== null) {
                     const game = new GamePacket(stream.buffer);
+                    game.useCompression = player.useCompression;
                     await game.deserializeA();
                     HandlersList.refresh(player, this.server, connection.address.toString());
                     const gameHandler = new GamePacketHandler(player, this.server);
@@ -109,7 +110,7 @@ class RakNetInterface {
                 frame.orderChannel = 0;
                 frame.isFragmented = false;
                 const game = new GamePacket();
-                game.compression = player.readyToLogin;
+                game.useCompression = player.useCompression;
                 game.streams.push(packet);
                 await game.serializeA();
                 frame.stream = game;

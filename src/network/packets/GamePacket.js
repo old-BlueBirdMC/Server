@@ -20,42 +20,36 @@ const zlib = require("zlib");
 class GamePacket extends PacketsBase {
     static id = Identifiers.game;
 
-    compression = true;
+    useCompression = false;
     streams = [];
 
     async decompress(buffer) {
         return new Promise((resolve) => {
-            resolve(this.compression ? zlib.inflateRawSync(buffer) : buffer);
+            resolve(zlib.inflateRawSync(buffer));
         });
     }
 
     async compress(buffer) {
         return new Promise((resolve) => {
-            resolve(this.compression ? zlib.deflateRawSync(buffer) : buffer);
+            resolve(zlib.deflateRawSync(buffer));
         });
     }
 
     async deserialize() {
-        let remaining = this.readRemaining();
-        let data;
-
         try {
-            data = new BinaryStream(await this.decompress(remaining));
-        } catch (e) {
-            if (this.compression) {
-                this.compression = false;
-
-                data = new BinaryStream(remaining);
+            let remaining = this.readRemaining();
+            let data;
+            if (this.useCompression) {
+                data = new BinaryStream(await this.decompress(remaining));
             } else {
-                console.log(e);
-                throw new Error("Error while decompressing zlib");
+                data = new BinaryStream(remaining);
             }
-        } finally {
-            this.compression = true;
-        }
-
-        while (data.feos() === false) {
-            this.streams.push(new BinaryStream(data.read(data.readVarInt())));
+            while (data.feos() === false) {
+                this.streams.push(new BinaryStream(data.read(data.readVarInt())));
+            }
+        } catch (e) {
+            console.log(e);
+            throw new Error("Error while decompressing zlib");
         }
     }
 
@@ -70,7 +64,7 @@ class GamePacket extends PacketsBase {
             stream.writeVarInt(this.streams[i].buffer.length);
             stream.write(this.streams[i].buffer);
         }
-        this.write(await this.compress(stream.buffer));
+        this.write(this.useCompression ? (await this.compress(stream.buffer)) : stream.buffer);
     }
 
     async serializeA() {

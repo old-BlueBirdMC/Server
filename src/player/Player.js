@@ -37,6 +37,7 @@ const SetPlayerGameTypePacket = require("../network/packets/SetPlayerGameTypePac
 const PlayerAttribute = require("../network/types/PlayerAttribute");
 
 class Player extends Human {
+    useCompression = false;
     connection;
     server;
     loginClient;
@@ -51,7 +52,6 @@ class Player extends Human {
     breathing = true;
     sprint = false;
     resourcePackClientResponseSent = false; // fix spamming
-    readyToLogin = false;
     attributes = [];
     spawned = false;
 

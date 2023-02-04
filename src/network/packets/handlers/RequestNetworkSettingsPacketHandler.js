@@ -29,8 +29,7 @@ class RequestNetworkSettingsPacketHandler extends HandlersBase {
         networkSettings.throttleThreshold = 0;
         networkSettings.throttleScalar = 0.0;
         await networkSettings.sendTo(player);
-
-        player.readyToLogin = true;
+        this.player.useCompression = true;
     }
 }
 
