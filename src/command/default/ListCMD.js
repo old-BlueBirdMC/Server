@@ -12,7 +12,6 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const RakNetPlayerManager = require("../../managers/RakNetPlayerManager");
 const Command = require("../Command");
 
 class ListCMD extends Command {
@@ -23,10 +22,11 @@ class ListCMD extends Command {
 
     async run(sender, writtenCommand, args) {
         // if (!(sender.hasPerm(this.getPerm()))) {}
-        if (RakNetPlayerManager.getLength() > 0) {
-            sender.message(`Found: ${RakNetPlayerManager.getLength()}`);
-            RakNetPlayerManager.getAllObjectValues().forEach((playerFound) => {
-                sender.message(`id: ${playerFound.id}, name: ${sender.server.getPlayerName(playerFound)}`);
+        let onlinePlayers = sender.server.getOnlinePlayers();
+        if (onlinePlayers.length > 0) {
+            sender.message(`Found: ${onlinePlayers.length}`);
+            onlinePlayers.forEach((playerFound) => {
+                sender.message(`id: ${playerFound.id}, name: ${playerFound.getRealName()}`);
             });
         } else {
             sender.message("There is no players online");

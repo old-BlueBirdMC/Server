@@ -12,6 +12,4 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class Section {
-    
-}
+class Section {}

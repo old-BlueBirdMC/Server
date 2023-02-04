@@ -48,8 +48,8 @@ class Region {
         this.path = path;
         this.freeIndexes = [];
         try {
-            this.stream = new BinaryStream(fs.readFileSync(path, "binary"));
-        } catch(err) {
+            this.stream = new BinaryStream(fs.readFileSync(this.path));
+        } catch (err) {
             this.stream = new BinaryStream(Buffer.alloc(8192, 0, "binary"));
         }
     }
@@ -60,7 +60,7 @@ class Region {
     save() {
         try {
             fs.writeFileSync(this.path, this.stream.buffer);
-        } catch(err) {
+        } catch (err) {
             this.log.error(`Failed to write region file ${this.path}`);
         }
     }
@@ -72,7 +72,7 @@ class Region {
      * @returns {RegionIndex}
      */
     readIndex(x, z) {
-        this.stream.offset = (x + z * 32) << 2;
+        this.stream.offset = ((x & 31) + ((z & 31) << 5)) << 2;
         let index = new RegionIndex();
         index.offset = this.stream.readUnsignedTriadBE();
         index.length = this.stream.readUnsignedByte();
@@ -90,7 +90,7 @@ class Region {
         let stream = new BinaryStream();
         stream.writeUnsignedTriadBE(offset);
         stream.writeUnsignedByte(length);
-        stream.buffer.copy(this.stream.buffer, (x + z * 32) << 2, 0, 4);
+        stream.buffer.copy(this.stream.buffer, ((x & 31) + ((z & 31) << 5)) << 2, 0, 4);
     }
 
     /**
@@ -104,7 +104,7 @@ class Region {
         this.stream.offset = index.offset << 12;
         if (index.length) {
             let length = this.stream.readIntBE();
-            if (length + 4 <= index.length << 12 && length) {
+            if ((length + 4 <= index.length << 12) && length !== 0) {
                 let compressionType = this.stream.readByte();
                 let data = this.stream.read(length - 1);
                 if (compressionType == 1) {

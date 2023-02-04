@@ -16,15 +16,15 @@ const HandlersBase = require("./HandlersBase");
 const ChunkRadiusUpdatedPacket = require("../ChunkRadiusUpdatedPacket");
 
 class RequestChunkRadiusPacketHandler extends HandlersBase {
-    startHandling(packet) {
-        super.startHandling(packet);
+    async startHandling(packet) {
+        await super.startHandling(packet);
 
         this.player.chunkRadius = packet.chunkRadius;
         this.player.chunkRadius = 2;
 
         let chunkRadiusUpdated = new ChunkRadiusUpdatedPacket();
         chunkRadiusUpdated.chunkRadius = this.player.chunkRadius;
-        chunkRadiusUpdated.sendTo(this.player);
+        await chunkRadiusUpdated.sendTo(this.player);
 
         if (!this.player.spawned) {
             this.player.sendChunks();

@@ -79,7 +79,6 @@ class RakNetInterface {
             this.log.debug("Disconnected, Address:", address.toString());
             const player = RakNetPlayerManager.getPlayer(address.toString());
             if (player !== null) {
-                player.disconnect("", true);
                 HandlersList.remove(address.toString());
                 RakNetPlayerManager.unregisterPlayer(address.toString());
             }
@@ -121,17 +120,17 @@ class RakNetInterface {
         }
     }
 
-    async close(closeMessage = undefined, exitProcess = false) {
+    async close(closeMessage = undefined, exitProcess = false, players = []) {
         if (this.rakNetServer.isRunning === true) {
             if (exitProcess === true) {
                 exitProcess = false;
-                for (const [, player] of RakNetPlayerManager.getAllObjectEntries()) {
+                players.forEach((player) => {
                     if (closeMessage === undefined) {
                         player.disconnect(`${MinecraftTextColors.red}Server killed`);
                     } else if (typeof closeMessage === "string") {
                         player.disconnect(`${MinecraftTextColors.red}Server killed, reason: ${closeMessage}`);
                     }
-                }
+                });
                 setInterval(async () => {
                     this.rakNetServer.isRunning = false;
                     this.rakNetServer.socket.close();

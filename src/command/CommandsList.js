@@ -25,8 +25,8 @@ class CommandsList {
     #alias = {};
 
     refresh() {
-        fs.readdirSync(__dirname + "/default").forEach((file) => {
-            const command = require(__dirname + "/default/" + file);
+        fs.readdirSync(`${__dirname}/default`).forEach((file) => {
+            const command = require(`${__dirname}/default/${file}`);
             this.add(new command());
         });
     }
@@ -37,7 +37,7 @@ class CommandsList {
                 this.#commands[command.name] = command;
                 command.getAliases().forEach((alias) => {
                     if (alias.length < 0) return;
-                    this.#alias[alias + "CcmdAlias"] = command;
+                    this.#alias[alias + "CmdAlias"] = command;
                 });
             }
         }
@@ -47,14 +47,14 @@ class CommandsList {
         if (commandName in this.#commands) {
             delete this.#commands[commandName];
         } else if (commandName in this.#alias) {
-            delete this.#alias[commandName + "CcmdAlias"];
+            delete this.#alias[commandName + "CmdAlias"];
         }
     }
 
     has(commandName) {
         if (commandName in this.#commands) {
             return true;
-        } else if (commandName + "CcmdAlias" in this.#alias) {
+        } else if (commandName + "CmdAlias" in this.#alias) {
             return true;
         }
         return false;
@@ -63,8 +63,8 @@ class CommandsList {
     get(commandName) {
         if (commandName in this.#commands) {
             return this.#commands[commandName];
-        } else if (commandName + "CcmdAlias" in this.#alias) {
-            return this.#alias[commandName + "CcmdAlias"];
+        } else if (commandName + "CmdAlias" in this.#alias) {
+            return this.#alias[commandName + "CmdAlias"];
         }
     }
 

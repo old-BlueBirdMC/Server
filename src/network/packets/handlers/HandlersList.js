@@ -22,7 +22,7 @@ class HandlersList {
         fs.readdirSync(__dirname).forEach(async (handlersName) => {
             let blackList = ["GamePacketHandler.js", "HandlersBase.js", "HandlersList.js"];
             if (!blackList.includes(handlersName)) {
-                let staticPacket = require("./" + handlersName.replace(".js", ""));
+                let staticPacket = require(`./${handlersName.replace(".js", "")}`);
                 let IdentifierName = handlersName;
                 IdentifierName += "";
                 let toIdentifiersWork = Identifiers[(IdentifierName.charAt(0).toLocaleLowerCase() + IdentifierName.substring(1)).replace("PacketHandler.js", "")];

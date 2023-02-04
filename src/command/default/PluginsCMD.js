@@ -17,17 +17,19 @@ const Command = require("../Command");
 
 class PluginCMD extends Command {
     constructor() {
-        super("plugin", "Shows a list of plugins", ["pl"], []);
+        super("plugins", "The plugins list", [], []);
     }
 
     async run(sender, writtenCommand, args) {
         let list = "";
-        const getPlugins = sender.server.getAllPlugins();
-        sender.message("Plugins: (" + getPlugins.length + ") ");
-        getPlugins.forEach((plugin) => {
+        const plugins = sender.server.getAllPlugins();
+        sender.message("Plugins: (" + plugins.length + ") ");
+        plugins.forEach((plugin) => {
             list += plugin[1].description.pluginName;
         });
-        sender.message(`${MinecraftTextColors.green}${list}`);
+        if (list.length > 0) {
+            sender.message(`${MinecraftTextColors.green}${list}`);
+        }
     }
 }
 

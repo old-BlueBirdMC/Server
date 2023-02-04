@@ -64,7 +64,7 @@ class GamePacket extends PacketsBase {
             stream.writeVarInt(this.streams[i].buffer.length);
             stream.write(this.streams[i].buffer);
         }
-        this.write(this.useCompression ? (await this.compress(stream.buffer)) : stream.buffer);
+        this.write(this.useCompression ? await this.compress(stream.buffer) : stream.buffer);
     }
 
     async serializeA() {

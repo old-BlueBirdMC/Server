@@ -76,19 +76,19 @@ class Chunk {
             let root = stream.readRootTag();
             for (let i = 0; i < root.value.length; ++i) {
                 let entry = root.value[i];
-                if (entry.name == "DataVersion") {
+                if (entry.tagName == "DataVersion") {
                     this.dataVersion = entry.value;
-                } else if (entry.name == "xPos") {
+                } else if (entry.tagName == "xPos") {
                     this.xPos = entry.value;
-                } else if (entry.name == "zPos") {
+                } else if (entry.tagName == "zPos") {
                     this.zPos = entry.value;
-                } else if (entry.name == "yPos") {
+                } else if (entry.tagName == "yPos") {
                     this.yPos = entry.value;
-                } else if (entry.name == "Status") {
+                } else if (entry.tagName == "Status") {
                     this.status = entry.value;
-                } else if (entry.name == "LastUpdate") {
+                } else if (entry.tagName == "LastUpdate") {
                     this.lastUpdate = entry.value;
-                } else if (entry.name == "sections") {
+                } else if (entry.tagName == "sections") {
                     // todo
                 }
             }

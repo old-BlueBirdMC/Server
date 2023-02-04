@@ -12,9 +12,9 @@
     "author": "bbmc",
     "license": "MIT",
     "dependencies": {
-      "bbmc-binarystream": "^1.0.0",
-      "bbmc-nbt": "https://github.com/BlueBirdMC/NBT.git",
-      "bbmc-raknet": "^1.0.3"
+      "bbmc-binarystream": "1.0.0",
+      "bbmc-nbt": "github:BlueBirdMC/NBT",
+      "bbmc-raknet": "1.0.3"
     },
     "devDependencies": {
       "prettier": "2.8.3"

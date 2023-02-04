@@ -12,6 +12,8 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
+const CompressionAlgorithmTypes = require("../../constants/CompressionAlgorithmTypes");
+const CompressionThresholdTypes = require("../../constants/CompressionThresholdTypes");
 const NetworkSettingsPacket = require("../NetworkSettingsPacket");
 const HandlersBase = require("./HandlersBase");
 
@@ -23,13 +25,13 @@ class RequestNetworkSettingsPacketHandler extends HandlersBase {
         player.checkProtocol(packet.protocolVersion);
 
         let networkSettings = new NetworkSettingsPacket();
-        networkSettings.threshold = 1; //all = 1, none = 0
-        networkSettings.algorithm = 0; //snappy = 1, zlib = 0
+        networkSettings.threshold = CompressionThresholdTypes.all;
+        networkSettings.algorithm = CompressionAlgorithmTypes.zlib;
         networkSettings.clientThrottling = false;
         networkSettings.throttleThreshold = 0;
         networkSettings.throttleScalar = 0.0;
         await networkSettings.sendTo(player);
-        this.player.useCompression = true;
+        player.useCompression = true;
     }
 }
 
