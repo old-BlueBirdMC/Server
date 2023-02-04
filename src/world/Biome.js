@@ -12,22 +12,10 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const Block = require("../Block");
-const Tool = require("../Tool");
-
-class Barrier extends Block {
-    maxStack = 64;
-    tool = Tool.none;
-    blastResistance = 0;
-    hardness = 0;
-    isLuminant = false;
-    isTransparrent = true;
-    isFlammable = false;
-    catchesFireFromLava = false;
-
-    constructor() {
-        super("minecraft:barrier", 0);
-    }
+class Biome {
+    static OCEAN = 0;
+    static PLAINS = 1;
+    static DESERT = 2;
 }
 
-module.exports = Barrier;
+module.exports = Biome;

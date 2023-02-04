@@ -23,11 +23,7 @@ class PluginStructure {
     constructor(server, dataPath, pluginName) {
         this.server = server;
         this.dataPath = dataPath;
-        this.log = new Logger({
-            Name: pluginName,
-            WithColors: true,
-            AllowDebugging: false,
-        });
+        this.log = new Logger({ Name: pluginName, WithColors: true, AllowDebugging: false });
     }
 
     successfullyEnabled() {}
