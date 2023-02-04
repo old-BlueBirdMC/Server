@@ -36,16 +36,22 @@ const UpdateAttributesPacket = require("../UpdateAttributesPacket");
 const EntityProperties = require("../../types/EntityProperties");
 
 class ResourcePackClientResponsePacketHandler extends HandlersBase {
+    resourcePacksSent = false;
+
     randomUUID() {
-        let stream = new MinecraftBinaryStream(crypto.randomBytes(16));
+        let randomByte = crypto.randomBytes(16);
+        let stream = new MinecraftBinaryStream(randomByte);
         return stream.readUUID();
     }
 
     async startHandling(packet) {
+        if (this.resourcePacksSent === true) {
+            return;
+        }
         await super.startHandling(packet);
         switch (packet.responseStatus) {
             case ResourcePackClientResponseStatus.refused:
-                this.player.disconnect("You need to accept the resource pack");
+                await this.player.disconnect("You need to accept the resource packs");
                 break;
             case ResourcePackClientResponseStatus.sendPacks:
                 break;
@@ -58,7 +64,7 @@ class ResourcePackClientResponsePacketHandler extends HandlersBase {
                 resourcePackStack.gameVersion = ServerInfo.minecraftVersion;
                 resourcePackStack.experiments = [];
                 resourcePackStack.experimentsPreviouslyUsed = false;
-                resourcePackStack.sendTo(this.player);
+                await resourcePackStack.sendTo(this.player);
                 break;
             case ResourcePackClientResponseStatus.completed:
                 let worldPos = new Vector3F(); // temp
@@ -138,11 +144,11 @@ class ResourcePackClientResponsePacketHandler extends HandlersBase {
                 startGame.blockPaletteChecksum = 0n;
                 startGame.worldTemplateID = this.randomUUID();
                 startGame.clientSideGeneration = false;
-                startGame.sendTo(this.player);
+                await startGame.sendTo(this.player);
 
                 const biomeDefinitionList = new BiomeDefinitionListPacket();
                 biomeDefinitionList.nbt = this.server.resourceManager.biomeDefinitionList;
-                biomeDefinitionList.sendTo(this.player);
+                await biomeDefinitionList.sendTo(this.player);
 
                 const setEntityData = new SetEntityDataPacket();
                 setEntityData.runtimeEntityID = this.player.id;
@@ -151,28 +157,25 @@ class ResourcePackClientResponsePacketHandler extends HandlersBase {
                 setEntityData.properties.intProperties = [];
                 setEntityData.properties.floatProperties = [];
                 setEntityData.tick = 0;
-                setEntityData.sendTo(this.player);
+                await setEntityData.sendTo(this.player);
 
                 const updateAttributes = new UpdateAttributesPacket();
                 updateAttributes.runtimeEntityID = this.player.id;
                 updateAttributes.attributes = this.player.attributes;
                 updateAttributes.tick = 0;
-                updateAttributes.sendTo(this.player);
+                await updateAttributes.sendTo(this.player);
 
                 const availableEntityIdentifiers = new AvailableEntityIdentifiersPacket();
                 availableEntityIdentifiers.nbt = this.server.resourceManager.availableEntityIdentifiers;
-                availableEntityIdentifiers.sendTo(this.player);
+                await availableEntityIdentifiers.sendTo(this.player);
 
                 const creativeContent = new CreativeContentPacket();
                 creativeContent.entries = this.server.resourceManager.creativeItems;
-                creativeContent.sendTo(this.player);
+                await creativeContent.sendTo(this.player);
 
-                if (!this.player.resourcePackClientResponseSent) {
-                    //todo: remove after an packet impl
-                    this.player.sendAvailableCommands();
-                    this.player.resourcePackClientResponseSent = true;
-                }
+                this.player.sendAvailableCommands(); // not here
                 this.player.sendPlayStatus(PlayStatus.playerSpawn);
+                this.resourcePacksSent = true;
                 break;
         }
     }

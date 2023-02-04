@@ -18,8 +18,8 @@ class BlocksList {
     static #list = {};
 
     static refresh() {
-        fs.readdirSync(__dirname + "/default").forEach((file) => {
-            const block = require(__dirname + "/default/" + file);
+        fs.readdirSync(`${__dirname}/default`).forEach((file) => {
+            const block = require(`${__dirname}/default/${file}`);
             this.add(new block());
         });
     }

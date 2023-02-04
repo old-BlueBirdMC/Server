@@ -12,6 +12,7 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
+require("./misc/GlobFX");
 const { InternetAddress } = require("bbmc-raknet");
 const ServerInfo = require("./ServerInfo");
 const Logger = require("./console/Logger");
@@ -107,14 +108,18 @@ class Server {
             this.shutdown();
         });
     }
-    /**
-     * Shutdown Server
-     * @constructor
-     * @param {string} closeMessage - The server will display this message when a player is kicked out.
-     **/
 
+    /**
+     * shutdowns the server
+     *
+     * closeMessage = the message that will appear after closing the server
+     * exitProcess = force exitting the process
+     *
+     * @param {string} closeMessage
+     * @param {bool} exitProcess
+     **/
     shutdown(closeMessage = undefined, exitProcess = true) {
-        this.rakNetInterface.close(closeMessage, exitProcess);
+        this.rakNetInterface.close(closeMessage, exitProcess, this.getOnlinePlayers());
     }
 
     sendUnserializedMinecraftPacket(packet, player) {

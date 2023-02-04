@@ -21,7 +21,7 @@ class PacketsList {
         fs.readdirSync(__dirname).forEach(async (packetsName) => {
             let blackList = ["handlers", "GamePacket.js", "Identifiers.js", "PacketsBase.js", "PacketsList.js"];
             if (!blackList.includes(packetsName)) {
-                this.add(require("./" + packetsName.replace(".js", "")));
+                this.add(require(`./${packetsName.replace(".js", "")}`));
             }
         });
     }

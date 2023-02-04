@@ -49,7 +49,7 @@ class Region {
         this.freeIndexes = [];
         try {
             this.stream = new BinaryStream(fs.readFileSync(path, "binary"));
-        } catch(err) {
+        } catch (err) {
             this.stream = new BinaryStream(Buffer.alloc(8192, 0, "binary"));
         }
     }
@@ -60,7 +60,7 @@ class Region {
     save() {
         try {
             fs.writeFileSync(this.path, this.stream.buffer);
-        } catch(err) {
+        } catch (err) {
             this.log.error(`Failed to write region file ${this.path}`);
         }
     }
