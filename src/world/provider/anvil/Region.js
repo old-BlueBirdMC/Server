@@ -48,7 +48,7 @@ class Region {
         this.path = path;
         this.freeIndexes = [];
         try {
-            this.stream = new BinaryStream(fs.readFileSync(path, "binary"));
+            this.stream = new BinaryStream(fs.readFileSync(this.path));
         } catch (err) {
             this.stream = new BinaryStream(Buffer.alloc(8192, 0, "binary"));
         }
@@ -104,7 +104,7 @@ class Region {
         this.stream.offset = index.offset << 12;
         if (index.length) {
             let length = this.stream.readIntBE();
-            if (length + 4 <= index.length << 12 && length) {
+            if ((length + 4 <= index.length << 12) && length !== 0) {
                 let compressionType = this.stream.readByte();
                 let data = this.stream.read(length - 1);
                 if (compressionType == 1) {
