@@ -39,8 +39,7 @@ class ResourcePackClientResponsePacketHandler extends HandlersBase {
     resourcePacksSent = false;
 
     randomUUID() {
-        let randomByte = crypto.randomBytes(16);
-        let stream = new MinecraftBinaryStream(randomByte);
+        let stream = new MinecraftBinaryStream(crypto.randomBytes(16));
         return stream.readUUID();
     }
 
@@ -51,7 +50,7 @@ class ResourcePackClientResponsePacketHandler extends HandlersBase {
         await super.startHandling(packet);
         switch (packet.responseStatus) {
             case ResourcePackClientResponseStatus.refused:
-                await this.player.disconnect("You need to accept the resource packs");
+                this.player.disconnect("You need to accept the resource packs");
                 break;
             case ResourcePackClientResponseStatus.sendPacks:
                 break;
