@@ -11,6 +11,7 @@ const perlinGradientVectors = [
     [0, -1, 1], [0, -1, -1]
 ]
 
+// https://en.wikipedia.org/wiki/Perlin_noise#Permutation
 const perlinPermutation = [
     151, 160, 137, 91, 90, 15, 131, 13, 201, 95, 96, 53, 194, 233, 7, 225, 140, 36,
     103, 30, 69, 142, 8, 99, 37, 240, 21, 10, 23, 190, 6, 148, 247, 120, 234, 75, 0,
@@ -82,6 +83,7 @@ class Perlin {
         return v0 + t * (v1 - v0);
     }
 
+    // https://adrianb.io/2014/08/09/perlinnoise.html
     noise(x, y, z) {
         let xi = Math.floor(x) & 255;
         let yi = Math.floor(y) & 255;
@@ -111,6 +113,24 @@ class Perlin {
         let y2 = this.lerp(x1, x2, v);
     
         return this.lerp(y1, y2, w);
+    }
+    
+    // https://adrianb.io/2014/08/09/perlinnoise.html
+    octaveNoise(x, y, z, octaves = 1, persistence = 0.2, lacunarity = 2) {
+        let total = 0;
+        let frequency = 1;
+        let amplitude = 1;
+        let maxValue = 0;
+        
+        for (let i = 0; i < octaves; ++i) {
+            total += this.noise(x * frequency, y * frequency, z * frequency) * amplitude;
+        
+            maxValue += amplitude;
+        
+            amplitude *= persistence;
+            frequency *= lacunarity;
+        }
+        return total / maxValue;
     }
 
     perlin(x, y, z, r = 1, scale = 1, octaves = 1, persistence = 0.2, lacunarity = 2) {
