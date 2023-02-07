@@ -52,7 +52,10 @@ class Perlin {
     p;
 
     constructor() {
-        this.p = perlinPermutation;
+        this.p = new Array(512);
+        for (let x = 0; x < 512; ++x) {
+            this.p[x] = perlinPermutation[x % 256];
+        }
     }
 
     // 3D dot function

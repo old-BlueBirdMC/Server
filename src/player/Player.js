@@ -53,6 +53,8 @@ class Player extends Human {
     sprint = false;
     attributes = [];
     spawned = false;
+    xuid;
+    identity;
 
     constructor(connection, server) {
         super();
@@ -78,7 +80,7 @@ class Player extends Human {
         } else if (typeof this.loginIdentity[2] === "undefined") {
             retVal = this.connection.address.toString();
         } else {
-            retVal = this.loginIdentity[2]["extraData"]["displayName"];
+            retVal = this.loginIdentity[2].extraData.displayName;
         }
         this.realName = retVal;
         if (updateFName === true) {

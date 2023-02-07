@@ -32,6 +32,8 @@ class LoginPacketHandler extends HandlersBase {
         });
         player.loginClient = loginClient;
         player.loginIdentity = loginIdentity;
+        player.xuid = player.loginIdentity[2].extraData.XUID;
+        player.identity = player.loginIdentity[2].extraData.identity;
 
         player.updateName(true);
 
