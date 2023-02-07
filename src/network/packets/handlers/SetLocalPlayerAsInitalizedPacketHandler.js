@@ -30,7 +30,7 @@ class SetLocalPlayerAsInitalizedPacketHandler extends HandlersBase {
             this.player.disconnect("Join cancelled", false);
             return;
         }
-        this.server.log.info(ev.message !== "" ? ev.message : `Player ${this.player.getRealName()} joined the game`);
+        this.server.log.info(ev.message !== "" ? ev.message : `Player ${this.player.displayName} joined the game`);
     }
 }
 

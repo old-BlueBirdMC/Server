@@ -16,6 +16,7 @@ const PlayStatus = require("../../constants/PlayStatus");
 const ResourcePacksInfoPacket = require("../ResourcePacksInfoPacket");
 const HandlersBase = require("./HandlersBase");
 const canceller = require("../../../event/canceller");
+const Auth = require("../../../misc/Auth");
 
 class LoginPacketHandler extends HandlersBase {
     async startHandling(packet) {
@@ -23,19 +24,12 @@ class LoginPacketHandler extends HandlersBase {
         let player = this.player;
         player.checkProtocol(packet.protocolVersion);
 
-        const [, lClient] = packet.loginTokens.client.split(".");
-        const loginClient = JSON.parse(Buffer.from(lClient, "base64").toString("binary"));
-        const lIdentity = JSON.parse(packet.loginTokens.identity.toString("binary"));
-        const loginIdentity = lIdentity["chain"].map((data) => {
-            const [, ldata] = data.split(".");
-            return JSON.parse(Buffer.from(ldata, "base64").toString("binary"));
-        });
-        player.loginClient = loginClient;
-        player.loginIdentity = loginIdentity;
-        player.xuid = player.loginIdentity[2].extraData.XUID;
-        player.identity = player.loginIdentity[2].extraData.identity;
-
-        player.updateName(true);
+        const [, splittedClientToken] = packet.loginTokens.client.split(".");
+        const parsedClientData = JSON.parse(Buffer.from(splittedClientToken, "base64").toString("binary"));
+        player.clientData = parsedClientData;
+        const auth = new Auth(this.player, this.server, this.server.configManager.isOnlineMode(), packet.loginTokens.identity);
+        auth.authMainCheck();
+        player.auth = auth;
 
         let ev = {
             player: this.player,

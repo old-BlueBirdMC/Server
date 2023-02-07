@@ -31,19 +31,19 @@ class RakNetInterface {
     rakNetServer;
     rakNetMessage;
 
-    constructor(server, address, rakNetMsgFH) {
+    constructor(server, address, rakNetMsgOptions) {
         this.server = server;
         this.address = address;
         this.rakNetServer = new RakNetServer(address, ServerInfo.rakNetProtocolVersion);
         this.rakNetMessage = new RakNetMessage(
-            rakNetMsgFH.motd,
-            rakNetMsgFH.protocolVersion,
-            rakNetMsgFH.minecraftVersion,
+            rakNetMsgOptions.motd,
+            rakNetMsgOptions.protocolVersion,
+            rakNetMsgOptions.minecraftVersion,
             RakNetPlayerManager.getLength(),
-            rakNetMsgFH.maxPlayerCount,
+            rakNetMsgOptions.maxPlayerCount,
             this.rakNetServer.serverGUID.toString(),
-            rakNetMsgFH.subMotd,
-            rakNetMsgFH.gameMode
+            rakNetMsgOptions.subMotd,
+            rakNetMsgOptions.gameMode
         );
         this.rakNetServer.message = this.rakNetMessage.toString();
         this.log = new Logger({

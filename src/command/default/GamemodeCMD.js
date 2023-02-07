@@ -57,15 +57,15 @@ class GamemodeCMD extends Command {
         }
     }
 
-    changeGM(messagesSentToWho, player, argument) {
+    changeGM(whoToSendTo, player, argument) {
         if (this.isAcceptedGM(argument) === false) {
-            messagesSentToWho.message(`${MinecraftTextColors.red}[ERROR] The gamemode is unknown`);
+            whoToSendTo.message(`${MinecraftTextColors.red}[ERROR] The gamemode is unknown`);
             return;
         }
         if (player.setPlayerGameType(argument) === null) {
-            messagesSentToWho.message(`${MinecraftTextColors.red}[ERROR] The gamemode requested is invalid`);
+            whoToSendTo.message(`${MinecraftTextColors.red}[ERROR] The gamemode requested is invalid`);
         } else {
-            messagesSentToWho.message(`${MinecraftTextColors.green}[SUCCESS] gamemode has been changed to ${argument}`);
+            whoToSendTo.message(`${MinecraftTextColors.green}[SUCCESS] gamemode has been changed to ${argument}`);
         }
     }
 
@@ -78,9 +78,9 @@ class GamemodeCMD extends Command {
         }
     }
 
-    noArg(args, messagesSentToWho) {
+    noArg(args, whoToSendTo) {
         if (args.length === 0) {
-            messagesSentToWho.message(`${MinecraftTextColors.red}[ERROR] Please provide one of the following: "survival", "creative" or "adventure".`);
+            whoToSendTo.message(`${MinecraftTextColors.red}[ERROR] Please provide one of the following: "survival", "creative" or "adventure".`);
         }
     }
 }

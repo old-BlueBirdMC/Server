@@ -40,21 +40,18 @@ class Player extends Human {
     useCompression = false;
     connection;
     server;
-    loginClient;
-    loginIdentity;
+    clientData;
+    auth;
+    displayName;
     chunkRadius;
     position;
     rotation;
-    realName;
-    name;
     onGround = true;
     gamemode = GameMode.creative;
     breathing = true;
     sprint = false;
     attributes = [];
     spawned = false;
-    xuid;
-    identity;
 
     constructor(connection, server) {
         super();
@@ -71,29 +68,6 @@ class Player extends Human {
         this.boundingBox.z = 1.9; // height
         this.updateMetadataFlags();
         this.updateAttributes();
-    }
-
-    updateName(updateFName = false) {
-        let retVal;
-        if (typeof this.loginIdentity === "undefined") {
-            retVal = this.connection.address.toString();
-        } else if (typeof this.loginIdentity[2] === "undefined") {
-            retVal = this.connection.address.toString();
-        } else {
-            retVal = this.loginIdentity[2].extraData.displayName;
-        }
-        this.realName = retVal;
-        if (updateFName === true) {
-            this.name = retVal;
-        }
-    }
-
-    getRealName() {
-        return this.realName;
-    }
-
-    getName() {
-        return this.name;
     }
 
     message(value) {
@@ -201,7 +175,7 @@ class Player extends Human {
         if (value.length >= 256) return;
         if (value.trim() === "") return;
         for (const [, player] of RakNetPlayerManager.getAllObjectEntries()) {
-            player.message(`<${this.getRealName()}> ${value}`);
+            player.message(`<${this.displayName}> ${value}`);
         }
     }
 
@@ -259,7 +233,7 @@ class Player extends Human {
     }
 
     setPlayerGameType(value) {
-        let translatedGM = this.translateGM(value);
+        let translatedGM = this.server.translateGamemode(value);
         if (translatedGM === -1) {
             return null;
         }
@@ -271,30 +245,7 @@ class Player extends Human {
         }
     }
 
-    translateGM(value) {
-        let gm = -1;
-        switch (value.toLowerCase()) {
-            case "survival":
-            case "s":
-                gm = GameMode.survival;
-                break;
-            case "creative":
-            case "c":
-                gm = GameMode.creative;
-                break;
-            case "adventure":
-            case "a":
-                gm = GameMode.adventure;
-                break;
-            case "spectator":
-            case "v":
-                gm = GameMode.spectator;
-                break;
-        }
-        return gm;
-    }
-
-    updateData(viewers = [], updateFlags = false) {
+    updateData(updateFlags = false) {
         if (updateFlags === true) {
             this.updateMetadataFlags();
         }
@@ -305,12 +256,6 @@ class Player extends Human {
         setEntityData.properties.intProperties = [];
         setEntityData.properties.floatProperties = [];
         setEntityData.tick = 0;
-        if (viewers.length > 0) {
-            viewers.forEach((viewer) => {
-                setEntityData.sendTo(viewer);
-            });
-            return;
-        }
         setEntityData.sendTo(this);
     }
 

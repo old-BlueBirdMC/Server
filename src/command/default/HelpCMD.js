@@ -20,12 +20,18 @@ const Command = require("../Command");
 class HelpCMD extends Command {
     constructor() {
         let cmdParam = new CommandParam();
-        cmdParam.name = "page/command";
+        cmdParam.name = "page";
         cmdParam.optional = true;
         cmdParam.typeID = CommandArgumentFlags.valid | CommandArgumentTypes.int;
         cmdParam.options = 0;
         cmdParam.suffixes = [];
-        super("help", "Shows the help menu.", ["?"], [cmdParam]);
+        let cmdParam2 = new CommandParam();
+        cmdParam2.name = "command";
+        cmdParam2.optional = true;
+        cmdParam2.typeID = CommandArgumentFlags.valid | CommandArgumentTypes.str;
+        cmdParam2.options = 0;
+        cmdParam2.suffixes = [];
+        super("help", "Shows the help menu or for a certain command.", ["?"], [cmdParam, cmdParam2]);
     }
 
     async run(sender, writtenCommand, args) {
@@ -57,21 +63,21 @@ class HelpCMD extends Command {
                 });
             }
 
-            let sorted_commands = [];
+            let sortedCommands = [];
 
             Object.keys(commands)
                 .sort()
                 .forEach((command) => {
-                    sorted_commands.push(commands[command]);
+                    sortedCommands.push(commands[command]);
                     delete commands[command];
                 });
 
-            page = Math.min(sorted_commands.length, page);
+            page = Math.min(sortedCommands.length, page);
 
             if (page < 1) page = 1;
 
-            sender.message("----- Help (" + page + " of " + Math.ceil(sorted_commands.length / 4) + ") -----");
-            sorted_commands.slice(page * 4 - 4, page * 4).forEach((command) => {
+            sender.message("----- Help (" + page + " of " + Math.ceil(sortedCommands.length / 4) + ") -----");
+            sortedCommands.slice(page * 4 - 4, page * 4).forEach((command) => {
                 sender.message("/" + command.name + ": " + command.description);
             });
         } else {

@@ -44,11 +44,11 @@ class ConfigIniManager {
     }
 
     getServerPort() {
-        return this.#content.serverPort;
+        return parseInt(this.#content.serverPort);
     }
 
     getAddressVersion() {
-        return this.#content.getAddressVersion;
+        return parseInt(this.#content.addressVersion);
     }
 
     getChatRestriction() {
@@ -56,7 +56,7 @@ class ConfigIniManager {
     }
 
     isOnlineMode() {
-        return this.#content.onlineMode;
+        return this.#content.onlineMode === "true" ? true : false;
     }
 
     getWorldName() {
@@ -71,8 +71,11 @@ class ConfigIniManager {
                 content = this.#content[i];
                 if (content.includes(content.split(/#+/))) {
                     if (content.includes("=")) {
-                        // ' = ' or ' =' or '= ' is not supported but who cares?
                         obj[i] = content.split("=");
+                    } else if (content.includes(" =")) {
+                        obj[i] = content.split(" =");
+                    } else if (content.includes("= ")) {
+                        obj[i] = content.split("= ");
                     }
                 }
             }

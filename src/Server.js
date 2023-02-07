@@ -47,6 +47,7 @@ class Server {
     configManager;
     generatorManager;
     testWorld;
+    playerNamesInUse = 0;
 
     constructor() {
         let startTime = Date.now();
@@ -56,7 +57,7 @@ class Server {
         this.registerDefaultGenerators();
         this.testWorld = new World(this.generatorManager);
         this.#eventsHandler = new EventEmitter();
-        let rakNetMsgFH = {
+        let rakNetMsgOptions = {
             motd: this.configManager.getMotd(),
             protocolVersion: ServerInfo.minecraftProtocolVersion,
             minecraftVersion: ServerInfo.minecraftVersion,
@@ -64,7 +65,7 @@ class Server {
             subMotd: this.configManager.getSubMotd(),
             gameMode: this.configManager.getGamemode(),
         };
-        this.rakNetInterface = new RakNetInterface(this, new InternetAddress("0.0.0.0", this.configManager.getServerPort(), this.configManager.getAddressVersion()), rakNetMsgFH);
+        this.rakNetInterface = new RakNetInterface(this, new InternetAddress("0.0.0.0", this.configManager.getServerPort(), this.configManager.getAddressVersion()), rakNetMsgOptions);
         this.log = new Logger({
             Name: "Server",
             AllowDebugging: false,
@@ -95,6 +96,7 @@ class Server {
         }
         this.enablePlugins();
         this.log.info("Plugins Loaded");
+        this.playerNamesInUse = 0;
         this.log.info("Server Loaded");
         this.log.info("Done in (" + (Date.now() - startTime) / 1000 + ")s!");
         this.handleProcess();
@@ -258,6 +260,29 @@ class Server {
             }
         });
         return players;
+    }
+
+    translateGamemode(value) {
+        let gm = -1;
+        switch (value.toLowerCase()) {
+            case "survival":
+            case "s":
+                gm = GameMode.survival;
+                break;
+            case "creative":
+            case "c":
+                gm = GameMode.creative;
+                break;
+            case "adventure":
+            case "a":
+                gm = GameMode.adventure;
+                break;
+            case "spectator":
+            case "v":
+                gm = GameMode.spectator;
+                break;
+        }
+        return gm;
     }
 
     registerDefaultGenerators() {
