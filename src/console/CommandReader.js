@@ -26,7 +26,7 @@ class CommandReader {
         this.consoleCommandSender = new ConsoleCommandSender(this.server);
     }
 
-    readConsole() {
+    handle() {
         this.rl.on("line", async (input) => {
             this.server.commandsList.dispatch(this.consoleCommandSender, input);
         });

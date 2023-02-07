@@ -74,7 +74,7 @@ class Server {
         this.commandsList = new CommandsList();
         this.commandsList.refresh();
         this.consoleCommandReader = new CommandReader(this);
-        this.consoleCommandReader.readConsole();
+        this.consoleCommandReader.handle();
         PacketsList.refresh();
         BlocksList.refresh();
         this.rakNetInterface.handlePong();

@@ -51,7 +51,6 @@ class Player extends Human {
     gamemode = GameMode.creative;
     breathing = true;
     sprint = false;
-    resourcePackClientResponseSent = false; // fix spamming
     attributes = [];
     spawned = false;
 
