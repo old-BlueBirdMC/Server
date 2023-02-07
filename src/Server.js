@@ -211,7 +211,7 @@ class Server {
     getOnlinePlayer(name) {
         let foundPlayer;
         this.getOnlinePlayers().forEach((player) => {
-            if (player.getRealName() === name) {
+            if (player.name === name) {
                 foundPlayer = player;
             }
         });

@@ -21,7 +21,7 @@ class TextPacket extends PacketsBase {
 
     typeID;
     needsTranslation;
-    sourceName;
+    sourceUserName;
     message;
     parameters;
     xuid;
@@ -34,7 +34,7 @@ class TextPacket extends PacketsBase {
             case TextTypes.chat:
             case TextTypes.whisper:
             case TextTypes.announcement:
-                this.sourceName = this.readStringVarInt();
+                this.sourceUserName = this.readStringVarInt();
             case TextTypes.raw:
             case TextTypes.tip:
             case TextTypes.system:
@@ -63,7 +63,7 @@ class TextPacket extends PacketsBase {
             case TextTypes.chat:
             case TextTypes.whisper:
             case TextTypes.announcement:
-                this.readStringVarInt(this.sourceName);
+                this.readStringVarInt(this.sourceUserName);
             case TextTypes.raw:
             case TextTypes.tip:
             case TextTypes.system:

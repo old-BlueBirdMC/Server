@@ -42,7 +42,7 @@ class Player extends Human {
     server;
     clientData;
     auth;
-    displayName;
+    name;
     chunkRadius;
     position;
     rotation;
@@ -175,7 +175,7 @@ class Player extends Human {
         if (value.length >= 256) return;
         if (value.trim() === "") return;
         for (const [, player] of RakNetPlayerManager.getAllObjectEntries()) {
-            player.message(`<${this.displayName}> ${value}`);
+            player.message(`<${this.name}> ${value}`);
         }
     }
 

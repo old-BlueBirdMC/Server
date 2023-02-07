@@ -25,7 +25,7 @@ class Auth {
         this.server = server;
         this.onlineMode = onlineMode;
         this.identityTokenParser = new IdentityTokenParser(identityToken);
-        this.player.displayName = this.identityTokenParser.realName;
+        this.player.name = this.identityTokenParser.realName;
     }
 
     authMainCheck() {
@@ -60,7 +60,7 @@ class Auth {
             return;
         }
         if (this.playerNameEqualToSomeone(this.server) === true) {
-            this.player.displayName = this.identityTokenParser.realName + " - " + this.server.playerNamesInUse;
+            this.player.name = this.identityTokenParser.realName + " - " + this.server.playerNamesInUse;
             ++this.server.playerNamesInUse;
         }
     }

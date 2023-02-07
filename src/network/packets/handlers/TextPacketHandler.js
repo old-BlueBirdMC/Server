@@ -12,11 +12,15 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
+const TextTypes = require("../../constants/TextTypes");
 const HandlersBase = require("./HandlersBase");
 
 class TextPacketHandler extends HandlersBase {
     async startHandling(packet) {
         await super.startHandling(packet);
+        if (packet.typeID !== TextTypes.chat) {
+            return;
+        }
         this.player.sendChatMessage(packet.message);
     }
 }

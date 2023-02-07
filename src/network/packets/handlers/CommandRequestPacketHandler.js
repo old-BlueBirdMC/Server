@@ -18,13 +18,14 @@ const HandlersBase = require("./HandlersBase");
 class CommandRequestPacketHandler extends HandlersBase {
     async startHandling(packet) {
         super.startHandling(packet);
-        if (packet.data.typeID === CommandOriginDataTypes.player) {
-            let cmd = packet.command;
-            if (!cmd.startsWith("/")) {
-                return;
-            }
-            this.server.commandsList.dispatch(this.player, cmd.substring(1));
+        if (packet.data.typeID !== CommandOriginDataTypes.player) {
+            return;
         }
+        let cmd = packet.command;
+        if (!cmd.startsWith("/")) {
+            return;
+        }
+        this.server.commandsList.dispatch(this.player, cmd.substring(1));
     }
 }
 
