@@ -2,7 +2,7 @@ const Biome = require("../../Biome");
 const Perlin = require("../../Perlin");
 
 class Ocean {
-    generator(x, y, z, chunkX, chunkZ, chunk, blockMap) {
+    generate(x, y, z, chunkX, chunkZ, chunk, blockMap) {
         return new Promise((resolve) => {
             let bedrock = blockMap.legacyToRuntime("minecraft:bedrock", 0);
             let stone = blockMap.legacyToRuntime("minecraft:stone", 0);
