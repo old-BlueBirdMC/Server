@@ -20,7 +20,7 @@ const fs = require("fs");
 class Anvil {
     /**
      * Path to the world folder
-     * @type {String} 
+     * @type {String}
      */
     path;
     /**
@@ -36,7 +36,7 @@ class Anvil {
 
     /**
      * loads up a world
-     * @param {String} path 
+     * @param {String} path
      */
     constructor(path) {
         this.path = path;
@@ -46,8 +46,8 @@ class Anvil {
 
     /**
      * loads a region
-     * @param {Number} x 
-     * @param {Number} z 
+     * @param {Number} x
+     * @param {Number} z
      * @returns {Region}
      */
     loadRegion(x, z) {
@@ -62,9 +62,9 @@ class Anvil {
 
     /**
      * loads a chunk
-     * @param {Number} x 
+     * @param {Number} x
      * @param {Number} z
-     * @returns {Chunk} 
+     * @returns {Chunk}
      */
     loadChunk(x, z) {
         let xz = CoordinateUtils.hashXZ(x, z);

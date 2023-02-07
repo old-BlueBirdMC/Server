@@ -2,7 +2,6 @@ const Biome = require("../../Biome");
 const Perlin = require("../../Perlin");
 
 class Ocean {
-
     generator(x, y, z, chunkX, chunkZ, chunk, blockMap) {
         return new Promise((resolve) => {
             let bedrock = blockMap.legacyToRuntime("minecraft:bedrock", 0);
@@ -15,14 +14,14 @@ class Ocean {
                     chunk.setBlockRuntimeID(x, bedrockY, z, 0, bedrock);
                 }
                 let noise = perlin.noise((chunkX << 4) + x + 0.5, y + 0.5, (chunkZ << 4) + z + 0.5, 8, 3);
-                if(noise > 0){
+                if (noise > 0) {
                     chunk.setBlockRuntimeID(x, y, z, 0, stone);
                 } else if (y <= 62) {
                     chunk.setBlockRuntimeID(x, y, z, 0, water);
                 }
             }
             return resolve();
-        })
+        });
     }
 }
 

@@ -13,34 +13,34 @@
 \******************************************/
 
 class IdentityTokenParser {
-	token;
-	usingAccount;
-	fixatedData;
-	fixatedExtraData;
-	xuid;
-	realName;
-	identity;
+    token;
+    usingAccount;
+    fixatedData;
+    fixatedExtraData;
+    xuid;
+    realName;
+    identity;
 
-	constructor(token) {
-		this.token = token;
-		this.fixatedData = [];
-		const parsedToken = JSON.parse(this.token.toString("binary"));
-		const mappedIdentityData = parsedToken["chain"].map(receivedData => {
-			const [, splittedData] = receivedData.split(".");
-			return JSON.parse(Buffer.from(splittedData, "base64").toString("binary"));
-		});
-		this.fixatedData = mappedIdentityData;
-		if (typeof mappedIdentityData[2] !== "undefined") {
-			this.fixatedExtraData = mappedIdentityData[2].extraData;
-			this.usingAccount = true;
-		} else {
-			this.fixatedExtraData = mappedIdentityData[0].extraData;
-			this.usingAccount = false;
-		}
-		this.xuid = this.fixatedExtraData.XUID;
-		this.realName = this.fixatedExtraData.displayName;
-		this.identity = this.fixatedExtraData.identity;
-	}
+    constructor(token) {
+        this.token = token;
+        this.fixatedData = [];
+        const parsedToken = JSON.parse(this.token.toString("binary"));
+        const mappedIdentityData = parsedToken["chain"].map((receivedData) => {
+            const [, splittedData] = receivedData.split(".");
+            return JSON.parse(Buffer.from(splittedData, "base64").toString("binary"));
+        });
+        this.fixatedData = mappedIdentityData;
+        if (typeof mappedIdentityData[2] !== "undefined") {
+            this.fixatedExtraData = mappedIdentityData[2].extraData;
+            this.usingAccount = true;
+        } else {
+            this.fixatedExtraData = mappedIdentityData[0].extraData;
+            this.usingAccount = false;
+        }
+        this.xuid = this.fixatedExtraData.XUID;
+        this.realName = this.fixatedExtraData.displayName;
+        this.identity = this.fixatedExtraData.identity;
+    }
 }
 
 module.exports = IdentityTokenParser;

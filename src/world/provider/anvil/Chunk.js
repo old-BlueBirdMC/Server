@@ -12,7 +12,7 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const {NBTBEBinaryStream} = require("bbmc-nbt");
+const { NBTBEBinaryStream } = require("bbmc-nbt");
 
 class Chunk {
     /**
@@ -68,7 +68,7 @@ class Chunk {
 
     /**
      * loads up values from chunk data
-     * @param {Buffer} data 
+     * @param {Buffer} data
      */
     loadChunkData(data) {
         if (data !== null) {

@@ -15,69 +15,69 @@
 const IdentityTokenParser = require("./IdentityTokenParser");
 
 class Auth {
-	player;
-	server;
-	onlineMode;
-	identityTokenParser;
+    player;
+    server;
+    onlineMode;
+    identityTokenParser;
 
-	constructor(player, server, onlineMode, identityToken) {
-		this.player = player;
-		this.server = server;
-		this.onlineMode = onlineMode;
-		this.identityTokenParser = new IdentityTokenParser(identityToken);
-		this.player.displayName = this.identityTokenParser.realName;
-	}
+    constructor(player, server, onlineMode, identityToken) {
+        this.player = player;
+        this.server = server;
+        this.onlineMode = onlineMode;
+        this.identityTokenParser = new IdentityTokenParser(identityToken);
+        this.player.displayName = this.identityTokenParser.realName;
+    }
 
-	authMainCheck() {
-		this.xboxCheck();
-		this.accountCheck();
-		this.playerNameCheck();
-	}
+    authMainCheck() {
+        this.xboxCheck();
+        this.accountCheck();
+        this.playerNameCheck();
+    }
 
-	xboxCheck() {
-		if (this.onlineMode !== true) {
-			return;
-		}
-		if (typeof this.identityTokenParser.xuid !== "string") {
-			this.player.disconnect("use xbox auth to join this server");
-		}
-		if (this.identityTokenParser.xuid === "") {
-			this.player.disconnect("use xbox auth to join this server");
-		}
-	}
+    xboxCheck() {
+        if (this.onlineMode !== true) {
+            return;
+        }
+        if (typeof this.identityTokenParser.xuid !== "string") {
+            this.player.disconnect("use xbox auth to join this server");
+        }
+        if (this.identityTokenParser.xuid === "") {
+            this.player.disconnect("use xbox auth to join this server");
+        }
+    }
 
-	accountCheck() {
-		if (this.onlineMode !== true) {
-			return;
-		}
-		if (this.identityTokenParser.usingAccount === false) {
-			this.player.disconnect("use an account to join the server");
-		}
-	}
+    accountCheck() {
+        if (this.onlineMode !== true) {
+            return;
+        }
+        if (this.identityTokenParser.usingAccount === false) {
+            this.player.disconnect("use an account to join the server");
+        }
+    }
 
-	playerNameCheck() {
-		if (this.onlineMode !== true) {
-			return;
-		}
-		if (this.playerNameEqualToSomeone(this.server) === true) {
-			this.player.displayName = this.identityTokenParser.realName + " - " + this.server.playerNamesInUse;
-			++this.server.playerNamesInUse;
-		}
-	}
+    playerNameCheck() {
+        if (this.onlineMode !== true) {
+            return;
+        }
+        if (this.playerNameEqualToSomeone(this.server) === true) {
+            this.player.displayName = this.identityTokenParser.realName + " - " + this.server.playerNamesInUse;
+            ++this.server.playerNamesInUse;
+        }
+    }
 
-	playerNameEqualToSomeone() {
-		let retVal = false;
-		let onlinePlayers = this.server.getOnlinePlayers();
-		if (onlinePlayers.length <= 1) {
-			return false;
-		}
-		onlinePlayers.forEach(players => {
-			if (players.auth.identityTokenParser.realName === this.identityTokenParser.realName) {
-				retVal = true;
-			}
-		});
-		return retVal;
-	}
+    playerNameEqualToSomeone() {
+        let retVal = false;
+        let onlinePlayers = this.server.getOnlinePlayers();
+        if (onlinePlayers.length <= 1) {
+            return false;
+        }
+        onlinePlayers.forEach((players) => {
+            if (players.auth.identityTokenParser.realName === this.identityTokenParser.realName) {
+                retVal = true;
+            }
+        });
+        return retVal;
+    }
 }
 
 module.exports = Auth;
