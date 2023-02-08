@@ -53,7 +53,6 @@ class Server {
     constructor() {
         let startTime = Date.now();
         let language = new LangManager('en');
-        console.log(language.getContent("serverClosed"))
         this.resourceManager = new ResourceManager();
         this.configManager = new ConfigIniManager();
         this.generatorManager = new GeneratorManager(this.resourceManager.blockStatesMap);
