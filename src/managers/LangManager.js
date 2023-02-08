@@ -15,7 +15,7 @@
 const path = require("path");
 const fs = require("fs");
 
-class ConfigIniManager {
+class LangManager {
     // this is not an complete reader but it works so who cares/
     #content;
 
@@ -25,10 +25,6 @@ class ConfigIniManager {
         this.#content = fileContents.split(/\r?\n/);
         let fixedContent = this.fixContent(fileLen);
         this.#content = this.turnIntoObject(fixedContent);
-    }
-
-    getMotd() {
-        return this.#content.motd;
     }
 
     getContent(info) {
@@ -75,4 +71,4 @@ class ConfigIniManager {
     }
 }
 
-module.exports = ConfigIniManager;
+module.exports = LangManager;

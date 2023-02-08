@@ -34,7 +34,7 @@ const ConfigIniManager = require("./managers/ConfgIniManager");
 const PluginInfo = require("./plugin/PluginInfo");
 const RakNetPlayerManager = require("./managers/RakNetPlayerManager");
 const Player = require("./player/Player");
-const LangManager = require("./managers/JsonManager");
+const LangManager = require("./managers/LangManager");
 
 class Server {
     rakNetServer;
