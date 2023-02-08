@@ -83,7 +83,7 @@ class Player extends Human {
     }
 
     disconnect(reason, hideNotification = false) {
-        const disconnect = new DisconnectPacket();
+        let disconnect = new DisconnectPacket();
         disconnect.message = reason;
         disconnect.hideNotification = hideNotification;
         disconnect.sendTo(this);
@@ -180,7 +180,7 @@ class Player extends Human {
     }
 
     text(id, message, needsTranslation = false, sourceName = "", parameters = [], xuid = "", platformChatID = "") {
-        const text = new TextPacket();
+        let text = new TextPacket();
         text.typeID = id;
         text.message = message;
         text.needsTranslation = needsTranslation;

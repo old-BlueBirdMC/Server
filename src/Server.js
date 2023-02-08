@@ -34,6 +34,7 @@ const ConfigIniManager = require("./managers/ConfgIniManager");
 const PluginInfo = require("./plugin/PluginInfo");
 const RakNetPlayerManager = require("./managers/RakNetPlayerManager");
 const Player = require("./player/Player");
+const LangManager = require("./managers/JsonManager");
 
 class Server {
     rakNetServer;
@@ -51,6 +52,8 @@ class Server {
 
     constructor() {
         let startTime = Date.now();
+        let language = new LangManager('en');
+        console.log(language.getContent("serverClosed"))
         this.resourceManager = new ResourceManager();
         this.configManager = new ConfigIniManager();
         this.generatorManager = new GeneratorManager(this.resourceManager.blockStatesMap);
@@ -71,7 +74,7 @@ class Server {
             AllowDebugging: false,
             WithColors: true,
         });
-        this.log.info("Loading Server");
+        this.log.info(language.getContent("serverLoading"));
         this.commandsList = new CommandsList();
         this.commandsList.refresh();
         this.consoleCommandReader = new CommandReader(this);
@@ -80,25 +83,25 @@ class Server {
         BlocksList.refresh();
         this.rakNetInterface.handlePong();
         this.rakNetInterface.handle();
-        this.log.info("Loading worlds");
+        this.log.info(language.getContent("worldLoading"));
         if (!fs.existsSync("worlds")) {
             fs.mkdirSync("worlds");
         }
-        this.log.info("Worlds Loaded");
-        this.log.info("Loading PlayersData");
+        this.log.info(language.getContent("worldLoaded"));
+        this.log.info(language.getContent("playerLoading"));
         if (!fs.existsSync("players_data")) {
             fs.mkdirSync("players_data");
         }
-        this.log.info("PlayersData Loaded");
-        this.log.info("Loading Plugins");
+        this.log.info(language.getContent("playerLoaded"));
+        this.log.info(language.getContent("pluginLoading"));
         if (!fs.existsSync("plugins")) {
             fs.mkdirSync("plugins");
         }
         this.enablePlugins();
-        this.log.info("Plugins Loaded");
+        this.log.info(language.getContent("pluginLoaded"));
         this.playerNamesInUse = 0;
-        this.log.info("Server Loaded");
-        this.log.info("Done in (" + (Date.now() - startTime) / 1000 + ")s!");
+        this.log.info(language.getContent("serverLoaded"));
+        this.log.info(language.getContent("serverDone") + "(" + (Date.now() - startTime) / 1000 + ")s!");
         this.handleProcess();
     }
 
