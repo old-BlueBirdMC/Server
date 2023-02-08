@@ -24,16 +24,19 @@ const MinecraftTextColors = require("../color/MinecraftTextColors");
 const RakNetMessage = require("../misc/RakNetMessage");
 const RakNetPlayerManager = require("../managers/RakNetPlayerManager");
 const GamePacketHandler = require("./packets/handlers/GamePacketHandler");
+const LangManager = require('../managers/LangManager');
 
 class RakNetInterface {
     server;
     address;
+    languageManager;
     rakNetServer;
     rakNetMessage;
 
     constructor(server, address, rakNetMsgOptions) {
         this.server = server;
         this.address = address;
+        this.languageManager = new LangManager();
         this.rakNetServer = new RakNetServer(address, ServerInfo.rakNetProtocolVersion);
         this.rakNetMessage = new RakNetMessage(
             rakNetMsgOptions.motd,
@@ -126,9 +129,9 @@ class RakNetInterface {
                 exitProcess = false;
                 players.forEach((player) => {
                     if (closeMessage === undefined) {
-                        player.disconnect(`${MinecraftTextColors.red}Server killed`);
+                        player.disconnect(`${MinecraftTextColors.red}${this.languageManager.lang('serverClosed')}`);
                     } else if (typeof closeMessage === "string") {
-                        player.disconnect(`${MinecraftTextColors.red}Server killed, reason: ${closeMessage}`);
+                        player.disconnect(`${MinecraftTextColors.red}${this.languageManager.lang("serverKickReason")}${closeMessage}`);
                     }
                 });
                 setInterval(async () => {

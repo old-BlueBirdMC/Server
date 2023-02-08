@@ -47,6 +47,10 @@ class ConfigIniManager {
         return parseInt(this.#content.serverPort);
     }
 
+    getLanguage() {
+        return this.#content.language;
+    }
+
     getAddressVersion() {
         return parseInt(this.#content.addressVersion);
     }
