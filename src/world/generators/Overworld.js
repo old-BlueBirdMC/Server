@@ -15,6 +15,7 @@
 const Chunk = require("../chunk/Chunk");
 const Generator = require("../Generator");
 const Perlin = require("../Perlin");
+const Ocean = require("../generators/Normal/Ocean");
 
 class Overworld extends Generator {
     static generatorName = "overworld";
@@ -32,35 +33,11 @@ class Overworld extends Generator {
             let chunk = new Chunk(chunkX, chunkZ, air);
             let perlin = new Perlin();
             for (let x = 0; x < 16; ++x) {
-                for (let z = 0; z < 16; ++z) {
-                    let y = perlin.perlin((chunkX << 4) + x, (chunkZ << 4) + z, 10.0 * seed, 1, 8, 4, 0.4, 2) + 62;
-                    let startPoint = y;
-                    while (y >= 0) {
-                        if (y < 1 && y >= 0) {
-                            chunk.setBlockRuntimeID(x, y, z, 0, bedrock);
-                        } else if (y < startPoint && y > startPoint - 4) {
-                            if (y > 60) {
-                                chunk.setBlockRuntimeID(x, y, z, 0, dirt);
-                            } else {
-                                chunk.setBlockRuntimeID(x, y, z, 0, gravel);
-                            }
-                        } else if (y === startPoint) {
-                            if (y > 61) {
-                                chunk.setBlockRuntimeID(x, y, z, 0, grass);
-                            } else {
-                                chunk.setBlockRuntimeID(x, y, z, 0, gravel);
-                            }
-                        } else {
-                            chunk.setBlockRuntimeID(x, y, z, 0, stone);
-                        }
-                        --y;
+                for (let y = 0; y < 16; ++y)
+                    for (let z = 0; z < 16; ++z) {
+                        const ocean = new Ocean();
+                        ocean.generate(x, y, z, chunkX, chunkZ, chunk, this.blockStatesMap)
                     }
-                    for (let i = 0; i < 62; ++i) {
-                        if (chunk.getBlockRuntimeID(x, i, z, 0) == air) {
-                            chunk.setBlockRuntimeID(x, i, z, 0, water);
-                        }
-                    }
-                }
             }
             resolve(chunk);
         });
