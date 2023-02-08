@@ -20,7 +20,7 @@ class LangManager {
     #content;
 
     constructor(language) {
-        let fileContents = fs.readFileSync(`src/lang/${language}.ini`).toString();
+        let fileContents = fs.readFileSync(`src/languages/${language}.ini`).toString();
         let fileLen = fileContents.length;
         this.#content = fileContents.split(/\r?\n/);
         let fixedContent = this.fixContent(fileLen);
