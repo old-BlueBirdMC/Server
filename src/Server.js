@@ -204,14 +204,14 @@ class Server {
     }
 
     /**
-     * get a player by name
-     * @param {string} name
+     * get a player by displayName
+     * @param {string} displayName
      * @returns {Player}
      **/
     getOnlinePlayer(name) {
         let foundPlayer;
         this.getOnlinePlayers().forEach((player) => {
-            if (player.name === name) {
+            if (player.displayName === name) {
                 foundPlayer = player;
             }
         });
@@ -220,7 +220,7 @@ class Server {
 
     /**
      * get a player by entity id
-     * @param {string} name
+     * @param {string} displayName
      * @returns {Player}
      **/
     getOnlinePlayerByID(id) {
@@ -235,7 +235,7 @@ class Server {
 
     /**
      * get a player by runtime entity id
-     * @param {string} name
+     * @param {string} displayName
      * @returns {Player}
      **/
     getOnlinePlayerByRID(id) {

@@ -26,7 +26,7 @@ class ListCMD extends Command {
         if (onlinePlayers.length > 0) {
             sender.message(`Found: ${onlinePlayers.length}`);
             onlinePlayers.forEach((playerFound) => {
-                sender.message(`id: ${playerFound.id}, name: ${playerFound.name}`);
+                sender.message(`id: ${playerFound.id}, name: ${playerFound.displayName}`);
             });
         } else {
             sender.message("There is no players online");
