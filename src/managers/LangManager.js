@@ -13,12 +13,11 @@
 \******************************************/
 
 const Language = require('bbmc-lang');
-const ConfigIniManager = require("./ConfgIniManager");
 
 class LangManager {
 
-    lang(content) {
-        return Language(new ConfigIniManager().getLanguage(), content);
+    lang(configManager, content) {
+        return Language(configManager.getLanguage(), content);
     }
 }
 
