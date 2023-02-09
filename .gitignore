@@ -1,6 +1,6 @@
 node_modules/
 package-lock.json
-plugins/
+/plugins/
 songs/
 worlds/
 players_data/

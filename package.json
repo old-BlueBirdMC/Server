@@ -13,7 +13,6 @@
     "license": "MIT",
     "dependencies": {
         "bbmc-binarystream": "1.0.0",
-        "bbmc-lang": "0.1.9",
         "bbmc-nbt": "github:BlueBirdMC/NBT",
         "bbmc-raknet": "1.0.3"
     },

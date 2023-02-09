@@ -34,28 +34,33 @@ const ConfigIniManager = require("./managers/ConfgIniManager");
 const PluginInfo = require("./plugin/PluginInfo");
 const RakNetPlayerManager = require("./managers/RakNetPlayerManager");
 const Player = require("./player/Player");
-const LangManager = require("./managers/LangManager");
+const LanguageManager = require("./managers/LanguageManager");
+const LanguageDictionary = require("./language/LanguageDictionary");
 
 class Server {
-    rakNetServer;
-    rakNetMessage;
-    log;
+    resourceManager;
+    configManager;
+    /** @type {LanguageManager} */
     languageManager;
+    /** @type {LanguageDictionary} */
+    languageDictionary;
+    generatorManager;
     #workingEvents = [];
     #workingPlugins = {};
     #eventsHandler;
+    rakNetInterface;
+    log;
     commandsList;
-    resourceManager;
-    configManager;
-    generatorManager;
+    consoleCommandReader;
     testWorld;
     playerNamesInUse = 0;
 
     constructor() {
         let startTime = Date.now();
-        this.languageManager = new LangManager();
         this.resourceManager = new ResourceManager();
         this.configManager = new ConfigIniManager();
+        this.languageManager = new LanguageManager(this.configManager.getLanguage());
+        this.languageDictionary = this.languageManager.dictionary;
         this.generatorManager = new GeneratorManager(this.resourceManager.blockStatesMap);
         this.registerDefaultGenerators();
         this.testWorld = new World(this.generatorManager);
@@ -68,13 +73,13 @@ class Server {
             subMotd: this.configManager.getSubMotd(),
             gameMode: this.configManager.getGamemode(),
         };
-        this.rakNetInterface = new RakNetInterface(this, new InternetAddress("0.0.0.0", this.configManager.getServerPort(), this.configManager.getAddressVersion()), rakNetMsgOptions);
+        this.rakNetInterface = new RakNetInterface(this, new InternetAddress("0.0.0.0", this.configManager.getServerPort(), this.configManager.getAddressVersion()), rakNetMsgOptions, this.languageDictionary);
         this.log = new Logger({
             Name: "Server",
             AllowDebugging: false,
             WithColors: true,
         });
-        this.log.info(this.languageManager.lang("serverLoading"));
+        this.log.info(this.languageDictionary.server().loading());
         this.commandsList = new CommandsList();
         this.commandsList.refresh();
         this.consoleCommandReader = new CommandReader(this);
@@ -83,25 +88,25 @@ class Server {
         BlocksList.refresh();
         this.rakNetInterface.handlePong();
         this.rakNetInterface.handle();
-        this.log.info(this.languageManager.lang("worldLoading"));
+        this.log.info(this.languageDictionary.world().loading());
         if (!fs.existsSync("worlds")) {
             fs.mkdirSync("worlds");
         }
-        this.log.info(this.languageManager.lang("worldLoaded"));
-        this.log.info(this.languageManager.lang("playerLoading"));
+        this.log.info(this.languageDictionary.world().loaded());
+        this.log.info(this.languageDictionary.player().dataProperty.loading());
         if (!fs.existsSync("players_data")) {
             fs.mkdirSync("players_data");
         }
-        this.log.info(this.languageManager.lang("playerLoaded"));
-        this.log.info(this.languageManager.lang("pluginLoading"));
+        this.log.info(this.languageDictionary.player().dataProperty.loaded());
+        this.log.info(this.languageDictionary.plugins().loading());
         if (!fs.existsSync("plugins")) {
             fs.mkdirSync("plugins");
         }
         this.enablePlugins();
-        this.log.info(this.languageManager.lang("pluginLoaded"));
+        this.log.info(this.languageDictionary.plugins().loaded());
         this.playerNamesInUse = 0;
-        this.log.info(this.languageManager.lang("serverLoaded"));
-        this.log.info(this.languageManager.lang("serverDone") + "(" + (Date.now() - startTime) / 1000 + ")s!");
+        this.log.info(this.languageDictionary.server().loaded());
+        this.log.info(this.languageDictionary.server().loadFinish("(" + (Date.now() - startTime) / 1000 + ")s!"));
         this.handleProcess();
     }
 
@@ -144,8 +149,8 @@ class Server {
 
     enablePlugins() {
         fs.readdirSync("plugins").forEach(async (pluginsDir) => {
-            if (fs.lstatSync(`plugins/${pluginsDir}`).isDirectory()) {
-                let pluginPackage = `plugins/${pluginsDir}/package.json`;
+            if (fs.lstatSync(`plugins${path.sep}${pluginsDir}`).isDirectory()) {
+                let pluginPackage = `plugins${path.sep}${pluginsDir}${path.sep}package.json`;
                 if (fs.existsSync(pluginPackage)) {
                     let data = JSON.parse(fs.readFileSync(pluginPackage).toString("utf-8"));
                     let pluginName = typeof data["name"] !== "undefined" ? data["name"] : "";
@@ -158,8 +163,8 @@ class Server {
                         throw `Cant load plugin ${pluginName}, due to incompatible api version (${apiVersion})`;
                     }
                     if (!(pluginName in this.#workingPlugins)) {
-                        let dataPath = `plugins/${pluginsDir}/data`;
-                        let req = require(path.join(`../plugins/${pluginsDir}`, main.replace(".js", "")));
+                        let dataPath = `plugins${path.sep}${pluginsDir}${path.sep}data`;
+                        let req = require(path.join(`..${path.sep}plugins${path.sep}${pluginsDir}`, main.replace(".js", "")));
                         let mainClass = new req(this, dataPath, pluginName);
                         if (!(mainClass instanceof PluginStructure)) {
                             throw `Cant load plugin ${pluginName}, due to the plugin is not an instance of PluginStructure`;

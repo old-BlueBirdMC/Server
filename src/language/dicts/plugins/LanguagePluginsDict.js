@@ -12,13 +12,8 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const Language = require('bbmc-lang');
+const LanguageLLDictBase = require("../LanguageLLDictBase");
 
-class LangManager {
+class LanguagePluginsDict extends LanguageLLDictBase {}
 
-    lang(configManager, content) {
-        return Language(configManager.getLanguage(), content);
-    }
-}
-
-module.exports = LangManager;
+module.exports = LanguagePluginsDict;
