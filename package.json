@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "test": "node .",
+        "test": "node ./test.js",
         "start": "node index.js",
         "prettier-format": "prettier --print-width 250 --prose-wrap always --tab-width 4 --write src/**/*.js"
     },
