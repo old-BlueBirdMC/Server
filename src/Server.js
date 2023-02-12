@@ -34,16 +34,13 @@ const ConfigIniManager = require("./managers/ConfgIniManager");
 const PluginInfo = require("./plugin/PluginInfo");
 const RakNetPlayerManager = require("./managers/RakNetPlayerManager");
 const Player = require("./player/Player");
-const LanguageManager = require("./managers/LanguageManager");
-const LanguageDictionary = require("./language/LanguageDictionary");
+const Language = require("./language/Language");
 
 class Server {
     resourceManager;
     configManager;
-    /** @type {LanguageManager} */
-    languageManager;
-    /** @type {LanguageDictionary} */
-    languageDictionary;
+    /** @type {Language} */
+    language;
     generatorManager;
     #workingEvents = [];
     #workingPlugins = {};
@@ -59,8 +56,7 @@ class Server {
         let startTime = Date.now();
         this.resourceManager = new ResourceManager();
         this.configManager = new ConfigIniManager();
-        this.languageManager = new LanguageManager(this.configManager.getLanguage());
-        this.languageDictionary = this.languageManager.dictionary;
+        this.language = new Language(this.configManager.getLanguage());
         this.generatorManager = new GeneratorManager(this.resourceManager.blockStatesMap);
         this.registerDefaultGenerators();
         this.testWorld = new World(this.generatorManager);
@@ -79,7 +75,7 @@ class Server {
             AllowDebugging: false,
             WithColors: true,
         });
-        this.log.info(this.languageDictionary.server().loading());
+        this.log.info(this.language.server("loading"))
         this.commandsList = new CommandsList();
         this.commandsList.refresh();
         this.consoleCommandReader = new CommandReader(this);
@@ -88,25 +84,25 @@ class Server {
         BlocksList.refresh();
         this.rakNetInterface.handlePong();
         this.rakNetInterface.handle();
-        this.log.info(this.languageDictionary.world().loading());
+        this.log.info(this.language.world("loading"));
         if (!fs.existsSync("worlds")) {
             fs.mkdirSync("worlds");
         }
-        this.log.info(this.languageDictionary.world().loaded());
-        this.log.info(this.languageDictionary.player().dataProperty.loading());
+        this.log.info(this.language.world("loaded"));
+        this.log.info(this.language.player("loading"));
         if (!fs.existsSync("players_data")) {
             fs.mkdirSync("players_data");
         }
-        this.log.info(this.languageDictionary.player().dataProperty.loaded());
-        this.log.info(this.languageDictionary.plugins().loading());
+        this.log.info(this.language.player("loaded"));
+        this.log.info(this.language.plugin("loading"))
         if (!fs.existsSync("plugins")) {
             fs.mkdirSync("plugins");
         }
         this.enablePlugins();
-        this.log.info(this.languageDictionary.plugins().loaded());
+        this.log.info(this.language.plugin("loaded"))
         this.playerNamesInUse = 0;
-        this.log.info(this.languageDictionary.server().loaded());
-        this.log.info(this.languageDictionary.server().loadFinish("(" + (Date.now() - startTime) / 1000 + ")s!"));
+        this.log.info(this.language.server("loaded"))
+        this.log.info(this.language.server("loadFinish", (Date.now() - startTime) / 1000))
         this.handleProcess();
     }
 
