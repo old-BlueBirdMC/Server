@@ -163,6 +163,8 @@ class ResourcePackClientResponsePacketHandler extends HandlersBase {
                 updateAttributes.attributes = this.player.attributes;
                 updateAttributes.tick = 0;
                 await updateAttributes.sendTo(this.player);
+                
+                this.player.sendAvailableCommands();
 
                 const availableEntityIdentifiers = new AvailableEntityIdentifiersPacket();
                 availableEntityIdentifiers.nbt = this.server.resourceManager.availableEntityIdentifiers;
@@ -172,7 +174,6 @@ class ResourcePackClientResponsePacketHandler extends HandlersBase {
                 creativeContent.entries = this.server.resourceManager.creativeItems;
                 await creativeContent.sendTo(this.player);
 
-                this.player.sendAvailableCommands(); // not here
                 this.player.sendPlayStatus(PlayStatus.playerSpawn);
                 this.resourcePacksSent = true;
                 break;
