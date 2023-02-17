@@ -12,10 +12,10 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const Vector2F = require("../network/types/Vector2F");
-const EntityMetadataStorage = require("./EntityMetadataStorage");
+import Vector2F from "../network/minecraft/types/Vector2F.js";
+import EntityMetadataStorage from "./EntityMetadataStorage.js";
 
-class Entity {
+export default class Entity {
     id = 0;
     metadataStorage;
     scaleValue = 1.0;
@@ -37,5 +37,3 @@ class Entity {
         this.boundingBox = new Vector2F();
     }
 }
-
-module.exports = Entity;

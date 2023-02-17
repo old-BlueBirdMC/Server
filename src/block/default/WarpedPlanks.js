@@ -12,10 +12,10 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const Block = require("../Block");
-const Tool = require("../Tool");
+import Block from "../Block.js";
+import Tool from "../Tool.js";
 
-class WarpedPlanks extends Block {
+export default class WarpedPlanks extends Block {
     maxStack = 64;
     tool = Tool.axe;
     blastResistance = 3;
@@ -29,5 +29,3 @@ class WarpedPlanks extends Block {
         super("minecraft:warped_planks", 0);
     }
 }
-
-module.exports = WarpedPlanks;

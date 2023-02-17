@@ -12,10 +12,8 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const Entity = require("./Entity");
+import Entity from "./Entity.js";
 
-class Human extends Entity {
+export default class Human extends Entity {
     spawned = false;
 }
-
-module.exports = Human;

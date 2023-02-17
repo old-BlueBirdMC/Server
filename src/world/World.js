@@ -12,9 +12,9 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const CoordinateUtils = require("./CoordinateUtils");
+import CoordinateUtils from "./CoordinateUtils.js";
 
-class World {
+export default class World {
     generatorManager;
     chunks;
 
@@ -74,5 +74,3 @@ class World {
         this.chunks.get(xz).setBlockRuntimeID(x & 0x0f, y, z & 0x0f, layer, runtimeID);
     }
 }
-
-module.exports = World;

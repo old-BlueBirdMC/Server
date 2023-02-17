@@ -12,10 +12,9 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const path = require("path");
-const fs = require("fs");
+import * as fs from "fs";
 
-class ConfigIniManager {
+export default class ConfigIniManager {
     // this is not an complete reader but it works so who cares/
     #content;
 
@@ -106,5 +105,3 @@ class ConfigIniManager {
         return indexVal;
     }
 }
-
-module.exports = ConfigIniManager;

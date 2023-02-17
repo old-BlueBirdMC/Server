@@ -12,7 +12,7 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class Command {
+export default class Command {
     name;
     description;
     aliases;
@@ -37,5 +37,3 @@ class Command {
         return this.aliases;
     }
 }
-
-module.exports = Command;

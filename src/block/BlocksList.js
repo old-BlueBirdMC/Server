@@ -12,15 +12,19 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const fs = require("fs");
+import * as fs from "fs";
+import * as MBlocksList from "./BlocksList.mjs";
 
-class BlocksList {
+export default class BlocksList {
     static #list = {};
 
     static refresh() {
-        fs.readdirSync(`${__dirname}/default`).forEach((file) => {
-            const block = require(`${__dirname}/default/${file}`);
-            this.add(new block());
+        // fs.readdirSync(`${__dirname}/default`).forEach((file) => {
+        //     const block = require(`${__dirname}/default/${file}`);
+        //     this.add(new block());
+        // });
+        Object.values(MBlocksList).forEach((classes) => {
+            this.add(new classes());
         });
     }
 
@@ -46,5 +50,3 @@ class BlocksList {
         return this.#list[blockAndMetadata];
     }
 }
-
-module.exports = BlocksList;

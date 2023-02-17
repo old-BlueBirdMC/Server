@@ -26,7 +26,7 @@
     },
     {
         "name": "minecraft:music_disc_ward",
-        "runtime_id": 543,
+        "runtime_id": 548,
         "component_based": false
     },
     {
@@ -51,7 +51,7 @@
     },
     {
         "name": "minecraft:creeper_banner_pattern",
-        "runtime_id": 582,
+        "runtime_id": 587,
         "component_based": false
     },
     {
@@ -96,7 +96,7 @@
     },
     {
         "name": "minecraft:bamboo_sign",
-        "runtime_id": 637,
+        "runtime_id": 654,
         "component_based": false
     },
     {
@@ -116,7 +116,7 @@
     },
     {
         "name": "minecraft:golden_horse_armor",
-        "runtime_id": 532,
+        "runtime_id": 537,
         "component_based": false
     },
     {
@@ -131,7 +131,7 @@
     },
     {
         "name": "minecraft:nether_star",
-        "runtime_id": 518,
+        "runtime_id": 523,
         "component_based": false
     },
     {
@@ -166,7 +166,7 @@
     },
     {
         "name": "minecraft:oak_chest_boat",
-        "runtime_id": 641,
+        "runtime_id": 643,
         "component_based": false
     },
     {
@@ -181,7 +181,7 @@
     },
     {
         "name": "minecraft:scute",
-        "runtime_id": 572,
+        "runtime_id": 577,
         "component_based": false
     },
     {
@@ -211,7 +211,7 @@
     },
     {
         "name": "minecraft:music_disc_chirp",
-        "runtime_id": 537,
+        "runtime_id": 542,
         "component_based": false
     },
     {
@@ -226,7 +226,7 @@
     },
     {
         "name": "minecraft:glow_squid_spawn_egg",
-        "runtime_id": 502,
+        "runtime_id": 503,
         "component_based": false
     },
     {
@@ -331,12 +331,12 @@
     },
     {
         "name": "minecraft:sparkler",
-        "runtime_id": 600,
+        "runtime_id": 605,
         "component_based": false
     },
     {
         "name": "minecraft:warped_door",
-        "runtime_id": 617,
+        "runtime_id": 622,
         "component_based": false
     },
     {
@@ -391,7 +391,7 @@
     },
     {
         "name": "minecraft:nautilus_shell",
-        "runtime_id": 570,
+        "runtime_id": 575,
         "component_based": false
     },
     {
@@ -426,7 +426,7 @@
     },
     {
         "name": "minecraft:comparator",
-        "runtime_id": 522,
+        "runtime_id": 527,
         "component_based": false
     },
     {
@@ -496,17 +496,17 @@
     },
     {
         "name": "minecraft:campfire",
-        "runtime_id": 589,
+        "runtime_id": 594,
         "component_based": false
     },
     {
         "name": "minecraft:lingering_potion",
-        "runtime_id": 562,
+        "runtime_id": 567,
         "component_based": false
     },
     {
         "name": "minecraft:rabbit_foot",
-        "runtime_id": 528,
+        "runtime_id": 533,
         "component_based": false
     },
     {
@@ -616,7 +616,7 @@
     },
     {
         "name": "minecraft:music_disc_strad",
-        "runtime_id": 542,
+        "runtime_id": 547,
         "component_based": false
     },
     {
@@ -641,7 +641,7 @@
     },
     {
         "name": "minecraft:command_block_minecart",
-        "runtime_id": 563,
+        "runtime_id": 568,
         "component_based": false
     },
     {
@@ -671,12 +671,12 @@
     },
     {
         "name": "minecraft:spawn_egg",
-        "runtime_id": 656,
+        "runtime_id": 661,
         "component_based": false
     },
     {
         "name": "minecraft:raw_iron",
-        "runtime_id": 505,
+        "runtime_id": 510,
         "component_based": false
     },
     {
@@ -781,12 +781,12 @@
     },
     {
         "name": "minecraft:netherite_boots",
-        "runtime_id": 612,
+        "runtime_id": 617,
         "component_based": false
     },
     {
         "name": "minecraft:music_disc_mall",
-        "runtime_id": 539,
+        "runtime_id": 544,
         "component_based": false
     },
     {
@@ -806,7 +806,7 @@
     },
     {
         "name": "minecraft:raw_gold",
-        "runtime_id": 506,
+        "runtime_id": 511,
         "component_based": false
     },
     {
@@ -911,7 +911,7 @@
     },
     {
         "name": "minecraft:elytra",
-        "runtime_id": 564,
+        "runtime_id": 569,
         "component_based": false
     },
     {
@@ -956,7 +956,7 @@
     },
     {
         "name": "minecraft:skull_banner_pattern",
-        "runtime_id": 583,
+        "runtime_id": 588,
         "component_based": false
     },
     {
@@ -970,13 +970,18 @@
         "component_based": false
     },
     {
-        "name": "minecraft:panda_spawn_egg",
-        "runtime_id": 489,
+        "name": "minecraft:snow_golem_spawn_egg",
+        "runtime_id": 505,
         "component_based": false
     },
     {
         "name": "minecraft:stone_hoe",
         "runtime_id": 330,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:panda_spawn_egg",
+        "runtime_id": 489,
         "component_based": false
     },
     {
@@ -1011,7 +1016,7 @@
     },
     {
         "name": "minecraft:glow_frame",
-        "runtime_id": 623,
+        "runtime_id": 628,
         "component_based": false
     },
     {
@@ -1131,7 +1136,7 @@
     },
     {
         "name": "minecraft:music_disc_pigstep",
-        "runtime_id": 620,
+        "runtime_id": 625,
         "component_based": false
     },
     {
@@ -1176,7 +1181,7 @@
     },
     {
         "name": "minecraft:axolotl_spawn_egg",
-        "runtime_id": 500,
+        "runtime_id": 501,
         "component_based": false
     },
     {
@@ -1256,7 +1261,7 @@
     },
     {
         "name": "minecraft:heart_of_the_sea",
-        "runtime_id": 571,
+        "runtime_id": 576,
         "component_based": false
     },
     {
@@ -1281,7 +1286,7 @@
     },
     {
         "name": "minecraft:music_disc_wait",
-        "runtime_id": 545,
+        "runtime_id": 550,
         "component_based": false
     },
     {
@@ -1301,7 +1306,7 @@
     },
     {
         "name": "minecraft:tadpole_bucket",
-        "runtime_id": 630,
+        "runtime_id": 635,
         "component_based": false
     },
     {
@@ -1376,7 +1381,7 @@
     },
     {
         "name": "minecraft:music_disc_11",
-        "runtime_id": 544,
+        "runtime_id": 549,
         "component_based": false
     },
     {
@@ -1456,7 +1461,7 @@
     },
     {
         "name": "minecraft:crossbow",
-        "runtime_id": 575,
+        "runtime_id": 580,
         "component_based": false
     },
     {
@@ -1521,7 +1526,7 @@
     },
     {
         "name": "minecraft:written_book",
-        "runtime_id": 511,
+        "runtime_id": 516,
         "component_based": false
     },
     {
@@ -1551,7 +1556,7 @@
     },
     {
         "name": "minecraft:globe_banner_pattern",
-        "runtime_id": 588,
+        "runtime_id": 593,
         "component_based": false
     },
     {
@@ -1566,7 +1571,7 @@
     },
     {
         "name": "minecraft:netherite_ingot",
-        "runtime_id": 603,
+        "runtime_id": 608,
         "component_based": false
     },
     {
@@ -1596,7 +1601,7 @@
     },
     {
         "name": "minecraft:tadpole_spawn_egg",
-        "runtime_id": 629,
+        "runtime_id": 634,
         "component_based": false
     },
     {
@@ -1606,7 +1611,7 @@
     },
     {
         "name": "minecraft:trident",
-        "runtime_id": 546,
+        "runtime_id": 551,
         "component_based": false
     },
     {
@@ -1631,12 +1636,12 @@
     },
     {
         "name": "minecraft:netherite_sword",
-        "runtime_id": 604,
+        "runtime_id": 609,
         "component_based": false
     },
     {
         "name": "minecraft:music_disc_stal",
-        "runtime_id": 541,
+        "runtime_id": 546,
         "component_based": false
     },
     {
@@ -1736,7 +1741,7 @@
     },
     {
         "name": "minecraft:frame",
-        "runtime_id": 513,
+        "runtime_id": 518,
         "component_based": false
     },
     {
@@ -1756,12 +1761,12 @@
     },
     {
         "name": "minecraft:dye",
-        "runtime_id": 654,
+        "runtime_id": 659,
         "component_based": false
     },
     {
         "name": "minecraft:music_disc_13",
-        "runtime_id": 534,
+        "runtime_id": 539,
         "component_based": false
     },
     {
@@ -1826,7 +1831,7 @@
     },
     {
         "name": "minecraft:mangrove_door",
-        "runtime_id": 634,
+        "runtime_id": 638,
         "component_based": false
     },
     {
@@ -1861,7 +1866,7 @@
     },
     {
         "name": "minecraft:camel_spawn_egg",
-        "runtime_id": 633,
+        "runtime_id": 657,
         "component_based": false
     },
     {
@@ -1886,7 +1891,7 @@
     },
     {
         "name": "minecraft:turtle_helmet",
-        "runtime_id": 573,
+        "runtime_id": 578,
         "component_based": false
     },
     {
@@ -1916,17 +1921,17 @@
     },
     {
         "name": "minecraft:camera",
-        "runtime_id": 593,
+        "runtime_id": 598,
         "component_based": false
     },
     {
         "name": "minecraft:chorus_fruit",
-        "runtime_id": 558,
+        "runtime_id": 563,
         "component_based": false
     },
     {
         "name": "minecraft:suspicious_stew",
-        "runtime_id": 590,
+        "runtime_id": 595,
         "component_based": false
     },
     {
@@ -1941,7 +1946,7 @@
     },
     {
         "name": "minecraft:name_tag",
-        "runtime_id": 548,
+        "runtime_id": 553,
         "component_based": false
     },
     {
@@ -1971,7 +1976,7 @@
     },
     {
         "name": "minecraft:netherite_chestplate",
-        "runtime_id": 610,
+        "runtime_id": 615,
         "component_based": false
     },
     {
@@ -2021,7 +2026,7 @@
     },
     {
         "name": "minecraft:cooked_mutton",
-        "runtime_id": 551,
+        "runtime_id": 556,
         "component_based": false
     },
     {
@@ -2121,7 +2126,7 @@
     },
     {
         "name": "minecraft:bleach",
-        "runtime_id": 596,
+        "runtime_id": 601,
         "component_based": false
     },
     {
@@ -2181,7 +2186,7 @@
     },
     {
         "name": "minecraft:warped_sign",
-        "runtime_id": 615,
+        "runtime_id": 620,
         "component_based": false
     },
     {
@@ -2196,7 +2201,7 @@
     },
     {
         "name": "minecraft:chain",
-        "runtime_id": 619,
+        "runtime_id": 624,
         "component_based": false
     },
     {
@@ -2206,12 +2211,12 @@
     },
     {
         "name": "minecraft:warped_fungus_on_a_stick",
-        "runtime_id": 618,
+        "runtime_id": 623,
         "component_based": false
     },
     {
         "name": "minecraft:soul_campfire",
-        "runtime_id": 622,
+        "runtime_id": 627,
         "component_based": false
     },
     {
@@ -2276,7 +2281,7 @@
     },
     {
         "name": "minecraft:spruce_sign",
-        "runtime_id": 576,
+        "runtime_id": 581,
         "component_based": false
     },
     {
@@ -2306,7 +2311,7 @@
     },
     {
         "name": "minecraft:netherite_pickaxe",
-        "runtime_id": 606,
+        "runtime_id": 611,
         "component_based": false
     },
     {
@@ -2325,13 +2330,13 @@
         "component_based": false
     },
     {
-        "name": "minecraft:bamboo_slab",
-        "runtime_id": -513,
+        "name": "minecraft:bamboo_door",
+        "runtime_id": -517,
         "component_based": false
     },
     {
-        "name": "minecraft:bamboo_door",
-        "runtime_id": -517,
+        "name": "minecraft:bamboo_slab",
+        "runtime_id": -513,
         "component_based": false
     },
     {
@@ -2381,7 +2386,7 @@
     },
     {
         "name": "minecraft:warden_spawn_egg",
-        "runtime_id": 632,
+        "runtime_id": 637,
         "component_based": false
     },
     {
@@ -2406,7 +2411,7 @@
     },
     {
         "name": "minecraft:rapid_fertilizer",
-        "runtime_id": 597,
+        "runtime_id": 602,
         "component_based": false
     },
     {
@@ -2516,12 +2521,12 @@
     },
     {
         "name": "minecraft:quartz",
-        "runtime_id": 524,
+        "runtime_id": 529,
         "component_based": false
     },
     {
         "name": "minecraft:carrot_on_a_stick",
-        "runtime_id": 517,
+        "runtime_id": 522,
         "component_based": false
     },
     {
@@ -2545,8 +2550,13 @@
         "component_based": false
     },
     {
+        "name": "minecraft:sniffer_spawn_egg",
+        "runtime_id": 500,
+        "component_based": false
+    },
+    {
         "name": "minecraft:goat_spawn_egg",
-        "runtime_id": 501,
+        "runtime_id": 502,
         "component_based": false
     },
     {
@@ -2555,13 +2565,33 @@
         "component_based": false
     },
     {
+        "name": "minecraft:lime_glazed_terracotta",
+        "runtime_id": 225,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:iron_golem_spawn_egg",
+        "runtime_id": 504,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:ender_dragon_spawn_egg",
+        "runtime_id": 506,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:wither_spawn_egg",
+        "runtime_id": 507,
+        "component_based": false
+    },
+    {
         "name": "minecraft:glow_ink_sac",
-        "runtime_id": 503,
+        "runtime_id": 508,
         "component_based": false
     },
     {
         "name": "minecraft:copper_ingot",
-        "runtime_id": 504,
+        "runtime_id": 509,
         "component_based": false
     },
     {
@@ -2606,7 +2636,7 @@
     },
     {
         "name": "minecraft:prismarine_shard",
-        "runtime_id": 565,
+        "runtime_id": 570,
         "component_based": false
     },
     {
@@ -2641,7 +2671,7 @@
     },
     {
         "name": "minecraft:mutton",
-        "runtime_id": 550,
+        "runtime_id": 555,
         "component_based": false
     },
     {
@@ -2666,7 +2696,7 @@
     },
     {
         "name": "minecraft:fire_charge",
-        "runtime_id": 509,
+        "runtime_id": 514,
         "component_based": false
     },
     {
@@ -2691,17 +2721,17 @@
     },
     {
         "name": "minecraft:raw_copper",
-        "runtime_id": 507,
+        "runtime_id": 512,
         "component_based": false
     },
     {
         "name": "minecraft:experience_bottle",
-        "runtime_id": 508,
+        "runtime_id": 513,
         "component_based": false
     },
     {
         "name": "minecraft:writable_book",
-        "runtime_id": 510,
+        "runtime_id": 515,
         "component_based": false
     },
     {
@@ -2711,7 +2741,7 @@
     },
     {
         "name": "minecraft:emerald",
-        "runtime_id": 512,
+        "runtime_id": 517,
         "component_based": false
     },
     {
@@ -2726,7 +2756,7 @@
     },
     {
         "name": "minecraft:flower_pot",
-        "runtime_id": 514,
+        "runtime_id": 519,
         "component_based": false
     },
     {
@@ -2746,17 +2776,17 @@
     },
     {
         "name": "minecraft:empty_map",
-        "runtime_id": 515,
+        "runtime_id": 520,
         "component_based": false
     },
     {
         "name": "minecraft:skull",
-        "runtime_id": 516,
+        "runtime_id": 521,
         "component_based": false
     },
     {
         "name": "minecraft:firework_rocket",
-        "runtime_id": 519,
+        "runtime_id": 524,
         "component_based": false
     },
     {
@@ -2766,7 +2796,7 @@
     },
     {
         "name": "minecraft:firework_star",
-        "runtime_id": 520,
+        "runtime_id": 525,
         "component_based": false
     },
     {
@@ -2781,17 +2811,17 @@
     },
     {
         "name": "minecraft:enchanted_book",
-        "runtime_id": 521,
+        "runtime_id": 526,
         "component_based": false
     },
     {
         "name": "minecraft:totem_of_undying",
-        "runtime_id": 568,
+        "runtime_id": 573,
         "component_based": false
     },
     {
         "name": "minecraft:netherbrick",
-        "runtime_id": 523,
+        "runtime_id": 528,
         "component_based": false
     },
     {
@@ -2801,22 +2831,22 @@
     },
     {
         "name": "minecraft:tnt_minecart",
-        "runtime_id": 525,
+        "runtime_id": 530,
         "component_based": false
     },
     {
         "name": "minecraft:hopper_minecart",
-        "runtime_id": 526,
+        "runtime_id": 531,
         "component_based": false
     },
     {
         "name": "minecraft:dragon_breath",
-        "runtime_id": 560,
+        "runtime_id": 565,
         "component_based": false
     },
     {
         "name": "minecraft:hopper",
-        "runtime_id": 527,
+        "runtime_id": 532,
         "component_based": false
     },
     {
@@ -2826,37 +2856,37 @@
     },
     {
         "name": "minecraft:rabbit_hide",
-        "runtime_id": 529,
+        "runtime_id": 534,
         "component_based": false
     },
     {
         "name": "minecraft:leather_horse_armor",
-        "runtime_id": 530,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:iron_horse_armor",
-        "runtime_id": 531,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:diamond_horse_armor",
-        "runtime_id": 533,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:jungle_door",
-        "runtime_id": 555,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:music_disc_cat",
         "runtime_id": 535,
         "component_based": false
     },
     {
-        "name": "minecraft:music_disc_blocks",
+        "name": "minecraft:iron_horse_armor",
         "runtime_id": 536,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:diamond_horse_armor",
+        "runtime_id": 538,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:jungle_door",
+        "runtime_id": 560,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:music_disc_cat",
+        "runtime_id": 540,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:music_disc_blocks",
+        "runtime_id": 541,
         "component_based": false
     },
     {
@@ -2871,12 +2901,12 @@
     },
     {
         "name": "minecraft:music_disc_far",
-        "runtime_id": 538,
+        "runtime_id": 543,
         "component_based": false
     },
     {
         "name": "minecraft:music_disc_mellohi",
-        "runtime_id": 540,
+        "runtime_id": 545,
         "component_based": false
     },
     {
@@ -2886,17 +2916,17 @@
     },
     {
         "name": "minecraft:prismarine_crystals",
-        "runtime_id": 549,
+        "runtime_id": 554,
         "component_based": false
     },
     {
         "name": "minecraft:lead",
-        "runtime_id": 547,
+        "runtime_id": 552,
         "component_based": false
     },
     {
         "name": "minecraft:acacia_sign",
-        "runtime_id": 579,
+        "runtime_id": 584,
         "component_based": false
     },
     {
@@ -2906,17 +2936,17 @@
     },
     {
         "name": "minecraft:armor_stand",
-        "runtime_id": 552,
+        "runtime_id": 557,
         "component_based": false
     },
     {
         "name": "minecraft:phantom_membrane",
-        "runtime_id": 574,
+        "runtime_id": 579,
         "component_based": false
     },
     {
         "name": "minecraft:spruce_door",
-        "runtime_id": 553,
+        "runtime_id": 558,
         "component_based": false
     },
     {
@@ -2926,12 +2956,12 @@
     },
     {
         "name": "minecraft:birch_door",
-        "runtime_id": 554,
+        "runtime_id": 559,
         "component_based": false
     },
     {
         "name": "minecraft:acacia_door",
-        "runtime_id": 556,
+        "runtime_id": 561,
         "component_based": false
     },
     {
@@ -2941,17 +2971,17 @@
     },
     {
         "name": "minecraft:netherite_leggings",
-        "runtime_id": 611,
+        "runtime_id": 616,
         "component_based": false
     },
     {
         "name": "minecraft:dark_oak_door",
-        "runtime_id": 557,
+        "runtime_id": 562,
         "component_based": false
     },
     {
         "name": "minecraft:popped_chorus_fruit",
-        "runtime_id": 559,
+        "runtime_id": 564,
         "component_based": false
     },
     {
@@ -2961,12 +2991,12 @@
     },
     {
         "name": "minecraft:splash_potion",
-        "runtime_id": 561,
+        "runtime_id": 566,
         "component_based": false
     },
     {
         "name": "minecraft:shulker_shell",
-        "runtime_id": 566,
+        "runtime_id": 571,
         "component_based": false
     },
     {
@@ -2976,12 +3006,12 @@
     },
     {
         "name": "minecraft:banner",
-        "runtime_id": 567,
+        "runtime_id": 572,
         "component_based": false
     },
     {
         "name": "minecraft:iron_nugget",
-        "runtime_id": 569,
+        "runtime_id": 574,
         "component_based": false
     },
     {
@@ -3001,7 +3031,7 @@
     },
     {
         "name": "minecraft:birch_sign",
-        "runtime_id": 577,
+        "runtime_id": 582,
         "component_based": false
     },
     {
@@ -3011,17 +3041,502 @@
     },
     {
         "name": "minecraft:balloon",
-        "runtime_id": 598,
+        "runtime_id": 603,
         "component_based": false
     },
     {
         "name": "minecraft:jungle_sign",
-        "runtime_id": 578,
+        "runtime_id": 583,
         "component_based": false
     },
     {
         "name": "minecraft:dark_oak_sign",
-        "runtime_id": 580,
+        "runtime_id": 585,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:flower_banner_pattern",
+        "runtime_id": 586,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:polished_diorite_stairs",
+        "runtime_id": -173,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:monster_egg",
+        "runtime_id": 97,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:mojang_banner_pattern",
+        "runtime_id": 589,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:frog_spawn_egg",
+        "runtime_id": 633,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:field_masoned_banner_pattern",
+        "runtime_id": 590,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:small_dripleaf_block",
+        "runtime_id": -336,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:bordure_indented_banner_pattern",
+        "runtime_id": 591,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:piglin_banner_pattern",
+        "runtime_id": 592,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:potatoes",
+        "runtime_id": 142,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:element_78",
+        "runtime_id": -89,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:honeycomb",
+        "runtime_id": 596,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:moss_carpet",
+        "runtime_id": -335,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:honey_bottle",
+        "runtime_id": 597,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:red_nether_brick",
+        "runtime_id": 215,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:compound",
+        "runtime_id": 599,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:ice_bomb",
+        "runtime_id": 600,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:medicine",
+        "runtime_id": 604,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:end_portal_frame",
+        "runtime_id": 120,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:warped_fungus",
+        "runtime_id": -229,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:element_92",
+        "runtime_id": -103,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:glow_stick",
+        "runtime_id": 606,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:lodestone_compass",
+        "runtime_id": 607,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:element_83",
+        "runtime_id": -94,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:netherite_shovel",
+        "runtime_id": 610,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:quartz_ore",
+        "runtime_id": 153,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:item.warped_door",
+        "runtime_id": -245,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:netherite_axe",
+        "runtime_id": 612,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:netherite_hoe",
+        "runtime_id": 613,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:light_gray_candle",
+        "runtime_id": -421,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:black_candle_cake",
+        "runtime_id": -445,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:mud",
+        "runtime_id": -473,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:netherite_helmet",
+        "runtime_id": 614,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:netherite_scrap",
+        "runtime_id": 618,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:concrete",
+        "runtime_id": 236,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:crimson_sign",
+        "runtime_id": 619,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:crimson_door",
+        "runtime_id": 621,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:sponge",
+        "runtime_id": 19,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:cartography_table",
+        "runtime_id": -200,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:nether_sprouts",
+        "runtime_id": 626,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:blackstone_slab",
+        "runtime_id": -282,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:polished_blackstone_slab",
+        "runtime_id": -293,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:cobbled_deepslate_slab",
+        "runtime_id": -380,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:polished_deepslate_slab",
+        "runtime_id": -384,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:deepslate_tile_slab",
+        "runtime_id": -388,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:mangrove_boat",
+        "runtime_id": 640,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:spyglass",
+        "runtime_id": 630,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:deepslate_brick_slab",
+        "runtime_id": -392,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:hard_glass",
+        "runtime_id": 253,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:cobbled_deepslate_wall",
+        "runtime_id": -382,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:element_76",
+        "runtime_id": -87,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:amethyst_shard",
+        "runtime_id": 629,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:birch_chest_boat",
+        "runtime_id": 644,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:element_33",
+        "runtime_id": -44,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:music_disc_otherside",
+        "runtime_id": 631,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:goat_horn",
+        "runtime_id": 632,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:magenta_candle",
+        "runtime_id": -415,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:smooth_red_sandstone_stairs",
+        "runtime_id": -176,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:frog_spawn",
+        "runtime_id": -468,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:allay_spawn_egg",
+        "runtime_id": 636,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:waxed_weathered_double_cut_copper_slab",
+        "runtime_id": -374,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:magma",
+        "runtime_id": 213,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:element_22",
+        "runtime_id": -33,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:blue_candle_cake",
+        "runtime_id": -441,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:mangrove_sign",
+        "runtime_id": 639,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:stripped_warped_hyphae",
+        "runtime_id": -301,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:mangrove_slab",
+        "runtime_id": -489,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:mangrove_propagule",
+        "runtime_id": -474,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:powered_repeater",
+        "runtime_id": 94,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:mangrove_roots",
+        "runtime_id": -482,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:muddy_mangrove_roots",
+        "runtime_id": -483,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:green_glazed_terracotta",
+        "runtime_id": 233,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:music_disc_5",
+        "runtime_id": 641,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:disc_fragment_5",
+        "runtime_id": 642,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:jungle_standing_sign",
+        "runtime_id": -188,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:scaffolding",
+        "runtime_id": -165,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:observer",
+        "runtime_id": 251,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:cyan_candle_cake",
+        "runtime_id": -439,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:jungle_chest_boat",
+        "runtime_id": 645,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:spruce_chest_boat",
+        "runtime_id": 646,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:acacia_chest_boat",
+        "runtime_id": 647,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:dark_oak_chest_boat",
+        "runtime_id": 648,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:mangrove_chest_boat",
+        "runtime_id": 649,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:info_update",
+        "runtime_id": 248,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:recovery_compass",
+        "runtime_id": 651,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:sculk_shrieker",
+        "runtime_id": -461,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:chest_boat",
+        "runtime_id": 650,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:tripwire_hook",
+        "runtime_id": 131,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:echo_shard",
+        "runtime_id": 652,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:birch_trapdoor",
+        "runtime_id": -146,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:trader_llama_spawn_egg",
+        "runtime_id": 653,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:yellow_flower",
+        "runtime_id": 37,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:bamboo_mosaic_slab",
+        "runtime_id": -524,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:stained_hardened_clay",
+        "runtime_id": 159,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:bamboo_raft",
+        "runtime_id": 655,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:deadbush",
+        "runtime_id": 32,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:bamboo_chest_raft",
+        "runtime_id": 656,
         "component_based": false
     },
     {
@@ -3077,511 +3592,6 @@
     {
         "name": "minecraft:brown_candle",
         "runtime_id": -425,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:flower_banner_pattern",
-        "runtime_id": 581,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:polished_diorite_stairs",
-        "runtime_id": -173,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:monster_egg",
-        "runtime_id": 97,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:mojang_banner_pattern",
-        "runtime_id": 584,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:frog_spawn_egg",
-        "runtime_id": 628,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:field_masoned_banner_pattern",
-        "runtime_id": 585,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:bell",
-        "runtime_id": -206,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:small_dripleaf_block",
-        "runtime_id": -336,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:bordure_indented_banner_pattern",
-        "runtime_id": 586,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:piglin_banner_pattern",
-        "runtime_id": 587,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:potatoes",
-        "runtime_id": 142,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:element_78",
-        "runtime_id": -89,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:honeycomb",
-        "runtime_id": 591,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:moss_carpet",
-        "runtime_id": -335,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:honey_bottle",
-        "runtime_id": 592,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:red_nether_brick",
-        "runtime_id": 215,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:compound",
-        "runtime_id": 594,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:ice_bomb",
-        "runtime_id": 595,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:medicine",
-        "runtime_id": 599,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:end_portal_frame",
-        "runtime_id": 120,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:warped_fungus",
-        "runtime_id": -229,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:element_92",
-        "runtime_id": -103,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:glow_stick",
-        "runtime_id": 601,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:lodestone_compass",
-        "runtime_id": 602,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:element_83",
-        "runtime_id": -94,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:netherite_shovel",
-        "runtime_id": 605,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:quartz_ore",
-        "runtime_id": 153,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:polished_deepslate_double_slab",
-        "runtime_id": -397,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:chain_command_block",
-        "runtime_id": 189,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:loom",
-        "runtime_id": -204,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:item.warped_door",
-        "runtime_id": -245,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:netherite_axe",
-        "runtime_id": 607,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:netherite_hoe",
-        "runtime_id": 608,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:light_gray_candle",
-        "runtime_id": -421,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:black_candle_cake",
-        "runtime_id": -445,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:mud",
-        "runtime_id": -473,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:netherite_helmet",
-        "runtime_id": 609,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:netherite_scrap",
-        "runtime_id": 613,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:concrete",
-        "runtime_id": 236,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:crimson_sign",
-        "runtime_id": 614,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:crimson_door",
-        "runtime_id": 616,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:sponge",
-        "runtime_id": 19,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:nether_sprouts",
-        "runtime_id": 621,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:cartography_table",
-        "runtime_id": -200,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:blackstone_slab",
-        "runtime_id": -282,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:polished_blackstone_slab",
-        "runtime_id": -293,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:cobbled_deepslate_slab",
-        "runtime_id": -380,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:polished_deepslate_slab",
-        "runtime_id": -384,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:deepslate_tile_slab",
-        "runtime_id": -388,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:mangrove_boat",
-        "runtime_id": 636,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:spyglass",
-        "runtime_id": 625,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:deepslate_brick_slab",
-        "runtime_id": -392,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:hard_glass",
-        "runtime_id": 253,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:cobbled_deepslate_wall",
-        "runtime_id": -382,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:element_76",
-        "runtime_id": -87,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:amethyst_shard",
-        "runtime_id": 624,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:birch_chest_boat",
-        "runtime_id": 642,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:element_33",
-        "runtime_id": -44,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:music_disc_otherside",
-        "runtime_id": 626,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:goat_horn",
-        "runtime_id": 627,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:magenta_candle",
-        "runtime_id": -415,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:smooth_red_sandstone_stairs",
-        "runtime_id": -176,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:frog_spawn",
-        "runtime_id": -468,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:allay_spawn_egg",
-        "runtime_id": 631,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:waxed_weathered_double_cut_copper_slab",
-        "runtime_id": -374,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:magma",
-        "runtime_id": 213,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:element_22",
-        "runtime_id": -33,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:blue_candle_cake",
-        "runtime_id": -441,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:mangrove_sign",
-        "runtime_id": 635,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:stripped_warped_hyphae",
-        "runtime_id": -301,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:bamboo_raft",
-        "runtime_id": 638,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:yellow_flower",
-        "runtime_id": 37,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:bamboo_mosaic_slab",
-        "runtime_id": -524,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:stained_hardened_clay",
-        "runtime_id": 159,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:mangrove_slab",
-        "runtime_id": -489,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:mangrove_propagule",
-        "runtime_id": -474,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:powered_repeater",
-        "runtime_id": 94,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:mangrove_roots",
-        "runtime_id": -482,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:muddy_mangrove_roots",
-        "runtime_id": -483,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:green_glazed_terracotta",
-        "runtime_id": 233,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:music_disc_5",
-        "runtime_id": 639,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:disc_fragment_5",
-        "runtime_id": 640,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:jungle_standing_sign",
-        "runtime_id": -188,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:scaffolding",
-        "runtime_id": -165,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:observer",
-        "runtime_id": 251,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:cyan_candle_cake",
-        "runtime_id": -439,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:jungle_chest_boat",
-        "runtime_id": 643,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:spruce_chest_boat",
-        "runtime_id": 644,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:acacia_chest_boat",
-        "runtime_id": 645,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:dark_oak_chest_boat",
-        "runtime_id": 646,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:mangrove_chest_boat",
-        "runtime_id": 647,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:info_update",
-        "runtime_id": 248,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:recovery_compass",
-        "runtime_id": 650,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:sculk_shrieker",
-        "runtime_id": -461,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:deadbush",
-        "runtime_id": 32,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:bamboo_chest_raft",
-        "runtime_id": 648,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:chest_boat",
-        "runtime_id": 649,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:tripwire_hook",
-        "runtime_id": 131,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:echo_shard",
-        "runtime_id": 651,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:birch_trapdoor",
-        "runtime_id": -146,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:trader_llama_spawn_egg",
-        "runtime_id": 652,
         "component_based": false
     },
     {
@@ -3800,8 +3810,28 @@
         "component_based": false
     },
     {
+        "name": "minecraft:polished_deepslate_double_slab",
+        "runtime_id": -397,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:chain_command_block",
+        "runtime_id": 189,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:loom",
+        "runtime_id": -204,
+        "component_based": false
+    },
+    {
         "name": "minecraft:grindstone",
         "runtime_id": -195,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:bell",
+        "runtime_id": -206,
         "component_based": false
     },
     {
@@ -4040,13 +4070,13 @@
         "component_based": false
     },
     {
-        "name": "minecraft:element_20",
-        "runtime_id": -31,
+        "name": "minecraft:pearlescent_froglight",
+        "runtime_id": -469,
         "component_based": false
     },
     {
-        "name": "minecraft:pearlescent_froglight",
-        "runtime_id": -469,
+        "name": "minecraft:element_20",
+        "runtime_id": -31,
         "component_based": false
     },
     {
@@ -4410,13 +4440,13 @@
         "component_based": false
     },
     {
-        "name": "minecraft:element_118",
-        "runtime_id": -129,
+        "name": "minecraft:bamboo_button",
+        "runtime_id": -511,
         "component_based": false
     },
     {
-        "name": "minecraft:bamboo_button",
-        "runtime_id": -511,
+        "name": "minecraft:element_118",
+        "runtime_id": -129,
         "component_based": false
     },
     {
@@ -4441,17 +4471,17 @@
     },
     {
         "name": "minecraft:boat",
-        "runtime_id": 653,
+        "runtime_id": 658,
         "component_based": false
     },
     {
         "name": "minecraft:banner_pattern",
-        "runtime_id": 655,
+        "runtime_id": 660,
         "component_based": false
     },
     {
         "name": "minecraft:end_crystal",
-        "runtime_id": 657,
+        "runtime_id": 662,
         "component_based": false
     },
     {
@@ -4461,7 +4491,7 @@
     },
     {
         "name": "minecraft:glow_berries",
-        "runtime_id": 658,
+        "runtime_id": 663,
         "component_based": false
     },
     {
@@ -4477,6 +4507,11 @@
     {
         "name": "minecraft:nether_gold_ore",
         "runtime_id": -288,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:bamboo_block",
+        "runtime_id": -527,
         "component_based": false
     },
     {
@@ -4542,11 +4577,6 @@
     {
         "name": "minecraft:stripped_dark_oak_log",
         "runtime_id": -9,
-        "component_based": false
-    },
-    {
-        "name": "minecraft:lime_glazed_terracotta",
-        "runtime_id": 225,
         "component_based": false
     },
     {
@@ -4855,6 +4885,16 @@
         "component_based": false
     },
     {
+        "name": "minecraft:bamboo_trapdoor",
+        "runtime_id": -520,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:stripped_bamboo_block",
+        "runtime_id": -528,
+        "component_based": false
+    },
+    {
         "name": "minecraft:sculk_catalyst",
         "runtime_id": -460,
         "component_based": false
@@ -5150,11 +5190,6 @@
         "component_based": false
     },
     {
-        "name": "minecraft:bamboo_trapdoor",
-        "runtime_id": -520,
-        "component_based": false
-    },
-    {
         "name": "minecraft:item.skull",
         "runtime_id": 144,
         "component_based": false
@@ -5260,11 +5295,6 @@
         "component_based": false
     },
     {
-        "name": "minecraft:item.nether_sprouts",
-        "runtime_id": -238,
-        "component_based": false
-    },
-    {
         "name": "minecraft:mossy_stone_brick_stairs",
         "runtime_id": -175,
         "component_based": false
@@ -5357,6 +5387,11 @@
     {
         "name": "minecraft:structure_block",
         "runtime_id": 252,
+        "component_based": false
+    },
+    {
+        "name": "minecraft:item.nether_sprouts",
+        "runtime_id": -238,
         "component_based": false
     },
     {

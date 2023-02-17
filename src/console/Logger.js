@@ -12,9 +12,9 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const ConsoleColors = require("../color/ConsoleColors");
+import ConsoleColors from "../color/ConsoleColors.js";
 
-class Logger {
+export default class Logger {
     options = {};
 
     constructor(
@@ -56,5 +56,3 @@ class Logger {
         }
     }
 }
-
-module.exports = Logger;

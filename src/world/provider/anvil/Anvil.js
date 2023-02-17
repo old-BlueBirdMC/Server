@@ -12,12 +12,11 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const CoordinateUtils = require("../../CoordinateUtils");
-const Chunk = require("./Chunk");
-const Region = require("./Region");
-const fs = require("fs");
+import CoordinateUtils from "../../CoordinateUtils.js";
+import Chunk from "./Chunk.js";
+import Region from "./Region.js";
 
-class Anvil {
+export default class Anvil {
     /**
      * Path to the world folder
      * @type {String}
@@ -79,5 +78,3 @@ class Anvil {
         return this.chunks.get(xz);
     }
 }
-
-module.exports = Anvil;

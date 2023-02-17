@@ -12,7 +12,7 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class RegionIndex {
+export default class RegionIndex {
     /**
      * Sector index in 4KB blocks from the start of the file
      * @type {Number}
@@ -24,5 +24,3 @@ class RegionIndex {
      */
     length;
 }
-
-module.exports = RegionIndex;

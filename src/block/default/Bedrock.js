@@ -12,10 +12,10 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const Block = require("../Block");
-const Tool = require("../Tool");
+import Block from "../Block.js";
+import Tool from "../Tool.js";
 
-class Bedrock extends Block {
+export default class Bedrock extends Block {
     maxStack = 64;
     tool = Tool.none;
     blastResistance = 18000000;
@@ -29,5 +29,3 @@ class Bedrock extends Block {
         super("minecraft:bedrock", 0);
     }
 }
-
-module.exports = Bedrock;

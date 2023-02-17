@@ -12,9 +12,9 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const IdentityTokenParser = require("./IdentityTokenParser");
+import IdentityTokenParser from "./IdentityTokenParser.js";
 
-class Auth {
+export default class Auth {
     player;
     server;
     onlineMode;
@@ -25,7 +25,7 @@ class Auth {
         this.server = server;
         this.onlineMode = onlineMode;
         this.identityTokenParser = new IdentityTokenParser(identityToken);
-        this.player.displayName = this.identityTokenParser.realName;
+        this.player.name = this.identityTokenParser.realName;
     }
 
     authMainCheck() {
@@ -60,7 +60,7 @@ class Auth {
             return;
         }
         if (this.playerNameEqualToSomeone(this.server) === true) {
-            this.player.displayName = this.identityTokenParser.realName + " - " + this.server.playerNamesInUse;
+            this.player.name = this.identityTokenParser.realName + " - " + this.server.playerNamesInUse;
             ++this.server.playerNamesInUse;
         }
     }
@@ -79,5 +79,3 @@ class Auth {
         return retVal;
     }
 }
-
-module.exports = Auth;

@@ -12,12 +12,10 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class ServerInfo {
+export default class ServerInfo {
     static rakNetProtocolVersion = 11;
-    static minecraftProtocolVersion = 560;
-    static minecraftVersion = "1.19.50";
+    static minecraftProtocolVersion = 567;
+    static minecraftVersion = "1.19.60";
     static engine = "BlueBirdMC-Server";
     static apiVersion = "0.0.1";
 }
-
-module.exports = ServerInfo;

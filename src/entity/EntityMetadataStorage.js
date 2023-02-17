@@ -12,11 +12,11 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const MetadataListProperties = require("../network/constants/MetadataListProperties");
-const MetadataPropertyTypes = require("../network/constants/MetadataPropertyTypes");
-const MetadataEntry = require("./MetadataEntry");
+import MetadataListProperties from "../network/minecraft/constants/MetadataListProperties.js";
+import MetadataPropertyTypes from "../network/minecraft/constants/MetadataPropertyTypes.js";
+import MetadataEntry from "./MetadataEntry.js";
 
-class EntityMetadataStorage {
+export default class EntityMetadataStorage {
     metadata;
 
     constructor() {
@@ -161,5 +161,3 @@ class EntityMetadataStorage {
         }
     }
 }
-
-module.exports = EntityMetadataStorage;

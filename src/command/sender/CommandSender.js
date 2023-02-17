@@ -12,7 +12,7 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class CommandSender {
+export default class CommandSender {
     name = "";
     server;
 
@@ -20,5 +20,3 @@ class CommandSender {
         this.server = server;
     }
 }
-
-module.exports = CommandSender;

@@ -12,10 +12,10 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const Block = require("../Block");
-const Tool = require("../Tool");
+import Block from "../Block.js";
+import Tool from "../Tool.js";
 
-class Air extends Block {
+export default class Air extends Block {
     maxStack = 64;
     tool = Tool.none;
     blastResistance = 0;
@@ -29,5 +29,3 @@ class Air extends Block {
         super("minecraft:air", 1);
     }
 }
-
-module.exports = Air;

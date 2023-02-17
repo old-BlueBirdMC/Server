@@ -12,7 +12,7 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class Color {
+export default class Color {
     r;
     g;
     b;
@@ -25,5 +25,3 @@ class Color {
         this.a = a & 255;
     }
 }
-
-module.exports = Color;

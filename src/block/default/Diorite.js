@@ -12,10 +12,10 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const Block = require("../Block");
-const Tool = require("../Tool");
+import Block from "../Block.js";
+import Tool from "../Tool.js";
 
-class Diorite extends Block {
+export default class Diorite extends Block {
     maxStack = 64;
     tool = Tool.pickaxe;
     blastResistance = 6;
@@ -29,5 +29,3 @@ class Diorite extends Block {
         super("minecraft:stone", 3);
     }
 }
-
-module.exports = Diorite;

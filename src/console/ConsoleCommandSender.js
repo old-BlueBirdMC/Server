@@ -12,15 +12,13 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const ConsoleColors = require("../color/ConsoleColors");
-const CommandSender = require("../command/sender/CommandSender");
+import ConsoleColors from "../color/ConsoleColors.js";
+import CommandSender from "../command/sender/CommandSender.js";
 
-class ConsoleCommandSender extends CommandSender {
+export default class ConsoleCommandSender extends CommandSender {
     name = "Console";
 
     message(message) {
         this.server.log.info(ConsoleColors.McClrToConsole(message));
     }
 }
-
-module.exports = ConsoleCommandSender;

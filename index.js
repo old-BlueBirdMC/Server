@@ -12,7 +12,7 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const Server = require("./src/Server");
+import Server from "./src/Server.js";
 
 (() => {
 	const instance = new Server();

@@ -47,7 +47,7 @@ const perlins = [
 
 const avg = 0.08031678768442099;
 
-class Perlin {
+export default class Perlin {
     p;
 
     constructor() {
@@ -156,5 +156,3 @@ class Perlin {
         return height;
     }
 }
-
-module.exports = Perlin;

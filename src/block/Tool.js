@@ -12,7 +12,7 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class Tool {
+export default class Tool {
     static none = 0;
     static sword = 1;
     static shovel = 2;
@@ -20,5 +20,3 @@ class Tool {
     static axe = 8;
     static shears = 16;
 }
-
-module.exports = Tool;

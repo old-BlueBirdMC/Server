@@ -12,9 +12,7 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class MetadataEntry {
+export default class MetadataEntry {
     value;
     type;
 }
-
-module.exports = MetadataEntry;

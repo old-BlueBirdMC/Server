@@ -12,7 +12,7 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class RakNetMessage {
+export default class RakNetMessage {
     motd;
     protocolVersion;
     version;
@@ -37,5 +37,3 @@ class RakNetMessage {
         return `MCPE;${this.motd};${this.protocolVersion.toString()};${this.version};${this.playerCount.toString()};${this.maxPlayerCount.toString()};${this.serverGUID.toString()};${this.subMotd};${this.gamemode};`;
     }
 }
-
-module.exports = RakNetMessage;

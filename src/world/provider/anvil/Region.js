@@ -12,13 +12,15 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 const BinaryStream = require("bbmc-binarystream");
-const fs = require("fs");
-const RegionIndex = require("./types/RegionIndex");
-const zlib = require("zlib");
-const Logger = require("../../../console/Logger");
+import * as fs from "fs";
+import RegionIndex from "./types/RegionIndex.js";
+import * as zlib from "zlib";
+import Logger from "../../../console/Logger.js";
 
-class Region {
+export default class Region {
     /**
      * Holds the data stream of the region file
      * @type {BinaryStream}
@@ -176,5 +178,3 @@ class Region {
         }
     }
 }
-
-module.exports = Region;

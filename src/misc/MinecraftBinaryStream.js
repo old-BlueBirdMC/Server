@@ -12,45 +12,45 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 const BinaryStream = require("bbmc-binarystream");
-const LoginTokens = require("../network/types/LoginTokens");
-const BehaviorPackInfo = require("../network/types/BehaviorPackInfo");
-const TexturePackInfo = require("../network/types/TexturePackInfo");
-const ResourcePackIDVersion = require("../network/types/ResourcePackIDVersion");
-const Experiment = require("../network/types/Experiment");
-const GameRule = require("../network/types/GameRule");
-const GameRuleTypes = require("../network/constants/GameRuleTypes");
-const EducationSharedResourceURI = require("../network/types/EducationSharedResourceURI");
-const BlockCoordinates = require("../network/types/BlockCoordinates");
-const Vector3F = require("../network/types/Vector3F");
-const Vector2F = require("../network/types/Vector2F");
-const Vector3I = require("../network/types/Vector3I");
-const Vector3U = require("../network/types/Vector3U");
-const ItemState = require("../network/types/ItemState");
-const BlockProperty = require("../network/types/BlockProperty");
 const { NBTNetworkBinaryStream, NBTLEBinaryStream } = require("bbmc-nbt");
-const Item = require("../network/types/Item");
-const ItemExtraData = require("../network/types/ItemExtraData");
-const BitArray = require("../network/constants/BitArray");
-const BlockStorage = require("../world/chunk/BlockStorage");
-const SubChunk = require("../world/chunk/SubChunk");
-const Chunk = require("../world/chunk/Chunk");
-const MetadataEntry = require("../entity/MetadataEntry");
-const MetadataPropertyTypes = require("../network/constants/MetadataPropertyTypes");
-const EntityLink = require("../network/types/EntityLink");
-const CommandOriginData = require("../network/types/CommandOriginData");
-const CommandOriginDataTypes = require("../network/constants/CommandOriginDataTypes");
-const CommandEnum = require("../network/types/CommandEnum");
-const CommandArgumentFlags = require("../network/constants/CommandArgumentFlags");
-const CommandParam = require("../network/types/CommandParam");
-const CommandData = require("../network/types/CommandData");
-const CommandEnumConstraint = require("../network/types/CommandEnumConstraint");
-const EntityProperty = require("../network/types/EntityProperties");
-const TypeEntityProperty = require("../network/types/TypeEntityProperty");
-const PlayerAttribute = require("../network/types/PlayerAttribute");
-const PlayerAttributeModifier = require("../network/types/PlayerAttributeModifier");
+import LoginTokens from "../network/minecraft/types/LoginTokens.js";
+import BehaviorPackInfo from "../network/minecraft/types/BehaviorPackInfo.js";
+import TexturePackInfo from "../network/minecraft/types/TexturePackInfo.js";
+import ResourcePackIDVersion from "../network/minecraft/types/ResourcePackIDVersion.js";
+import Experiment from "../network/minecraft/types/Experiment.js";
+import GameRule from "../network/minecraft/types/GameRule.js";
+import GameRuleTypes from "../network/minecraft/constants/GameRuleTypes.js";
+import EducationSharedResourceURI from "../network/minecraft/types/EducationSharedResourceURI.js";
+import BlockCoordinates from "../network/minecraft/types/BlockCoordinates.js";
+import Vector3F from "../network/minecraft/types/Vector3F.js";
+import Vector2F from "../network/minecraft/types/Vector2F.js";
+import Vector3I from "../network/minecraft/types/Vector3I.js";
+import Vector3U from "../network/minecraft/types/Vector3U.js";
+import ItemState from "../network/minecraft/types/ItemState.js";
+import BlockProperty from "../network/minecraft/types/BlockProperty.js";
+import Item from "../network/minecraft/types/Item.js";
+import ItemExtraData from "../network/minecraft/types/ItemExtraData.js";
+import BitArray from "../network/minecraft/constants/BitArray.js";
+import SubChunk from "../world/chunk/SubChunk.js";
+import MetadataEntry from "../entity/MetadataEntry.js";
+import MetadataPropertyTypes from "../network/minecraft/constants/MetadataPropertyTypes.js";
+import EntityLink from "../network/minecraft/types/EntityLink.js";
+import CommandOriginData from "../network/minecraft/types/CommandOriginData.js";
+import CommandOriginDataTypes from "../network/minecraft/constants/CommandOriginDataTypes.js";
+import CommandEnum from "../network/minecraft/types/CommandEnum.js";
+import CommandArgumentFlags from "../network/minecraft/constants/CommandArgumentFlags.js";
+import CommandParam from "../network/minecraft/types/CommandParam.js";
+import CommandData from "../network/minecraft/types/CommandData.js";
+import CommandEnumConstraint from "../network/minecraft/types/CommandEnumConstraint.js";
+import EntityProperty from "../network/minecraft/types/EntityProperties.js";
+import TypeEntityProperty from "../network/minecraft/types/TypeEntityProperty.js";
+import PlayerAttribute from "../network/minecraft/types/PlayerAttribute.js";
+import PlayerAttributeModifier from "../network/minecraft/types/PlayerAttributeModifier.js";
 
-class MinecraftBinaryStream extends BinaryStream {
+export default class MinecraftBinaryStream extends BinaryStream {
     readStringVarInt() {
         let len = this.readVarInt();
         return this.read(len).toString("utf-8");
@@ -823,13 +823,13 @@ class MinecraftBinaryStream extends BinaryStream {
         }
     }
 
-    readCommandData(enums, suffixes) {
+    readCommandData(enumValues, enums, suffixes) {
         let value = new CommandData();
         value.name = this.readStringVarInt();
         value.description = this.readStringVarInt();
         value.flags = this.readUnsignedShortLE();
         value.permissionLevel = this.readUnsignedByte();
-        value.aliases = [];
+        value.alias = this.readIntBE();
         value.overloads = [];
 
         for (let i = 0; i < this.readVarInt(); ++i) {
@@ -854,18 +854,18 @@ class MinecraftBinaryStream extends BinaryStream {
                 }
                 cmdParam.optional = this.readBool();
                 cmdParam.options = this.readUnsignedByte();
-                overload[i] = [[cmdParam]]; // if this is wrong fix it
+                overload[i] = [[cmdParam]];
             }
             value.overloads.push([overload]);
         }
     }
 
-    writeCommandData(value, enums, dynamicEnums, suffixes) {
+    writeCommandData(value, enumValues, enums, dynamicEnums, suffixes) {
         this.writeStringVarInt(value.name);
         this.writeStringVarInt(value.description);
         this.writeUnsignedShortLE(value.flags);
         this.writeUnsignedByte(value.permissionLevel);
-        this.writeIntBE(-1); // aliases
+        this.writeIntBE(-1); // alias
         this.writeVarInt(value.overloads.length);
 
         for (const [overload] of value.overloads) {
@@ -1056,5 +1056,3 @@ class MinecraftBinaryStream extends BinaryStream {
         });
     }
 }
-
-module.exports = MinecraftBinaryStream;

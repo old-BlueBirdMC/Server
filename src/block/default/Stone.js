@@ -12,10 +12,10 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const Block = require("../Block");
-const Tool = require("../Tool");
+import Block from "../Block.js";
+import Tool from "../Tool.js";
 
-class Stone extends Block {
+export default class Stone extends Block {
     maxStack = 64;
     tool = Tool.pickaxe;
     blastResistance = 6;
@@ -29,5 +29,3 @@ class Stone extends Block {
         super("minecraft:stone", 0);
     }
 }
-
-module.exports = Stone;

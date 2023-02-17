@@ -12,7 +12,7 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class BlockStorage {
+export default class BlockStorage {
     blocks;
     palette;
 
@@ -54,5 +54,3 @@ class BlockStorage {
         return true;
     }
 }
-
-module.exports = BlockStorage;

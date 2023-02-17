@@ -12,9 +12,9 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const Command = require("../Command");
+import Command from "../Command.js";
 
-class ListCMD extends Command {
+export default class ListCMD extends Command {
     constructor() {
         super("list", "show a list of the online players");
         this.setPerm("listcmd.bb.perm");
@@ -26,12 +26,10 @@ class ListCMD extends Command {
         if (onlinePlayers.length > 0) {
             sender.message(`Found: ${onlinePlayers.length}`);
             onlinePlayers.forEach((playerFound) => {
-                sender.message(`id: ${playerFound.id}, name: ${playerFound.displayName}`);
+                sender.message(`id: ${playerFound.id}, name: ${playerFound.name}`);
             });
         } else {
             sender.message("There is no players online");
         }
     }
 }
-
-module.exports = ListCMD;

@@ -12,9 +12,9 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const Logger = require("../console/Logger");
+import Logger from "../console/Logger.js";
 
-class PluginStructure {
+export default class PluginStructure {
     server;
     dataPath;
     log;
@@ -32,5 +32,3 @@ class PluginStructure {
 
     successfullyDisabled() {}
 }
-
-module.exports = PluginStructure;

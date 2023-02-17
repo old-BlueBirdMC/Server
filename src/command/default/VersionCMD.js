@@ -12,10 +12,10 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const Command = require("../Command");
-const ServerInfo = require("../../ServerInfo");
+import Command from "../Command.js";
+import ServerInfo from "../../ServerInfo.js";
 
-class VersionCMD extends Command {
+export default class VersionCMD extends Command {
     constructor() {
         super("version", "Shows the version of BBMC is running or plugin version.", ["about", "ver", "versions"]);
     }
@@ -28,5 +28,3 @@ class VersionCMD extends Command {
         }
     }
 }
-
-module.exports = VersionCMD;

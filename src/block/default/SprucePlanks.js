@@ -12,10 +12,10 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const Block = require("../Block");
-const Tool = require("../Tool");
+import Block from "../Block.js";
+import Tool from "../Tool.js";
 
-class SprucePlanks extends Block {
+export default class SprucePlanks extends Block {
     maxStack = 64;
     tool = Tool.axe;
     blastResistance = 3;
@@ -29,5 +29,3 @@ class SprucePlanks extends Block {
         super("minecraft:planks", 1);
     }
 }
-
-module.exports = SprucePlanks;

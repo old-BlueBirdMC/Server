@@ -12,12 +12,12 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const CommandArgumentFlags = require("../../network/constants/CommandArgumentFlags");
-const CommandArgumentTypes = require("../../network/constants/CommandArgumentTypes");
-const CommandParam = require("../../network/types/CommandParam");
-const Command = require("../Command");
+import CommandArgumentFlags from "../../network/minecraft/constants/CommandArgumentFlags.js";
+import CommandArgumentTypes from "../../network/minecraft/constants/CommandArgumentTypes.js";
+import CommandParam from "../../network/minecraft/types/CommandParam.js";
+import Command from "../Command.js";
 
-class HelpCMD extends Command {
+export default class HelpCMD extends Command {
     constructor() {
         let cmdParam = new CommandParam();
         cmdParam.name = "page";
@@ -91,5 +91,3 @@ class HelpCMD extends Command {
         }
     }
 }
-
-module.exports = HelpCMD;

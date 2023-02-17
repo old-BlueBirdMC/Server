@@ -12,11 +12,16 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class PluginInfo {
+export default class PluginInfo {
     pluginName;
     author;
     version;
     description;
-}
 
-module.exports = PluginInfo;
+    fromPackageConfigurator(packageConfigurator) {
+        this.pluginName = packageConfigurator.name;
+        this.author = packageConfigurator.author;
+        this.version = packageConfigurator.version;
+        this.description = packageConfigurator.description;
+    }
+}

@@ -12,11 +12,11 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const Chunk = require("../chunk/Chunk");
-const Generator = require("../Generator");
-const Perlin = require("../Perlin");
+import Chunk from "../chunk/Chunk.js";
+import Generator from "../Generator.js";
+import Perlin from "../Perlin.js";
 
-class Overworld extends Generator {
+export default class Overworld extends Generator {
     static generatorName = "overworld";
 
     generate(chunkX, chunkZ) {
@@ -66,5 +66,3 @@ class Overworld extends Generator {
         });
     }
 }
-
-module.exports = Overworld;

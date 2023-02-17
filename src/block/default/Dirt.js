@@ -12,10 +12,10 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const Block = require("../Block");
-const Tool = require("../Tool");
+import Block from "../Block.js";
+import Tool from "../Tool.js";
 
-class Dirt extends Block {
+export default class Dirt extends Block {
     maxStack = 64;
     tool = Tool.shovel;
     blastResistance = 0.5;
@@ -29,5 +29,3 @@ class Dirt extends Block {
         super("minecraft:dirt", 0);
     }
 }
-
-module.exports = Dirt;

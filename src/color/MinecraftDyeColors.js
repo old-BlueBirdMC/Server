@@ -12,7 +12,7 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class MinecraftDyeColors {
+export default class MinecraftDyeColors {
     static white = 0;
     static orange = 1;
     static magenta = 2;
@@ -30,5 +30,3 @@ class MinecraftDyeColors {
     static red = 14;
     static black = 15;
 }
-
-module.exports = MinecraftDyeColors;

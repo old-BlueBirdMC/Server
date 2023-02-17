@@ -12,14 +12,14 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const WindowIDS = require("../../network/constants/WindowIDS");
-const WindowTypes = require("../../network/constants/WindowTypes");
-const ContainerClosePacket = require("../../network/packets/ContainerClosePacket");
-const ContainerOpenPacket = require("../../network/packets/ContainerOpenPacket");
-const Block = require("../Block");
-const Tool = require("../Tool");
+import WindowIDS from "../../network/minecraft/constants/WindowIDS.js";
+import WindowTypes from "../../network/minecraft/constants/WindowTypes.js";
+import ContainerClosePacket from "../../network/minecraft/packets/ContainerClosePacket.js";
+import ContainerOpenPacket from "../../network/minecraft/packets/ContainerOpenPacket.js";
+import Block from "../Block.js";
+import Tool from "../Tool.js";
 
-class Chest extends Block {
+export default class Chest extends Block {
     maxStack = 64;
     tool = Tool.axe;
     blastResistance = 2.5;
@@ -65,5 +65,3 @@ class Chest extends Block {
         containerClose.sendTo(source);
     }
 }
-
-module.exports = Chest;

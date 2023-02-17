@@ -12,12 +12,12 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const MinecraftTextColors = require("../../color/MinecraftTextColors");
-const Command = require("../Command");
+import MinecraftTextColors from "../../color/MinecraftTextColors.js";
+import Command from "../Command.js";
 
-class PluginCMD extends Command {
+export default class PluginsCMD extends Command {
     constructor() {
-        super("plugins", "The plugins list", [], []);
+        super("plugins", "The plugins list");
     }
 
     async run(sender, writtenCommand, args) {
@@ -32,5 +32,3 @@ class PluginCMD extends Command {
         }
     }
 }
-
-module.exports = PluginCMD;

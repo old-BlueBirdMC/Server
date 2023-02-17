@@ -12,7 +12,7 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class Enum {
+export default class Enum {
     constructor(list, values = []) {
         if (values.length !== 0) {
             let i = 0;
@@ -52,5 +52,3 @@ class Enum {
         return false;
     }
 }
-
-module.exports = Enum;

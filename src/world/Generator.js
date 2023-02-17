@@ -12,7 +12,7 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class Generator {
+export default class Generator {
     static generatorName;
 
     blockStatesMap;
@@ -23,5 +23,3 @@ class Generator {
 
     generate(x, z) {}
 }
-
-module.exports = Generator;

@@ -12,10 +12,13 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const path = require("path");
+import * as path from "path";
+import { fileURLToPath } from "url";
 
 (() => {
-    global.bbmcPath = path.normalize(__dirname);
+    global.__dirname = (dir) => path.dirname(fileURLToPath(dir));
+    global.bbmcPath = path.normalize(__dirname(import.meta.url + path.sep + "../"));
+    // global.es6Require = (value) => {let x; let z = import(`..${path.sep}${value}`); z.catch((value) => {throw value;}); z.then((value) => x = value.default); return x;};
     Math.ffmd = (x, z) => {
         let retVal = 0;
         if (x < 0) {

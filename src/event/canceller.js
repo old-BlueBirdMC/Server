@@ -12,7 +12,7 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class canceller {
+export default class canceller {
     #cancel = false;
 
     cancel() {
@@ -30,5 +30,3 @@ class canceller {
         return false;
     }
 }
-
-module.exports = canceller;

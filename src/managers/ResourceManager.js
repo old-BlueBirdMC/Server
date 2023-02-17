@@ -12,16 +12,18 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 const { NBTNetworkBinaryStream, NBTLEBinaryStream } = require("bbmc-nbt");
-const fs = require("fs");
-const path = require("path");
-const BlockStatesMap = require("../misc/BlockStatesMap");
-const Logger = require("../console/Logger");
-const ItemStatesMap = require("../misc/ItemStatesMap");
-const Item = require("../network/types/Item");
-const ItemExtraData = require("../network/types/ItemExtraData");
+import * as fs from "fs";
+import * as path from "path";
+import BlockStatesMap from "../misc/BlockStatesMap.js";
+import Logger from "../console/Logger.js";
+import ItemStatesMap from "../misc/ItemStatesMap.js";
+import Item from "../network/minecraft/types/Item.js";
+import ItemExtraData from "../network/minecraft/types/ItemExtraData.js";
 
-class ResourceManager {
+export default class ResourceManager {
     log;
     itemStatesMap;
     blockStatesMap;
@@ -30,7 +32,7 @@ class ResourceManager {
     creativeItems;
 
     readFile(name) {
-        return fs.readFileSync(path.join(__dirname, `..${path.sep}mc_data${path.sep}${name}`));
+        return fs.readFileSync(path.join(__dirname(import.meta.url), `..${path.sep}mc_data${path.sep}${name}`));
     }
 
     readBiomeDefinitionList() {
@@ -99,5 +101,3 @@ class ResourceManager {
         this.log.info("Resources Loaded");
     }
 }
-
-module.exports = ResourceManager;

@@ -12,10 +12,10 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const Chunk = require("../chunk/Chunk");
-const Generator = require("../Generator");
+import Chunk from "../chunk/Chunk.js";
+import Generator from "../Generator.js";
 
-class Flat extends Generator {
+export default class Flat extends Generator {
     static generatorName = "flat";
 
     generate(x, z) {
@@ -36,5 +36,3 @@ class Flat extends Generator {
         });
     }
 }
-
-module.exports = Flat;

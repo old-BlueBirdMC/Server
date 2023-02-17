@@ -12,7 +12,7 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class RakNetPlayerManager {
+export default class RakNetPlayerManager {
     static #savedPlayers = {};
 
     static getPlayer(strAddr) {
@@ -51,5 +51,3 @@ class RakNetPlayerManager {
         return this.getAllObjectEntries().length;
     }
 }
-
-module.exports = RakNetPlayerManager;

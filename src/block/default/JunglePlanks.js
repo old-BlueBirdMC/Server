@@ -12,10 +12,10 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const Block = require("../Block");
-const Tool = require("../Tool");
+import Block from "../Block.js";
+import Tool from "../Tool.js";
 
-class JunglePlanks extends Block {
+export default class JunglePlanks extends Block {
     maxStack = 64;
     tool = Tool.axe;
     blastResistance = 3;
@@ -29,5 +29,3 @@ class JunglePlanks extends Block {
         super("minecraft:planks", 3);
     }
 }
-
-module.exports = JunglePlanks;

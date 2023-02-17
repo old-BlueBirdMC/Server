@@ -12,10 +12,10 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const Block = require("../Block");
-const Tool = require("../Tool");
+import Block from "../Block.js";
+import Tool from "../Tool.js";
 
-class Andesite extends Block {
+export default class Andesite extends Block {
     maxStack = 64;
     tool = Tool.pickaxe;
     blastResistance = 6;
@@ -29,5 +29,3 @@ class Andesite extends Block {
         super("minecraft:stone", 5);
     }
 }
-
-module.exports = Andesite;

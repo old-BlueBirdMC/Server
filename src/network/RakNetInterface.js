@@ -12,30 +12,32 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 const { RakNetServer, Frame, ReliabilityTool } = require("bbmc-raknet");
-const HandlersList = require("./packets/handlers/HandlersList");
-const ServerInfo = require("../ServerInfo");
-const Identifiers = require("./packets/Identifiers");
-const Logger = require("../console/Logger");
-const GamePacket = require("./packets/GamePacket");
-const Player = require("../player/Player");
-const PacketsBase = require("./packets/PacketsBase");
-const MinecraftTextColors = require("../color/MinecraftTextColors");
-const RakNetMessage = require("../misc/RakNetMessage");
-const RakNetPlayerManager = require("../managers/RakNetPlayerManager");
-const GamePacketHandler = require("./packets/handlers/GamePacketHandler");
+import HandlersList from "./minecraft/packets/handlers/HandlersList.js";
+import ServerInfo from "../ServerInfo.js";
+import Identifiers from "./minecraft/packets/Identifiers.js";
+import Logger from "../console/Logger.js";
+import GamePacket from "./minecraft/packets/GamePacket.js";
+import Player from "../player/Player.js";
+import PacketsBase from "./minecraft/packets/PacketsBase.js";
+import MinecraftTextColors from "../color/MinecraftTextColors.js";
+import RakNetMessage from "../misc/RakNetMessage.js";
+import RakNetPlayerManager from "../managers/RakNetPlayerManager.js";
+import GamePacketHandler from "./minecraft/packets/handlers/GamePacketHandler.js";
 
-class RakNetInterface {
+export default class RakNetInterface {
     server;
     address;
-    languageDictionary;
+    languageManager;
     rakNetServer;
     rakNetMessage;
 
-    constructor(server, address, rakNetMsgOptions, languageDictionary) {
+    constructor(server, address, rakNetMsgOptions, languageManager) {
         this.server = server;
         this.address = address;
-        this.languageDictionary = languageDictionary;
+        this.languageManager = languageManager;
         this.rakNetServer = new RakNetServer(address, ServerInfo.rakNetProtocolVersion);
         this.rakNetMessage = new RakNetMessage(
             rakNetMsgOptions.motd,
@@ -93,8 +95,8 @@ class RakNetInterface {
                     game.useCompression = player.useCompression;
                     await game.deserializeA();
                     HandlersList.refresh(player, this.server, connection.address.toString());
-                    const gameHandler = new GamePacketHandler(player, this.server);
-                    await gameHandler.startHandling(game);
+                    const gamePacketHandler = new GamePacketHandler(player, this.server);
+                    await gamePacketHandler.startHandling(game);
                 }
             }
         });
@@ -128,7 +130,7 @@ class RakNetInterface {
                 exitProcess = false;
                 players.forEach((player) => {
                     if (closeMessage === undefined) {
-                        player.disconnect(`${MinecraftTextColors.red}${this.languageDictionary.server.close()}`);
+                        player.disconnect(`${MinecraftTextColors.red}${this.languageManager.server("close")}`);
                     } else if (typeof closeMessage === "string") {
                         player.disconnect(`${MinecraftTextColors.red}Server killed due to: ${closeMessage}`);
                     }
@@ -136,19 +138,17 @@ class RakNetInterface {
                 setInterval(async () => {
                     this.rakNetServer.isRunning = false;
                     this.rakNetServer.socket.close();
-                    this.server.disableAllPlugins();
+                    this.server.pluginsManager.disableAllPlugins();
                     process.exit();
                 }, 100);
             } else {
                 setInterval(async () => {
                     this.rakNetServer.isRunning = false;
                     this.rakNetServer.socket.close();
-                    this.server.disableAllPlugins();
+                    this.pluginsManager.server.disableAllPlugins();
                 }, 1000);
                 return;
             }
         }
     }
 }
-
-module.exports = RakNetInterface;

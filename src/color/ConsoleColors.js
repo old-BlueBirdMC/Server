@@ -12,9 +12,9 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const MinecraftTextColors = require("./MinecraftTextColors");
+import MinecraftTextColors from "./MinecraftTextColors.js";
 
-class ConsoleColors {
+export default class ConsoleColors {
     static bold = "\u001b[1m";
     static obfuscated = "";
     static italic = "\u001b[3m";
@@ -116,5 +116,3 @@ class ConsoleColors {
         return message;
     }
 }
-
-module.exports = ConsoleColors;

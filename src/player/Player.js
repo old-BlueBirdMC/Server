@@ -12,31 +12,29 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const Vector2F = require("../network/types/Vector2F");
-const Vector3F = require("../network/types/Vector3F");
-const NetworkChunkPublisherUpdatePacket = require("../network/packets/NetworkChunkPublisherUpdatePacket");
-const PlayStatusPacket = require("../network/packets/PlayStatusPacket");
-const BlockCoordinates = require("../network/types/BlockCoordinates");
-const LevelChunkPacket = require("../network/packets/LevelChunkPacket");
-const MinecraftBinaryStream = require("../misc/MinecraftBinaryStream");
-const GameMode = require("../network/constants/GameMode");
-const Human = require("../entity/Human");
-const TextPacket = require("../network/packets/TextPacket");
-const TextTypes = require("../network/constants/TextTypes");
-const DisconnectPacket = require("../network/packets/DisconnectPacket");
-const ServerInfo = require("../ServerInfo");
-const PlayStatus = require("../network/constants/PlayStatus");
-const CommandData = require("../network/types/CommandData");
-const AvailableCommandsPacket = require("../network/packets/AvailableCommandsPacket");
-const RakNetPlayerManager = require("../managers/RakNetPlayerManager");
-const EntityMetaDataFlags = require("../network/constants/EntityMetaDataFlags");
-const MetadataListProperties = require("../network/constants/MetadataListProperties");
-const SetEntityDataPacket = require("../network/packets/SetEntityDataPacket");
-const EntityProperties = require("../network/types/EntityProperties");
-const SetPlayerGameTypePacket = require("../network/packets/SetPlayerGameTypePacket");
-const PlayerAttribute = require("../network/types/PlayerAttribute");
+import Vector2F from "../network/minecraft/types/Vector2F.js";
+import Vector3F from "../network/minecraft/types/Vector3F.js";
+import NetworkChunkPublisherUpdatePacket from "../network/minecraft/packets/NetworkChunkPublisherUpdatePacket.js";
+import PlayStatusPacket from "../network/minecraft/packets/PlayStatusPacket.js";
+import BlockCoordinates from "../network/minecraft/types/BlockCoordinates.js";
+import LevelChunkPacket from "../network/minecraft/packets/LevelChunkPacket.js";
+import MinecraftBinaryStream from "../misc/MinecraftBinaryStream.js";
+import GameMode from "../network/minecraft/constants/GameMode.js";
+import Human from "../entity/Human.js";
+import TextPacket from "../network/minecraft/packets/TextPacket.js";
+import TextTypes from "../network/minecraft/constants/TextTypes.js";
+import DisconnectPacket from "../network/minecraft/packets/DisconnectPacket.js";
+import ServerInfo from "../ServerInfo.js";
+import PlayStatus from "../network/minecraft/constants/PlayStatus.js";
+import RakNetPlayerManager from "../managers/RakNetPlayerManager.js";
+import EntityMetaDataFlags from "../network/minecraft/constants/EntityMetaDataFlags.js";
+import MetadataListProperties from "../network/minecraft/constants/MetadataListProperties.js";
+import SetEntityDataPacket from "../network/minecraft/packets/SetEntityDataPacket.js";
+import EntityProperties from "../network/minecraft/types/EntityProperties.js";
+import SetPlayerGameTypePacket from "../network/minecraft/packets/SetPlayerGameTypePacket.js";
+import PlayerAttribute from "../network/minecraft/types/PlayerAttribute.js";
 
-class Player extends Human {
+export default class Player extends Human {
     useCompression = false;
     connection;
     server;
@@ -68,18 +66,6 @@ class Player extends Human {
         this.boundingBox.z = 1.9; // height
         this.updateMetadataFlags();
         this.updateAttributes();
-    }
-
-    message(value) {
-        this.text(TextTypes.raw, value);
-    }
-
-    popup(value) {
-        this.text(TextTypes.popup, value);
-    }
-
-    tip(value) {
-        this.text(TextTypes.tip, value);
     }
 
     disconnect(reason, hideNotification = false) {
@@ -127,43 +113,6 @@ class Player extends Human {
         });
     }
 
-    sendAvailableCommands() {
-        let data = [];
-        // let enums = {};
-        Object.values(this.server.commandsList.getAllCommands()).forEach((value) => {
-            if (typeof data[value.name] !== "undefined") {
-                return;
-            }
-            let cmdData = new CommandData();
-            cmdData.name = value.name.toLowerCase();
-            cmdData.description = value.description;
-            cmdData.flags = 0;
-            cmdData.permissionLevel = 0;
-            cmdData.aliases = value.aliases;
-            let cmdOverloads = value.overloads;
-            if (Array.isArray(cmdOverloads)) {
-                if (cmdOverloads.length !== 0) {
-                    cmdData.overloads = [[cmdOverloads]];
-                } else {
-                    cmdData.overloads = [];
-                }
-            }
-            data.push(cmdData);
-            // if (value.enums.length > 0) {
-            // 	enums = {"name": value.name, "enums": value.enums};
-            // }
-        });
-        let availableCommands = new AvailableCommandsPacket();
-        availableCommands.enumValues = [];
-        availableCommands.suffixes = [];
-        // todo availableCommands.enums = enums;
-        availableCommands.enums = [];
-        availableCommands.commandData = data;
-        availableCommands.dynamicEnums = [];
-        availableCommands.enumConstraints = [];
-        availableCommands.sendTo(this);
-    }
-
     sendPlayStatus(status) {
         let playStatus = new PlayStatusPacket();
         playStatus.status = status;
@@ -177,6 +126,18 @@ class Player extends Human {
         for (const [, player] of RakNetPlayerManager.getAllObjectEntries()) {
             player.message(`<${this.name}> ${value}`);
         }
+    }
+
+    message(value) {
+        this.text(TextTypes.raw, value);
+    }
+
+    popup(value) {
+        this.text(TextTypes.popup, value);
+    }
+
+    tip(value) {
+        this.text(TextTypes.tip, value);
     }
 
     text(id, message, needsTranslation = false, sourceName = "", parameters = [], xuid = "", platformChatID = "") {
@@ -233,15 +194,15 @@ class Player extends Human {
     }
 
     setPlayerGameType(value) {
-        let translatedGM = this.server.translateGamemode(value);
-        if (translatedGM === -1) {
+        let translatedGamemode = this.server.translateGamemode(value);
+        if (translatedGamemode === -1) {
             return null;
         }
-        if (this.gamemode !== translatedGM) {
+        if (this.gamemode !== translatedGamemode) {
             const setPlayerGameType = new SetPlayerGameTypePacket();
-            setPlayerGameType.mode = translatedGM;
+            setPlayerGameType.mode = translatedGamemode;
             setPlayerGameType.sendTo(this);
-            this.gamemode = translatedGM;
+            this.gamemode = translatedGamemode;
         }
     }
 
@@ -272,5 +233,3 @@ class Player extends Human {
         }
     }
 }
-
-module.exports = Player;

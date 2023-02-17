@@ -12,10 +12,10 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const Block = require("../Block");
-const Tool = require("../Tool");
+import Block from "../Block.js";
+import Tool from "../Tool.js";
 
-class CrimsonPlanks extends Block {
+export default class CrimsonPlanks extends Block {
     maxStack = 64;
     tool = Tool.axe;
     blastResistance = 3;
@@ -29,5 +29,3 @@ class CrimsonPlanks extends Block {
         super("minecraft:crimson_planks", 0);
     }
 }
-
-module.exports = CrimsonPlanks;

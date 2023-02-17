@@ -12,20 +12,44 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const LanguageFileReader = require("../language/LanguageFileReader");
-const LanguageDictionary = require("../language/LanguageDictionary");
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+const findLanguageFileContent = require("bbmc-lang");
 
-class LanguageManager {
-    /** @type {String} */
-    defaultLanguage;
-    /** @type {LanguageDictionary} */
-    dictionary;
+export default class LanguageManager {
+    content;
 
-    constructor(defLang) {
-        this.defaultLanguage = defLang;
-        this.languageFileReader = new LanguageFileReader(this.defaultLanguage);
-        this.dictionary = new LanguageDictionary(this.languageFileReader);
+    constructor(languageName) {
+        this.content = findLanguageFileContent(languageName);
+    }
+
+    plugin(item, arg) {
+        if (!arg) {
+            return this.content.plugins[item];
+        }
+
+        return this.content.plugins[item].replace("%rsn%", arg);
+    }
+    server(item, arg) {
+        if (!arg) {
+            return this.content.server[item];
+        }
+        return this.content.server[item].replace("%rsn%", arg);
+    }
+
+    world(item, arg) {
+        if (!arg) {
+            return this.content.world[item];
+        }
+
+        return this.content.world[item].replace("%rsn%", arg);
+    }
+
+    player(item, arg) {
+        if (!arg) {
+            return this.content.player[item];
+        }
+
+        return this.content.player[item].replace("%rsn%", arg);
     }
 }
-
-module.exports = LanguageManager;

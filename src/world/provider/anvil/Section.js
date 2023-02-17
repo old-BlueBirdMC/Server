@@ -12,4 +12,4 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class Section {}
+export default class Section {}

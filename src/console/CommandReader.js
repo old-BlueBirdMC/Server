@@ -12,10 +12,10 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const readline = require("readline");
-const ConsoleCommandSender = require("./ConsoleCommandSender");
+import readline from "readline";
+import ConsoleCommandSender from "./ConsoleCommandSender.js";
 
-class CommandReader {
+export default class CommandReader {
     server;
     rl;
     consoleCommandSender;
@@ -32,5 +32,3 @@ class CommandReader {
         });
     }
 }
-
-module.exports = CommandReader;

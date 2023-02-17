@@ -12,7 +12,7 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class IdentityTokenParser {
+export default class IdentityTokenParser {
     token;
     usingAccount;
     fixatedData;
@@ -42,5 +42,3 @@ class IdentityTokenParser {
         this.identity = this.fixatedExtraData.identity;
     }
 }
-
-module.exports = IdentityTokenParser;

@@ -12,10 +12,10 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const Block = require("../Block");
-const Tool = require("../Tool");
+import Block from "../Block.js";
+import Tool from "../Tool.js";
 
-class AcaciaPlanks extends Block {
+export default class AcaciaPlanks extends Block {
     maxStack = 64;
     tool = Tool.axe;
     blastResistance = 3;
@@ -29,5 +29,3 @@ class AcaciaPlanks extends Block {
         super("minecraft:planks", 4);
     }
 }
-
-module.exports = AcaciaPlanks;

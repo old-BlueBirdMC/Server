@@ -12,7 +12,7 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class BitArrayVersion {
+export default class BitArrayVersion {
     bitsPerBlock;
     blocksPerWord;
     wordsPerChunk;
@@ -27,5 +27,3 @@ class BitArrayVersion {
         this.header = header;
     }
 }
-
-module.exports = BitArrayVersion;

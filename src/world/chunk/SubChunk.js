@@ -12,9 +12,9 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const BlockStorage = require("./BlockStorage");
+import BlockStorage from "./BlockStorage.js";
 
-class SubChunk {
+export default class SubChunk {
     blockStorages;
 
     constructor(runtimeID) {
@@ -42,5 +42,3 @@ class SubChunk {
         return true;
     }
 }
-
-module.exports = SubChunk;

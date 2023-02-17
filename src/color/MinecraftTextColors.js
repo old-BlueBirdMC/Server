@@ -12,7 +12,7 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class MinecraftTextColors {
+export default class MinecraftTextColors {
     static black = "§0";
     static darkBlue = "§1";
     static darkGreen = "§2";
@@ -37,5 +37,3 @@ class MinecraftTextColors {
     static strike = "§m";
     static reset = "§r";
 }
-
-module.exports = MinecraftTextColors;

@@ -12,22 +12,29 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const fs = require("fs");
-const ConsoleColors = require("../color/ConsoleColors");
-const MinecraftTextColors = require("../color/MinecraftTextColors");
-const ConsoleCommandSender = require("../console/ConsoleCommandSender");
-const Player = require("../player/Player");
-const Command = require("./Command");
-const CommandSender = require("./sender/CommandSender");
+import * as fs from "fs";
+import * as path from "path";
+import ConsoleColors from "../color/ConsoleColors.js";
+import MinecraftTextColors from "../color/MinecraftTextColors.js";
+import ConsoleCommandSender from "../console/ConsoleCommandSender.js";
+import Player from "../player/Player.js";
+import Command from "./Command.js";
+import * as MCommandsList from "./CommandsList.mjs";
+import CommandSender from "./sender/CommandSender.js";
 
-class CommandsList {
+export default class CommandsList {
     #commands = {};
     #alias = {};
 
     refresh() {
-        fs.readdirSync(`${__dirname}/default`).forEach((file) => {
-            const command = require(`${__dirname}/default/${file}`);
-            this.add(new command());
+        // const commandsListPath = `${__dirname(import.meta.url)}${path.sep}default`;
+        // const commandsList = fs.readdirSync(commandsListPath);
+        // commandsList.forEach((filesName) => {
+        //     const req = import(path.join(`${commandsListPath}${path.sep}`, filesName.replace(".js", "")));
+        //     this.add(new req());
+        // });
+        Object.values(MCommandsList).forEach((classes) => {
+            this.add(new classes());
         });
     }
 
@@ -98,5 +105,3 @@ class CommandsList {
         return this.#alias;
     }
 }
-
-module.exports = CommandsList;

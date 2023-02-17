@@ -12,7 +12,7 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class GeneratorManager {
+export default class GeneratorManager {
     blockStatesMap;
     generators;
 
@@ -41,5 +41,3 @@ class GeneratorManager {
         }
     }
 }
-
-module.exports = GeneratorManager;

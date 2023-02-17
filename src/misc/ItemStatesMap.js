@@ -12,9 +12,9 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const ItemState = require("../network/types/ItemState");
+import ItemState from "../network/minecraft/types/ItemState.js";
 
-class ItemStatesMap {
+export default class ItemStatesMap {
     states;
     #runtimeToName;
     #nameToRuntime;
@@ -42,5 +42,3 @@ class ItemStatesMap {
         return this.#nameToRuntime[name];
     }
 }
-
-module.exports = ItemStatesMap;

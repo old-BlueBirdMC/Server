@@ -12,7 +12,7 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class CoordinateUtils {
+export default class CoordinateUtils {
     static hashXZ(x, z) {
         return (BigInt(x & 0xffffffff) << 16n) | BigInt(z & 0xffffffff);
     }
@@ -21,5 +21,3 @@ class CoordinateUtils {
         return [BigInt.asIntN(32, xz << 16n), BigInt.asIntN(32, xz & 0xffffffff)];
     }
 }
-
-module.exports = CoordinateUtils;

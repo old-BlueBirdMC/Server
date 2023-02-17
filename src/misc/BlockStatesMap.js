@@ -12,7 +12,7 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class BlockStatesMap {
+export default class BlockStatesMap {
     #runtimeToLegacy;
     #legacyToRuntime;
 
@@ -48,5 +48,3 @@ class BlockStatesMap {
         return this.#runtimeToLegacy[runtimeID];
     }
 }
-
-module.exports = BlockStatesMap;

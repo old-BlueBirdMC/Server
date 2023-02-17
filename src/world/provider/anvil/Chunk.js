@@ -12,9 +12,11 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 const { NBTBEBinaryStream } = require("bbmc-nbt");
 
-class Chunk {
+export default class Chunk {
     /**
      * Chunk format version
      * @type {Number}
@@ -95,5 +97,3 @@ class Chunk {
         }
     }
 }
-
-module.exports = Chunk;

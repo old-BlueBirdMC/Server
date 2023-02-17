@@ -12,7 +12,7 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class Block {
+export default class Block {
     blockName;
     metadata;
     maxStack;
@@ -35,5 +35,3 @@ class Block {
         return resourceManager.blockStatesMap.legacyToRuntime(this.blockName, this.metadata);
     }
 }
-
-module.exports = Block;

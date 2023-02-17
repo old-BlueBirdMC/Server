@@ -12,51 +12,51 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-require("./misc/GlobFX");
+import "./misc/GlobFX.js";
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 const { InternetAddress } = require("bbmc-raknet");
-const ServerInfo = require("./ServerInfo");
-const Logger = require("./console/Logger");
-const ResourceManager = require("./managers/ResourceManager");
-const GeneratorManager = require("./managers/GeneratorManager");
-const fs = require("fs");
-const BlocksList = require("./block/BlocksList");
+import ServerInfo from "./ServerInfo.js";
+import Logger from "./console/Logger.js";
+import ResourceManager from "./managers/ResourceManager.js";
+import GeneratorManager from "./managers/GeneratorManager.js";
+import fs from "fs";
+import BlocksList from "./block/BlocksList.js";
 const { EventEmitter } = require("stream");
-const Flat = require("./world/generators/Flat");
-const Overworld = require("./world/generators/Overworld");
-const World = require("./world/World");
-const PluginStructure = require("./plugin/PluginStructure");
-const path = require("path");
-const CommandsList = require("./command/CommandsList");
-const CommandReader = require("./console/CommandReader");
-const RakNetInterface = require("./network/RakNetInterface");
-const PacketsList = require("./network/packets/PacketsList");
-const ConfigIniManager = require("./managers/ConfgIniManager");
-const PluginInfo = require("./plugin/PluginInfo");
-const RakNetPlayerManager = require("./managers/RakNetPlayerManager");
-const Player = require("./player/Player");
-const Language = require("./language/Language");
+import Flat from "./world/generators/Flat.js";
+import Overworld from "./world/generators/Overworld.js";
+import World from "./world/World.js";
+import CommandsList from "./command/CommandsList.js";
+import CommandReader from "./console/CommandReader.js";
+import RakNetInterface from "./network/RakNetInterface.js";
+import PacketsList from "./network/minecraft/packets/PacketsList.js";
+import ConfigIniManager from "./managers/ConfgIniManager.js";
+import RakNetPlayerManager from "./managers/RakNetPlayerManager.js";
+import Player from "./player/Player.js";
+import LanguageManager from "./managers/LanguageManager.js";
+import PluginsManager from "./managers/PluginsManager.js";
 
-class Server {
+export default class Server {
     resourceManager;
     configManager;
     /** @type {Language} */
     language;
     generatorManager;
     #workingEvents = [];
-    #workingPlugins = {};
     #eventsHandler;
     rakNetInterface;
     log;
     commandsList;
     consoleCommandReader;
     testWorld;
+    pluginsManager;
     playerNamesInUse = 0;
 
     constructor() {
         let startTime = Date.now();
         this.resourceManager = new ResourceManager();
         this.configManager = new ConfigIniManager();
-        this.language = new Language(this.configManager.getLanguage());
+        this.languageManager = new LanguageManager(this.configManager.getLanguage());
         this.generatorManager = new GeneratorManager(this.resourceManager.blockStatesMap);
         this.registerDefaultGenerators();
         this.testWorld = new World(this.generatorManager);
@@ -69,13 +69,13 @@ class Server {
             subMotd: this.configManager.getSubMotd(),
             gameMode: this.configManager.getGamemode(),
         };
-        this.rakNetInterface = new RakNetInterface(this, new InternetAddress("0.0.0.0", this.configManager.getServerPort(), this.configManager.getAddressVersion()), rakNetMsgOptions, this.languageDictionary);
+        this.rakNetInterface = new RakNetInterface(this, new InternetAddress("0.0.0.0", this.configManager.getServerPort(), this.configManager.getAddressVersion()), rakNetMsgOptions, this.languageManager);
         this.log = new Logger({
             Name: "Server",
             AllowDebugging: false,
             WithColors: true,
         });
-        this.log.info(this.language.server("loading"))
+        this.log.info(this.languageManager.server("loading"));
         this.commandsList = new CommandsList();
         this.commandsList.refresh();
         this.consoleCommandReader = new CommandReader(this);
@@ -84,25 +84,23 @@ class Server {
         BlocksList.refresh();
         this.rakNetInterface.handlePong();
         this.rakNetInterface.handle();
-        this.log.info(this.language.world("loading"));
+        this.log.info(this.languageManager.world("loading"));
         if (!fs.existsSync("worlds")) {
             fs.mkdirSync("worlds");
         }
-        this.log.info(this.language.world("loaded"));
-        this.log.info(this.language.player("loading"));
+        this.log.info(this.languageManager.world("loaded"));
+        this.log.info(this.languageManager.player("loading"));
         if (!fs.existsSync("players_data")) {
             fs.mkdirSync("players_data");
         }
-        this.log.info(this.language.player("loaded"));
-        this.log.info(this.language.plugin("loading"))
-        if (!fs.existsSync("plugins")) {
-            fs.mkdirSync("plugins");
-        }
-        this.enablePlugins();
-        this.log.info(this.language.plugin("loaded"))
+        this.log.info(this.languageManager.player("loaded"));
+        this.log.info(this.languageManager.plugin("loading"));
+        this.pluginsManager = new PluginsManager("plugins", this);
+        this.pluginsManager.enableAllPlugins();
+        this.log.info(this.languageManager.plugin("loaded"));
         this.playerNamesInUse = 0;
-        this.log.info(this.language.server("loaded"))
-        this.log.info(this.language.server("loadFinish", (Date.now() - startTime) / 1000))
+        this.log.info(this.languageManager.server("loaded"));
+        this.log.info(this.languageManager.server("loadFinish", (Date.now() - startTime) / 1000));
         this.handleProcess();
     }
 
@@ -143,79 +141,16 @@ class Server {
         return this.#eventsHandler;
     }
 
-    enablePlugins() {
-        fs.readdirSync("plugins").forEach(async (pluginsDir) => {
-            if (fs.lstatSync(`plugins${path.sep}${pluginsDir}`).isDirectory()) {
-                let pluginPackage = `plugins${path.sep}${pluginsDir}${path.sep}package.json`;
-                if (fs.existsSync(pluginPackage)) {
-                    let data = JSON.parse(fs.readFileSync(pluginPackage).toString("utf-8"));
-                    let pluginName = typeof data["name"] !== "undefined" ? data["name"] : "";
-                    let main = typeof data["main"] !== "undefined" ? data["main"] : "";
-                    let author = typeof data["author"] !== "undefined" ? data["author"] : "";
-                    let description = typeof data["description"] !== "undefined" ? data["description"] : "";
-                    let version = typeof data["version"] !== "undefined" ? data["version"] : "";
-                    let apiVersion = typeof data["api"] !== "undefined" ? data["api"] : "";
-                    if (apiVersion !== ServerInfo.apiVersion) {
-                        throw `Cant load plugin ${pluginName}, due to incompatible api version (${apiVersion})`;
-                    }
-                    if (!(pluginName in this.#workingPlugins)) {
-                        let dataPath = `plugins${path.sep}${pluginsDir}${path.sep}data`;
-                        let req = require(path.join(`..${path.sep}plugins${path.sep}${pluginsDir}`, main.replace(".js", "")));
-                        let mainClass = new req(this, dataPath, pluginName);
-                        if (!(mainClass instanceof PluginStructure)) {
-                            throw `Cant load plugin ${pluginName}, due to the plugin is not an instance of PluginStructure`;
-                        }
-                        mainClass.info = new PluginInfo();
-                        mainClass.info.pluginName = pluginName;
-                        mainClass.info.verison = version;
-                        mainClass.info.description = description;
-                        mainClass.info.author = author;
-                        this.#workingPlugins[pluginName] = mainClass;
-                        if (!fs.existsSync(dataPath)) {
-                            fs.mkdirSync(dataPath);
-                        } else {
-                            if (!fs.lstatSync(dataPath).isDirectory()) {
-                                fs.mkdirSync(dataPath);
-                            }
-                        }
-                        this.#workingPlugins[pluginName].successfullyEnabled();
-                        this.#workingPlugins[pluginName].handleEvents();
-                    }
-                }
-            }
-        });
-    }
-
     /**
-     * disable all plugins
-     * @returns {void}
-     */
-    disableAllPlugins() {
-        let pluginEntries = Object.entries(this.#workingPlugins);
-        if (pluginEntries.length > 0) {
-            pluginEntries.forEach((plugin) => {
-                plugin[1].successfullyDisabled();
-            });
-        }
-    }
-
-    /**
-     * get all working plugins
-     * @returns {Object}
-     */
-    getAllPlugins() {
-        return Object.entries(this.#workingPlugins);
-    }
-
-    /**
-     * get a player by displayName
-     * @param {string} displayName
+     * get a player by name
+     *
+     * @param {string} name
      * @returns {Player}
      **/
     getOnlinePlayer(name) {
         let foundPlayer;
         this.getOnlinePlayers().forEach((player) => {
-            if (player.displayName === name) {
+            if (player.name === name) {
                 foundPlayer = player;
             }
         });
@@ -223,8 +158,27 @@ class Server {
     }
 
     /**
+     * get player by prefix
+     *
+     * @param {String} prefix
+     * @returns {Player}
+     */
+    getPlayerByPrefix(prefix) {
+        let foundPlayer;
+
+        this.getOnlinePlayers().forEach((player) => {
+            if (player.name.toLowerCase().include(prefix.toLocaleLowerCase())) {
+                foundPlayer = player;
+            }
+        });
+
+        return foundPlayer;
+    }
+
+    /**
      * get a player by entity id
-     * @param {string} displayName
+     *
+     * @param {Number} id
      * @returns {Player}
      **/
     getOnlinePlayerByID(id) {
@@ -239,7 +193,8 @@ class Server {
 
     /**
      * get a player by runtime entity id
-     * @param {string} displayName
+     *
+     * @param {bigint} id
      * @returns {Player}
      **/
     getOnlinePlayerByRID(id) {
@@ -254,7 +209,8 @@ class Server {
 
     /**
      * get all online players but fixed for server
-     * @returns {void}
+     *
+     * @returns {Array}
      **/
     getOnlinePlayers() {
         let players = [];
@@ -266,6 +222,12 @@ class Server {
         return players;
     }
 
+    /**
+     * turns the gamemode version from string into int
+     *
+     * @param {String} value
+     * @returns {Number}
+     */
     translateGamemode(value) {
         let gm = -1;
         switch (value.toLowerCase()) {
@@ -293,6 +255,46 @@ class Server {
         this.generatorManager.registerGenerator(Flat);
         this.generatorManager.registerGenerator(Overworld);
     }
-}
 
-module.exports = Server;
+    /**
+     * broadcast message
+     *
+     * @param {String} message
+     * @param {Array} players
+     */
+    broadcastMessage(message, players) {
+        if (players.length === 0) players = this.getOnlinePlayers();
+
+        players.forEach((player) => {
+            player.message(message);
+        });
+    }
+
+    /**
+     * broadcast popup message
+     *
+     * @param {String} message
+     * @param {Array} players
+     */
+    broadcastPopup(message, players) {
+        if (players.length === 0) players = this.getOnlinePlayers();
+
+        players.forEach((player) => {
+            player.popup(message);
+        });
+    }
+
+    /**
+     * broadcast tip message
+     *
+     * @param {String} message
+     * @param {Array} players
+     */
+    broadcastTip(message, players) {
+        if (players.length === 0) players = this.getOnlinePlayers();
+
+        players.forEach((player) => {
+            player.tip(message);
+        });
+    }
+}

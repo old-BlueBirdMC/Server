@@ -12,18 +12,18 @@
  * \ @author BlueBirdMC Team /            *
 \***************************************** */
 
-const MinecraftTextColors = require("../../color/MinecraftTextColors");
-const ConsoleCommandSender = require("../../console/ConsoleCommandSender");
-const CommandArgumentFlags = require("../../network/constants/CommandArgumentFlags");
-const CommandArgumentTypes = require("../../network/constants/CommandArgumentTypes");
-const CommandParam = require("../../network/types/CommandParam");
-const Command = require("../Command");
+import MinecraftTextColors from "../../color/MinecraftTextColors.js";
+import ConsoleCommandSender from "../../console/ConsoleCommandSender.js";
+import CommandArgumentFlags from "../../network/minecraft/constants/CommandArgumentFlags.js";
+import CommandArgumentTypes from "../../network/minecraft/constants/CommandArgumentTypes.js";
+import CommandParam from "../../network/minecraft/types/CommandParam.js";
+import Command from "../Command.js";
 
-class GamemodeCMD extends Command {
+export default class GamemodeCMD extends Command {
     constructor() {
         const cmdParamGM = new CommandParam();
         cmdParamGM.name = "gamemode";
-        cmdParamGM.optional = true;
+        cmdParamGM.optional = false;
         cmdParamGM.typeID = CommandArgumentFlags.valid | CommandArgumentTypes.str;
         cmdParamGM.options = 0;
         cmdParamGM.suffixes = [];
@@ -84,5 +84,3 @@ class GamemodeCMD extends Command {
         }
     }
 }
-
-module.exports = GamemodeCMD;

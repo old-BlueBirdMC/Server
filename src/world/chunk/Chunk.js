@@ -12,12 +12,12 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const BlockStorage = require("./BlockStorage");
-const SubChunk = require("./SubChunk");
+import BlockStorage from "./BlockStorage.js";
+import SubChunk from "./SubChunk.js";
 
 const MAXSUBCHUNKS = 24;
 
-class Chunk {
+export default class Chunk {
     x;
     z;
     subChunks;
@@ -112,5 +112,3 @@ class Chunk {
         return 0;
     }
 }
-
-module.exports = Chunk;

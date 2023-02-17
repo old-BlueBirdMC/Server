@@ -12,10 +12,8 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class Biome {
+export default class Biome {
     static OCEAN = 0;
     static PLAINS = 1;
     static DESERT = 2;
 }
-
-module.exports = Biome;
