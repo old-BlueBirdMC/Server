@@ -13,7 +13,7 @@ class Ocean {
                 if (bedrockY === 0) {
                     chunk.setBlockRuntimeID(x, bedrockY, z, 0, bedrock);
                 }
-                let noise = perlin.noise((chunkX << 4) + x + 0.5, y + 0.5, (chunkZ << 4) + z + 0.5, 8, 3);
+                let noise = perlin.noise(((chunkX << 4) + x) * 0.0625, y * 0.0625, ((chunkZ << 4) + z) * 0.0625);
                 if (noise > 0) {
                     chunk.setBlockRuntimeID(x, y, z, 0, stone);
                 } else if (y <= 62) {
