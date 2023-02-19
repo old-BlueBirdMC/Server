@@ -17,7 +17,7 @@ BBMC under active development.
 ## Getting started
 
 ```bash
-Begin by downloading the git using the command "git clone https://github.com/BlueBirdMC/Server.git --recursive" or by selecting the zip file from the code dropdown. 
+Begin by downloading the git using the command "git clone https://github.com/BlueBirdMC/Server.git" or by selecting the zip file from the code dropdown. 
 Next, open a terminal inside the download or git folder and type "npm install".
 The last step is to run "npm run test" or "npm run start".
 ```
