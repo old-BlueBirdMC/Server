@@ -21,17 +21,20 @@ class CommandRequestPacket extends PacketsBase {
     command;
     data;
     internal;
+    version;
 
     deserialize() {
         this.command = this.readStringVarInt();
         this.data = this.readCommandOrigin();
         this.internal = this.readBool();
+        this.version = this.readVarInt();
     }
 
     serialize() {
         this.writeStringVarInt(this.command);
         this.writeCommandOrigin(this.data);
         this.writeBool(this.internal);
+        this.writeVarInt(this.version);
     }
 }
 
