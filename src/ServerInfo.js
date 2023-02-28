@@ -17,7 +17,7 @@ class ServerInfo {
     static minecraftProtocolVersion = 567;
     static minecraftVersion = "1.19.62";
     static engine = "BlueBirdMC-Server";
-    static apiVersion = "0.0.1";
+    static apiVersion = "0.1.0";
 }
 
 module.exports = ServerInfo;
