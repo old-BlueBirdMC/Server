@@ -8,6 +8,7 @@
 <p align="center">
 	<a href="https://discord.gg/sCrAZbGtfr"><img src="https://img.shields.io/discord/1070387552126763152?label=discord&color=7289DA&logo=discord" alt="Discord" /></a>
 	<a href="https://github.com/BlueBirdMC/Server/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="Discord" /></a>
+	<a href="https://github.com/BlueBirdMC/Server/actions/workflows/npm-grunt.yml"><img src="https://github.com/BlueBirdMC/Server/actions/workflows/npm-grunt.yml/badge.svg" alt="Discord" /></a>
 </p>
 
 ## Status
