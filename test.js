@@ -1,15 +1,10 @@
 const Server = require('./src/Server');
 const ConsoleColors = require('./src/color/ConsoleColors');
+const instance = new Server();
 
-function run() {
-    try {
-        const instance = new Server();
-        instance.shutdown();
-        console.log(ConsoleColors.green + 'All tests passed' + ConsoleColors.reset);
-    } catch (error) {
-        if (error) {
-            console.log(ConsoleColors.Red + error + ConsoleColors.Reset);
-        }
-    }
+try {
+    instance.shutdown();
+    console.log(ConsoleColors.green + 'All tests passed' + ConsoleColors.reset);
+} catch(error) {
+    console.log(ConsoleColors.Red + error + ConsoleColors.Reset);
 }
-run()
