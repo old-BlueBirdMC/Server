@@ -12,12 +12,21 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-class ServerInfo {
-    static rakNetProtocolVersion = 11;
-    static minecraftProtocolVersion = 575;
-    static minecraftVersion = "1.19.73";
-    static engine = "BlueBirdMC-Server";
-    static apiVersion = "0.1.0";
-}
+const path = require("path");
 
-module.exports = ServerInfo;
+(() => {
+    global.bbmcPath = path.normalize(__dirname);
+    Math.ffmd = (x, z) => {
+        let retVal = 0;
+        if (x < 0) {
+            retVal = ~Math.abs(x);
+        } else {
+            retVal += x % z;
+        }
+        return retVal;
+    };
+
+    if (process.pkg) {
+        global.__dirname = path.dirname(process.execPath);
+    }
+})();
