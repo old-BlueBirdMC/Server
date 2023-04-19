@@ -15,6 +15,7 @@
         "bbmc-binarystream": "^1.0.0",
         "bbmc-lang": "^0.2.8",
         "bbmc-nbt": "github:MFDGaming/BBMC-NBT",
+        "bbmc-chunkutils": "github:MFDGaming/BBMC-ChunkUtils",
         "bbmc-raknet": "^1.0.3"
     },
     "devDependencies": {

@@ -13,6 +13,7 @@
 \******************************************/
 
 const BinaryStream = require("bbmc-binarystream");
+const ChunkUtils = require("bbmc-chunkutils");
 const LoginTokens = require("../network/types/LoginTokens");
 const BehaviorPackInfo = require("../network/types/BehaviorPackInfo");
 const TexturePackInfo = require("../network/types/TexturePackInfo");
@@ -605,7 +606,7 @@ class MinecraftBinaryStream extends BinaryStream {
     }
 
     writeBlockStorage(value) {
-        let bitsPerBlock = Math.ceil(Math.log2(value.palette.length));
+        /*let bitsPerBlock = Math.ceil(Math.log2(value.palette.length));
         let version;
         switch (bitsPerBlock) {
             case 0:
@@ -650,7 +651,8 @@ class MinecraftBinaryStream extends BinaryStream {
         this.writeSignedVarInt(value.palette.length);
         for (let i = 0; i < value.palette.length; ++i) {
             this.writeSignedVarInt(value.palette[i]);
-        }
+        }*/
+        this.write(ChunkUtils.writeBlockStorage(value.blocks, value.palette));
     }
 
     writeSubChunk(value) {
