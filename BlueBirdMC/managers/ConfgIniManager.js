@@ -20,7 +20,7 @@ class ConfigIniManager {
     #content;
 
     constructor() {
-        let fileContents = fs.readFileSync("config.ini").toString();
+        let fileContents = fs.readFileSync("./BlueBirdMC/resources/config.ini").toString();
         let fileLen = fileContents.length;
         this.#content = fileContents.split(/\r?\n/);
         let fixedContent = this.fixContent(fileLen);

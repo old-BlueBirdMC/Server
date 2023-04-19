@@ -12,7 +12,7 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const Server = require("./src/Server");
+const Server = require("./Server");
 
 (() => {
 	const instance = new Server();
