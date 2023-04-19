@@ -11,6 +11,9 @@
  * ___________________________            *
  * \ @author BlueBirdMC Team /            *
 \******************************************/
+const Path = require("path");
+
+global.bbmcPath = Path.normalize(__dirname);
 
 class ServerInfo {
     static rakNetProtocolVersion = 11;

@@ -12,7 +12,6 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-require("./misc/GlobFX");
 const { InternetAddress } = require("bbmc-raknet");
 const ServerInfo = require("./ServerInfo");
 const Logger = require("./console/Logger");
